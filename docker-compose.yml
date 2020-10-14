@@ -1,0 +1,14 @@
+version: "3.6"
+services:
+  db:
+    build: docker-db/
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=supersecretuooo
+      - POSTGRES_DB=otohime
+      - POSTGRES_DB_USER=otohime
+      - POSTGRES_DB_PASSWORD=smq.moe
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata:
