@@ -5,10 +5,10 @@ services:
     restart: always
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_PASSWORD=supersecretuooo
+      - POSTGRES_PASSWORD
       - POSTGRES_DB=otohime
       - POSTGRES_DB_USER=otohime
-      - POSTGRES_DB_PASSWORD=smq.moe
+      - POSTGRES_DB_PASSWORD
     volumes:
       - dbdata:/var/lib/postgresql/data
   hasura:
@@ -19,10 +19,10 @@ services:
       - "db"
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://otohime:smq.moe@db:5432/otohime
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DATABASE_URL: postgres://otohime:${POSTGRES_DB_PASSWORD}@db:5432/otohime
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: hasurarocks
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
 volumes:
   dbdata:

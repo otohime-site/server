@@ -1,0 +1,3 @@
+version: 2
+endpoint: http://localhost:8580
+metadata_directory: metadata
