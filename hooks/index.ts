@@ -40,6 +40,11 @@ router.get('/', async (ctx, next) => {
       'X-Hasura-User-Id': userId,
       'X-Hasura-Role': 'user'
     }
+    // Create new database entry once logged in
+    await pool.query(
+      'INSERT INTO users (id) VALUES ($1) ON CONFLICT DO NOTHING',
+      userId
+    )
     return await next()
   }
   // Switch to test long-lived token
