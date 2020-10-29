@@ -24,5 +24,17 @@ services:
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
+      HASURA_GRAPHQL_AUTH_HOOK: http://hooks:8787/
+  hooks:
+    build: hooks/
+    depends_on:
+      - "db"
+      - "hasura"
+    environment:
+      FIREBASE_ID: ${FIREBASE_ID}
+      PGUSER: otohime
+      PGDATABASE: otohime
+      PHHOST: db
+      PGPASSWORD: ${POSTGRES_DB_PASSWORD}
 volumes:
   dbdata:

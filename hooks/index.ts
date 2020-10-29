@@ -57,3 +57,4 @@ router.get('/', async (ctx, next) => {
   }
 })
 app.use(router.routes()).use(router.allowedMethods())
+app.listen(8787)
