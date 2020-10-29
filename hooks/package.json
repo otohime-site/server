@@ -1,0 +1,32 @@
+{
+  "name": "hooks",
+  "scripts": {
+    "lint": "eslint index.ts",
+    "ts-node": "ts-node",
+    "tsc": "tsc"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "jwks-rsa": "^1.11.0",
+    "koa": "^2.13.0",
+    "koa-jwt": "^4.0.0",
+    "koa-router": "^9.4.0",
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.6",
+    "@types/koa-router": "^7.4.1",
+    "@types/pg": "^7.14.5",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "eslint": "^7.11.0",
+    "eslint-config-standard-with-typescript": "^19.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "private": true
+}
