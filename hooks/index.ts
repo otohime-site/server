@@ -43,18 +43,25 @@ router.get('/', async (ctx, next) => {
     // Create new database entry once logged in
     await pool.query(
       'INSERT INTO users (id) VALUES ($1) ON CONFLICT DO NOTHING',
-      userId
+      [userId]
     )
     return await next()
   }
+  // Allow anonymous access
+  if (!('authorization' in ctx.header)) {
+    ctx.body = {
+      'X-Hasura-Role': 'anonymous'
+    }
+    return
+  }
   // Switch to test long-lived token
-  const authVal = ctx.header.authorization ?? ''.trim().split(' ')
+  const authVal = (ctx.header.authorization ?? '').trim().split(' ')
   if (authVal.length !== 2 || !/^Bearer$/i.test(authVal[0]) || /[^0-9a-z]/i.test(authVal[1])) {
     ctx.throw(401, 'Bad Auth')
   }
   const res = await pool.query('SELECT id, user_id FROM tokens WHERE id = $1;', [authVal[1]])
   if (res.rowCount === 0) {
-    ctx.throw(403, 'Bad Token')
+    ctx.throw(401, 'Bad Token')
   }
   ctx.body = {
     'X-Hasura-User-Id': res.rows[0].user_id,
