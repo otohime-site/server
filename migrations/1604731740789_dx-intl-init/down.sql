@@ -1,0 +1,17 @@
+DROP TRIGGER dx_intl_delete_note_cleanup ON dx_intl_notes;
+DROP FUNCTION dx_intl_delete_note_cleanup;
+DROP TRIGGER dx_intl_delete_player_cleanup ON dx_intl_players;
+DROP FUNCTION dx_intl_delete_player_cleanup;
+SELECT periods.drop_system_versioning('dx_intl_scores');
+SELECT periods.drop_system_versioning('dx_intl_records');
+DROP TABLE dx_intl_scores_history;
+DROP TABLE dx_intl_records_history;
+DROP TABLE dx_intl_scores;
+DROP TABLE dx_intl_records;
+DROP TABLE dx_intl_players;
+DROP TABLE dx_intl_notes;
+DROP TABLE dx_intl_songs;
+DROP TYPE dx_intl_sync_flag;
+DROP TYPE dx_intl_combo_flag;
+DROP TYPE dx_intl_level;
+DROP TYPE dx_intl_trophy;
