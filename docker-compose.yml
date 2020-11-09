@@ -34,7 +34,7 @@ services:
       FIREBASE_ID: ${FIREBASE_ID}
       PGUSER: otohime
       PGDATABASE: otohime
-      PHHOST: db
+      PGHOST: db
       PGPASSWORD: ${POSTGRES_DB_PASSWORD}
 volumes:
   dbdata:
