@@ -13,6 +13,27 @@
         table:
           schema: public
           name: dx_intl_scores
+  select_permissions:
+  - role: importer
+    permission:
+      columns:
+      - id
+      - song_id
+      - deluxe
+      - active
+      - levels
+      - version
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - active
+      - deluxe
+      - levels
+      - version
+      - id
+      - song_id
+      filter: {}
 - table:
     schema: public
     name: dx_intl_players
@@ -49,12 +70,25 @@
       check:
         user_id:
           _eq: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
       columns:
       - nickname
       - private
       - user_id
       backend_only: false
   select_permissions:
+  - role: importer
+    permission:
+      columns:
+      - created_at
+      - id
+      - nickname
+      - private
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
   - role: user
     permission:
       columns:
@@ -288,6 +322,21 @@
         table:
           schema: public
           name: dx_intl_notes
+  select_permissions:
+  - role: importer
+    permission:
+      columns:
+      - id
+      - category
+      - title
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - category
+      - id
+      - title
+      filter: {}
 - table:
     schema: public
     name: tokens
@@ -301,6 +350,8 @@
       check:
         user_id:
           _eq: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
       columns: []
       backend_only: false
   select_permissions:

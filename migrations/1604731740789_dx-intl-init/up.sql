@@ -26,7 +26,10 @@ CREATE TABLE dx_intl_notes (
 CREATE TABLE dx_intl_players (
     id SERIAL PRIMARY KEY,
     user_id text NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    nickname text UNIQUE CHECK (nickname ~ '^[0-9a-z]{1,20}$'),
+    nickname text UNIQUE CHECK (
+      (nickname IS NULL and private = TRUE) OR
+      (nickname IS NOT NULL AND private = FALSE AND nickname ~ '^[0-9a-z]{1,20}$')
+    ),
     "private" boolean NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now()
 );
@@ -59,33 +62,33 @@ SELECT periods.add_system_versioning('dx_intl_scores');
 
 CREATE FUNCTION dx_intl_delete_player_cleanup() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
 BEGIN
-    SELECT periods.drop_system_versioning('dx_intl_records');
-    SELECT periods.drop_system_versioning('dx_intl_scores');
+    PERFORM periods.drop_system_versioning('dx_intl_records');
+    PERFORM periods.drop_system_versioning('dx_intl_scores');
     GRANT DELETE ON TABLE dx_intl_records_history TO CURRENT_USER;
     GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
     DELETE FROM dx_intl_records WHERE player_id = OLD.id;
     DELETE FROM dx_intl_records_history WHERE player_id = OLD.id;
     DELETE FROM dx_intl_scores WHERE player_id = OLD.id;
     DELETE FROM dx_intl_scores_history WHERE player_id = OLD.id;
-    SELECT periods.add_system_versioning('dx_intl_records');
-    SELECT periods.add_system_versioning('dx_intl_scores');
+    PERFORM periods.add_system_versioning('dx_intl_records');
+    PERFORM periods.add_system_versioning('dx_intl_scores');
     RETURN OLD;
 END;
 $func$;
 
-CREATE TRIGGER dx_intl_delete_player_cleanup AFTER INSERT ON dx_intl_players FOR EACH ROW
+CREATE TRIGGER dx_intl_delete_player_cleanup AFTER DELETE ON dx_intl_players FOR EACH ROW
 EXECUTE PROCEDURE dx_intl_delete_player_cleanup();
 
 CREATE FUNCTION dx_intl_delete_note_cleanup() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
 BEGIN
-    SELECT periods.drop_system_versioning('dx_intl_scores');
+    PERFORM periods.drop_system_versioning('dx_intl_scores');
     GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
     DELETE FROM dx_intl_scores WHERE note_id = OLD.id;
     DELETE FROM dx_intl_scores_history WHERE note_id = OLD.id;
-    SELECT periods.add_system_versioning('dx_intl_scores');
+    PERFORM periods.add_system_versioning('dx_intl_scores');
     RETURN OLD;
 END;
 $func$;
 
-CREATE TRIGGER dx_intl_delete_note_cleanup AFTER INSERT ON dx_intl_notes FOR EACH ROW
+CREATE TRIGGER dx_intl_delete_note_cleanup AFTER DELETE ON dx_intl_notes FOR EACH ROW
 EXECUTE PROCEDURE dx_intl_delete_note_cleanup();
