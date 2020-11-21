@@ -1,4 +1,4 @@
-import { Pool } from 'pg'
+import { pool } from './db'
 import Koa from 'koa'
 import Router from 'koa-router'
 import jwt from 'koa-jwt'
@@ -9,7 +9,6 @@ if (firebaseProjectId === undefined) {
   console.log('Please assign FIREBASE_ID')
   process.exit(1)
 }
-const pool = new Pool()
 
 // As we need to support both JWT and long-lived token,
 // it is better to be served with a webhook. :(
