@@ -1,5 +1,4 @@
-import { pool } from './db'
-import Koa from 'koa'
+import pool from './db'
 import Router from 'koa-router'
 import jwt from 'koa-jwt'
 import jwksRsa from 'jwks-rsa'
@@ -13,7 +12,6 @@ if (firebaseProjectId === undefined) {
 // As we need to support both JWT and long-lived token,
 // it is better to be served with a webhook. :(
 
-const app = new Koa()
 const router = new Router()
 router.use(
   jwt({
@@ -67,5 +65,5 @@ router.get('/', async (ctx, next) => {
     'X-Hasura-Role': 'importer'
   }
 })
-app.use(router.routes()).use(router.allowedMethods())
-app.listen(8787)
+
+export default router

@@ -24,7 +24,7 @@ services:
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
-      HASURA_GRAPHQL_AUTH_HOOK: http://hooks:8787/
+      HASURA_GRAPHQL_AUTH_HOOK: http://hooks:8787/auth/
   hooks:
     build: hooks/
     depends_on:
