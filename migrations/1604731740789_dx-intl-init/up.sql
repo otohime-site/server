@@ -29,7 +29,8 @@ CREATE TABLE dx_intl_notes (
     difficulty smallint NOT NULL CHECK (difficulty >= 0 AND difficulty <= 4),
     "level" dx_intl_level,
     FOREIGN KEY (song_id, deluxe) REFERENCES dx_intl_variants (song_id, deluxe)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    UNIQUE (song_id, deluxe, difficulty)
 );
 
 CREATE TABLE dx_intl_players (
