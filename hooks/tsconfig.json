@@ -5,7 +5,8 @@
     "outDir": "build",
     "sourceMap": true,
     "strict": true,
-    "target": "es6",
+    "target": "es2015",
+    "moduleResolution": "node",
     "esModuleInterop": true
   },
   "include": [

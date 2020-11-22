@@ -329,6 +329,7 @@
       - id
       - category
       - title
+      - order
       filter: {}
   - role: user
     permission:
@@ -336,6 +337,7 @@
       - category
       - id
       - title
+      - order
       filter: {}
 - table:
     schema: public

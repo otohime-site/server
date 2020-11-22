@@ -10,6 +10,7 @@ CREATE TABLE dx_intl_songs (
     id SERIAL PRIMARY KEY,
     category smallint NOT NULL CHECK (category >= 1 AND category <= 6),
     title TEXT NOT NULL,
+    "order" smallint NOT NULL CHECK ("order" >= 1),
     UNIQUE (category, title)
 );
 

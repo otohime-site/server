@@ -32,6 +32,8 @@ services:
       - "hasura"
     environment:
       FIREBASE_ID: ${FIREBASE_ID}
+      SEGA_ID: ${SEGA_ID}
+      SEGA_PASSWORD: ${SEGA_PASSWORD}
       PGUSER: otohime
       PGDATABASE: otohime
       PGHOST: db

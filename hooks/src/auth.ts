@@ -5,8 +5,7 @@ import jwksRsa from 'jwks-rsa'
 
 const firebaseProjectId = process.env.FIREBASE_ID
 if (firebaseProjectId === undefined) {
-  console.log('Please assign FIREBASE_ID')
-  process.exit(1)
+  throw new Error('Please assign FIREBASE_ID to use /auth')
 }
 
 // As we need to support both JWT and long-lived token,
