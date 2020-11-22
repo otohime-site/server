@@ -44,6 +44,7 @@ CREATE TABLE dx_intl_records (
 );
 SELECT periods.add_system_time_period('dx_intl_records', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_records');
+CREATE INDEX ON dx_intl_records_history (player_id);
 
 CREATE TABLE dx_intl_scores (
     id BIGSERIAL PRIMARY KEY,
@@ -57,6 +58,7 @@ CREATE TABLE dx_intl_scores (
 );
 SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');
+CREATE INDEX ON dx_intl_scores_history (player_id);
 
 CREATE FUNCTION dx_intl_delete_player_cleanup() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
 BEGIN
