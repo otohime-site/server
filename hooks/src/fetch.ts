@@ -103,7 +103,7 @@ router.get('/', async (ctx, next) => {
     tap(() => console.log('Writing into database...')),
     flatMap(([result, client]) => (
       from(client.query('BEGIN')).pipe(
-        flatMap(() => client.query('UPDATE dx_intl_notes SET active = false;')),
+        flatMap(() => client.query('UPDATE dx_intl_variants SET active = false;')),
         flatMap(() => (
           from(
             result.reduce<Array<{ query: string, values?: any[] }>>((accr, categoryMap, index) => {
@@ -111,30 +111,39 @@ router.get('/', async (ctx, next) => {
               return [
                 ...accr,
                 ...[...categoryMap.entries()].reduce<Array<{ query: string, values?: any[] }>>(
-                  (accr, [title, variantMap], index) => (
-                    [...accr,
+                  (accr, [title, variantMap], index) => {
+                    const variants = [...variantMap.entries()]
+                    return [...accr,
                       {
                         query: `
                         WITH song as (
                           INSERT INTO dx_intl_songs (category, title, "order") VALUES ($1, $2, $3)
                           ON CONFLICT (category, title) DO UPDATE SET "order" = excluded.order RETURNING id
-                        )
-                        INSERT INTO dx_intl_notes (song_id, deluxe, active, levels, version) VALUES
-                        ${[...variantMap.entries()].map((_, index) => (
-                          `
-                          ((SELECT id FROM song), $${index * 3 + 4}, true, $${index * 3 + 5}, $${index * 3 + 6})
-                          `
-                        )).join(',\n')}
-                        ON CONFLICT (song_id, deluxe) DO UPDATE SET active = true, levels = excluded.levels, version = excluded.version;
+                        ), variants as (
+                          INSERT INTO dx_intl_variants(song_id, deluxe, version, active) VALUES
+                        ${variants.map((_, index) => (`
+                          ((SELECT id FROM song), $${index * 2 + 4}, $${index * 2 + 5}, true)
+                        `)).join(',\n')}
+                          ON CONFLICT (song_id, deluxe) DO UPDATE SET active = excluded.active, version = excluded.version
+                        ) INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level) VALUES
+                        ${[...Array(variants.reduce((accr, curr) => accr + curr[1].levels.length, 0))].map((_, index) => `
+                          ((SELECT id FROM song),
+                          $${4 + variants.length * 2 + index * 3},
+                          $${5 + variants.length * 2 + index * 3},
+                          $${6 + variants.length * 2 + index * 3})
+                        `).join(',\n')
+                        }
+                        ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET level = excluded.level;
                         `,
                         values: [
                           category, title, index + 1,
-                          ...[...variantMap.entries()].map(([deluxe, variant]) => (
-                            [deluxe, `{${variant.levels.join(',')}}`, variant.version]
-                          )).reduce((accr, curr) => [...accr, ...curr], [])
+                          ...variants.reduce<any[]>((accr, [deluxe, { version }]) => [...accr, deluxe, version], []),
+                          ...variants.reduce<any[]>((accr, [deluxe, { levels }]) => [
+                            ...accr, ...levels.reduce<any[]>((accr, level, index) => [...accr, deluxe, index, level], [])
+                          ], [])
                         ]
                       }]
-                  )
+                  }
                   , [])
               ]
             }, [])
