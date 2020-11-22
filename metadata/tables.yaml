@@ -2,9 +2,15 @@
     schema: public
     name: dx_intl_notes
   object_relationships:
-  - name: dx_intl_song
+  - name: dx_intl_variant
     using:
-      foreign_key_constraint_on: song_id
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_variants
+        column_mapping:
+          song_id: song_id
+          deluxe: deluxe
   array_relationships:
   - name: dx_intl_scores
     using:
@@ -20,19 +26,17 @@
       - id
       - song_id
       - deluxe
-      - active
-      - levels
-      - version
+      - difficulty
+      - level
       filter: {}
   - role: user
     permission:
       columns:
-      - active
-      - deluxe
-      - levels
-      - version
       - id
       - song_id
+      - deluxe
+      - difficulty
+      - level
       filter: {}
 - table:
     schema: public
@@ -237,7 +241,6 @@
             _eq: X-Hasura-User-Id
       columns:
       - combo_flag
-      - difficulty
       - note_id
       - player_id
       - score
@@ -249,7 +252,6 @@
       columns:
       - combo_flag
       - sync_flag
-      - difficulty
       - note_id
       - player_id
       - id
@@ -315,13 +317,13 @@
     schema: public
     name: dx_intl_songs
   array_relationships:
-  - name: dx_intl_notes
+  - name: dx_intl_variants
     using:
       foreign_key_constraint_on:
         column: song_id
         table:
           schema: public
-          name: dx_intl_notes
+          name: dx_intl_variants
   select_permissions:
   - role: importer
     permission:
@@ -338,6 +340,40 @@
       - id
       - title
       - order
+      filter: {}
+- table:
+    schema: public
+    name: dx_intl_variants
+  object_relationships:
+  - name: dx_intl_song
+    using:
+      foreign_key_constraint_on: song_id
+  array_relationships:
+  - name: dx_intl_notes
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_notes
+        column_mapping:
+          song_id: song_id
+          deluxe: deluxe
+  select_permissions:
+  - role: importer
+    permission:
+      columns:
+      - song_id
+      - deluxe
+      - version
+      - active
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - active
+      - deluxe
+      - version
+      - song_id
       filter: {}
 - table:
     schema: public

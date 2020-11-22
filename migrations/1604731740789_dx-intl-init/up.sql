@@ -14,14 +14,22 @@ CREATE TABLE dx_intl_songs (
     UNIQUE (category, title)
 );
 
-CREATE TABLE dx_intl_notes (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE dx_intl_variants (
     song_id integer REFERENCES dx_intl_songs (id) ON UPDATE CASCADE ON DELETE CASCADE,
     deluxe boolean NOT NULL,
+    "version" SMALLINT NOT NULL CHECK (version >= 0 AND version <= 14),
     active boolean NOT NULL,
-    levels dx_intl_level[] CHECK (array_length(levels, 1) IN (4, 5)),
-    version SMALLINT NOT NULL CHECK (version >= 0 AND version <= 14),
-    UNIQUE (song_id, deluxe)
+    PRIMARY KEY (song_id, deluxe)
+);
+
+CREATE TABLE dx_intl_notes (
+    id SERIAL PRIMARY KEY,
+    song_id integer,
+    deluxe boolean NOT NULL,
+    difficulty smallint NOT NULL CHECK (difficulty >= 0 AND difficulty <= 4),
+    "level" dx_intl_level,
+    FOREIGN KEY (song_id, deluxe) REFERENCES dx_intl_variants (song_id, deluxe)
+    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE dx_intl_players (
@@ -50,11 +58,10 @@ CREATE TABLE dx_intl_scores (
     id BIGSERIAL PRIMARY KEY,
     player_id integer NOT NULL REFERENCES dx_intl_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
     note_id integer NOT NULL REFERENCES dx_intl_notes (id) ON UPDATE RESTRICT ON DELETE CASCADE,
-    difficulty smallint NOT NULL CHECK (difficulty >= 0 AND difficulty <= 4),
     score numeric(7) NOT NULL CHECK (score >= 0 AND score <= 101.00),
     combo_flag dx_intl_combo_flag NOT NULL CHECK (combo_flag != 'ap+' OR score = 101.00),
     sync_flag dx_intl_sync_flag NOT NULL CHECK (sync_flag != 'fdx+' OR combo_flag = 'ap' OR combo_flag = 'ap+'),
-    UNIQUE (player_id, note_id, difficulty)
+    UNIQUE (player_id, note_id)
 );
 SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');

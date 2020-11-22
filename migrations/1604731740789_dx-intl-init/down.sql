@@ -9,6 +9,7 @@ DROP TABLE dx_intl_records_history;
 DROP TABLE dx_intl_scores;
 DROP TABLE dx_intl_records;
 DROP TABLE dx_intl_players;
+DROP TABLE dx_intl_variants;
 DROP TABLE dx_intl_notes;
 DROP TABLE dx_intl_songs;
 DROP TYPE dx_intl_sync_flag;
