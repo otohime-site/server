@@ -14,6 +14,8 @@ CREATE TABLE dx_intl_songs (
     UNIQUE (category, title)
 );
 
+CREATE INDEX on dx_intl_songs (category, "order");
+
 CREATE TABLE dx_intl_variants (
     song_id integer REFERENCES dx_intl_songs (id) ON UPDATE CASCADE ON DELETE CASCADE,
     deluxe boolean NOT NULL,
