@@ -29,7 +29,7 @@ CREATE TABLE dx_intl_notes (
     song_id integer,
     deluxe boolean NOT NULL,
     difficulty smallint NOT NULL CHECK (difficulty >= 0 AND difficulty <= 4),
-    "level" dx_intl_level,
+    "level" dx_intl_level NOT NULL,
     FOREIGN KEY (song_id, deluxe) REFERENCES dx_intl_variants (song_id, deluxe)
     ON UPDATE CASCADE ON DELETE CASCADE,
     UNIQUE (song_id, deluxe, difficulty)
@@ -61,7 +61,7 @@ CREATE TABLE dx_intl_scores (
     id BIGSERIAL PRIMARY KEY,
     player_id integer NOT NULL REFERENCES dx_intl_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
     note_id integer NOT NULL REFERENCES dx_intl_notes (id) ON UPDATE RESTRICT ON DELETE CASCADE,
-    score numeric(7) NOT NULL CHECK (score >= 0 AND score <= 101.00),
+    score numeric(7, 4) NOT NULL CHECK (score >= 0 AND score <= 101.00),
     combo_flag dx_intl_combo_flag NOT NULL CHECK (combo_flag != 'ap+' OR score = 101.00),
     sync_flag dx_intl_sync_flag NOT NULL CHECK (sync_flag != 'fdx+' OR combo_flag = 'ap' OR combo_flag = 'ap+'),
     UNIQUE (player_id, note_id)
@@ -69,36 +69,3 @@ CREATE TABLE dx_intl_scores (
 SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');
 CREATE INDEX ON dx_intl_scores_history (player_id);
-
-CREATE FUNCTION dx_intl_delete_player_cleanup() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
-BEGIN
-    PERFORM periods.drop_system_versioning('dx_intl_records');
-    PERFORM periods.drop_system_versioning('dx_intl_scores');
-    GRANT DELETE ON TABLE dx_intl_records_history TO CURRENT_USER;
-    GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
-    DELETE FROM dx_intl_records WHERE player_id = OLD.id;
-    DELETE FROM dx_intl_records_history WHERE player_id = OLD.id;
-    DELETE FROM dx_intl_scores WHERE player_id = OLD.id;
-    DELETE FROM dx_intl_scores_history WHERE player_id = OLD.id;
-    PERFORM periods.add_system_versioning('dx_intl_records');
-    PERFORM periods.add_system_versioning('dx_intl_scores');
-    RETURN OLD;
-END;
-$func$;
-
-CREATE TRIGGER dx_intl_delete_player_cleanup AFTER DELETE ON dx_intl_players FOR EACH ROW
-EXECUTE PROCEDURE dx_intl_delete_player_cleanup();
-
-CREATE FUNCTION dx_intl_delete_note_cleanup() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
-BEGIN
-    PERFORM periods.drop_system_versioning('dx_intl_scores');
-    GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
-    DELETE FROM dx_intl_scores WHERE note_id = OLD.id;
-    DELETE FROM dx_intl_scores_history WHERE note_id = OLD.id;
-    PERFORM periods.add_system_versioning('dx_intl_scores');
-    RETURN OLD;
-END;
-$func$;
-
-CREATE TRIGGER dx_intl_delete_note_cleanup AFTER DELETE ON dx_intl_notes FOR EACH ROW
-EXECUTE PROCEDURE dx_intl_delete_note_cleanup();
