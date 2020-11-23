@@ -1,7 +1,7 @@
-DROP TRIGGER dx_intl_delete_note_cleanup ON dx_intl_notes;
-DROP FUNCTION dx_intl_delete_note_cleanup;
-DROP TRIGGER dx_intl_delete_player_cleanup ON dx_intl_players;
-DROP FUNCTION dx_intl_delete_player_cleanup;
+DROP TRIGGER dx_intl_records_check_changed ON dx_intl_records;
+DROP FUNCTION dx_intl_records_check_changed;
+DROP TRIGGER dx_intl_scores_check_changed ON dx_intl_scores;
+DROP FUNCTION dx_intl_scores_check_changed;
 SELECT periods.drop_system_versioning('dx_intl_scores');
 SELECT periods.drop_system_versioning('dx_intl_records');
 DROP TABLE dx_intl_scores_history;
