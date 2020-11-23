@@ -149,6 +149,23 @@
       - trophy
       backend_only: false
   select_permissions:
+  - role: importer
+    permission:
+      columns:
+      - id
+      - player_id
+      - card_name
+      - title
+      - trophy
+      - rating
+      - max_rating
+      - grade
+      - start
+      - end
+      filter:
+        dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
   - role: user
     permission:
       columns:
