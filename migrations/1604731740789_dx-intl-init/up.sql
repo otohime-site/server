@@ -69,3 +69,23 @@ CREATE TABLE dx_intl_scores (
 SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');
 CREATE INDEX ON dx_intl_scores_history (player_id);
+
+CREATE FUNCTION dx_intl_records_check_changed() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
+BEGIN
+    RETURN CASE WHEN OLD IS DISTINCT FROM NEW THEN NEW ELSE NULL END;
+END;
+$func$;
+
+CREATE TRIGGER dx_intl_records_check_changed
+BEFORE UPDATE ON dx_intl_records FOR EACH ROW
+EXECUTE PROCEDURE dx_intl_records_check_changed();
+
+CREATE FUNCTION dx_intl_scores_check_changed() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
+BEGIN
+    RETURN CASE WHEN OLD IS DISTINCT FROM NEW THEN NEW ELSE NULL END;
+END;
+$func$;
+
+CREATE TRIGGER dx_intl_scores_check_changed
+BEFORE UPDATE ON dx_intl_scores FOR EACH ROW
+EXECUTE PROCEDURE dx_intl_scores_check_changed();
