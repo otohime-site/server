@@ -49,9 +49,9 @@ CREATE TABLE dx_intl_records (
     card_name text NOT NULL,
     title text NOT NULL,
     trophy dx_intl_trophy NOT NUll,
-    rating smallint CHECK (rating >=0 AND rating < 15000),
-    max_rating smallint CHECK (max_rating >=0 AND max_rating < 15000 AND max_rating >= rating),
-    grade integer CHECK (grade >= 1 AND grade <= 25)
+    rating smallint NOT NULL CHECK (rating >=0 AND rating < 15000),
+    max_rating smallint NOT NULL CHECK (max_rating >=0 AND max_rating < 15000 AND max_rating >= rating),
+    grade integer NOT NULL CHECK (grade >= 1 AND grade <= 25)
 );
 SELECT periods.add_system_time_period('dx_intl_records', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_records');
