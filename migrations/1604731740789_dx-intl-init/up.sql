@@ -89,3 +89,12 @@ $func$;
 CREATE TRIGGER dx_intl_scores_check_changed
 BEFORE UPDATE ON dx_intl_scores FOR EACH ROW
 EXECUTE PROCEDURE dx_intl_scores_check_changed();
+
+CREATE FUNCTION dx_intl_players_updated_at(dx_intl_players_row dx_intl_players)
+RETURNS timestamptz AS $$
+  WITH player AS (SELECT id FROM dx_intl_players)
+  SELECT greatest(record_start, score_start)
+  FROM 
+    (SELECT start AS record_start FROM dx_intl_records WHERE player_id = (SELECT id FROM player)) r CROSS JOIN
+    (SELECT MAX(start) AS score_start FROM dx_intl_scores WHERE player_id = (SELECT id FROM player)) s;
+$$ LANGUAGE sql STABLE;

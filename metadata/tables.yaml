@@ -20,6 +20,15 @@
           schema: public
           name: dx_intl_scores
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - song_id
+      - deluxe
+      - difficulty
+      - level
+      filter: {}
   - role: importer
     permission:
       columns:
@@ -68,6 +77,13 @@
         table:
           schema: public
           name: dx_intl_scores
+  computed_fields:
+  - name: updated_at
+    definition:
+      function:
+        schema: public
+        name: dx_intl_players_updated_at
+    comment: ""
   insert_permissions:
   - role: user
     permission:
@@ -82,6 +98,19 @@
       - user_id
       backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - created_at
+      - id
+      - nickname
+      - private
+      - user_id
+      computed_fields:
+      - updated_at
+      filter:
+        private:
+          _ne: true
   - role: importer
     permission:
       columns:
@@ -101,6 +130,8 @@
       - nickname
       - user_id
       - created_at
+      computed_fields:
+      - updated_at
       filter:
         _or:
         - private:
@@ -149,6 +180,23 @@
       - trophy
       backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - player_id
+      - card_name
+      - title
+      - trophy
+      - rating
+      - max_rating
+      - grade
+      - start
+      - end
+      filter:
+        dx_intl_player:
+          private:
+            _ne: true
   - role: importer
     permission:
       columns:
@@ -218,6 +266,13 @@
         column_mapping:
           player_id: id
   select_permissions:
+  - role: anonymous
+    permission:
+      columns: []
+      filter:
+        dx_intl_player:
+          private:
+            _ne: true
   - role: user
     permission:
       columns:
@@ -264,6 +319,21 @@
       - sync_flag
       backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - player_id
+      - note_id
+      - score
+      - combo_flag
+      - sync_flag
+      - start
+      - end
+      filter:
+        dx_intl_player:
+          private:
+            _ne: true
   - role: user
     permission:
       columns:
@@ -319,6 +389,21 @@
         column_mapping:
           player_id: id
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - player_id
+      - note_id
+      - score
+      - combo_flag
+      - sync_flag
+      - start
+      - end
+      filter:
+        dx_intl_player:
+          private:
+            _ne: true
   - role: user
     permission:
       columns: []
@@ -342,6 +427,14 @@
           schema: public
           name: dx_intl_variants
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - category
+      - title
+      - order
+      filter: {}
   - role: importer
     permission:
       columns:
@@ -376,6 +469,14 @@
           song_id: song_id
           deluxe: deluxe
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - song_id
+      - deluxe
+      - version
+      - active
+      filter: {}
   - role: importer
     permission:
       columns:
