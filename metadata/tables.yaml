@@ -119,6 +119,8 @@
       - nickname
       - private
       - user_id
+      computed_fields:
+      - updated_at
       filter:
         user_id:
           _eq: X-Hasura-User-Id
