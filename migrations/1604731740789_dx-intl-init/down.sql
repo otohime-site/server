@@ -1,3 +1,4 @@
+DROP FUNCTION dx_intl_players_timelines;
 DROP FUNCTION dx_intl_players_updated_at;
 DROP TRIGGER dx_intl_records_check_changed ON dx_intl_records;
 DROP FUNCTION dx_intl_records_check_changed;

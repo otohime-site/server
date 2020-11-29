@@ -59,6 +59,14 @@
           name: dx_intl_records
         column_mapping:
           id: player_id
+  - name: timelines
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_players_timelines
+        column_mapping:
+          id: id
   - name: user
     using:
       foreign_key_constraint_on: user_id
@@ -158,6 +166,55 @@
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: dx_intl_players_timelines
+  object_relationships:
+  - name: player
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_players
+        column_mapping:
+          id: id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - nickname
+      - timelines
+      filter:
+        player:
+          private:
+            _ne: true
+  - role: importer
+    permission:
+      columns:
+      - id
+      - nickname
+      - timelines
+      filter:
+        player:
+          _or:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - private:
+              _ne: true
+  - role: user
+    permission:
+      columns:
+      - id
+      - nickname
+      - timelines
+      filter:
+        player:
+          _or:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - private:
+              _ne: true
 - table:
     schema: public
     name: dx_intl_records

@@ -97,3 +97,12 @@ RETURNS timestamptz AS $$
     (SELECT start AS record_start FROM dx_intl_records WHERE player_id = dx_intl_players_row.id) r CROSS JOIN
     (SELECT MAX(start) AS score_start FROM dx_intl_scores WHERE player_id = dx_intl_players_row.id) s;
 $$ LANGUAGE sql STABLE;
+
+CREATE VIEW dx_intl_players_timelines AS
+    WITH make_it_read_only AS (SELECT 1)
+    SELECT id, nickname, array(
+        SELECT start FROM (
+            SELECT start FROM dx_intl_records_with_history WHERE player_id = p.id UNION ALL
+            SELECT DISTINCT start FROM dx_intl_scores_with_history WHERE player_id = p.id
+        ) AS q GROUP BY start ORDER BY start DESC
+    ) AS timelines FROM dx_intl_players p;
