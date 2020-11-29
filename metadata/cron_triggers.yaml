@@ -1,1 +1,5 @@
-[]
+- name: Cleanup players
+  webhook: http://hooks:8787/cleanup
+  schedule: '* * * * *'
+  include_in_metadata: true
+  payload: {}
