@@ -1,4 +1,4 @@
-- name: Cleanup players
+- name: Cleanup Players
   webhook: http://hooks:8787/cleanup
   schedule: '* * * * *'
   include_in_metadata: true
