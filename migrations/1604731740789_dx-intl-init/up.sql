@@ -102,7 +102,9 @@ CREATE VIEW dx_intl_players_timelines AS
     WITH make_it_read_only AS (SELECT 1)
     SELECT id, nickname, array(
         SELECT start FROM (
-            SELECT start FROM dx_intl_records_with_history WHERE player_id = p.id UNION ALL
-            SELECT DISTINCT start FROM dx_intl_scores_with_history WHERE player_id = p.id
+            SELECT start FROM dx_intl_records WHERE player_id = p.id UNION ALL
+            SELECT start FROM dx_intl_records_history WHERE player_id = p.id UNION ALL
+            SELECT DISTINCT start FROM dx_intl_scores WHERE player_id = p.id UNION ALL
+            SELECT DISTINCT start FROM dx_intl_scores_history WHERE player_id = p.id
         ) AS q GROUP BY start ORDER BY start DESC
     ) AS timelines FROM dx_intl_players p;
