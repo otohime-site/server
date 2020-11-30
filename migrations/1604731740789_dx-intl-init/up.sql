@@ -38,7 +38,7 @@ CREATE TABLE dx_intl_notes (
 CREATE TABLE dx_intl_players (
     id SERIAL PRIMARY KEY,
     user_id text NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    nickname text UNIQUE NOT NULL CHECK (nickname != 'new' AND nickname ~ '^[0-9a-z]{1,20}$'),
+    nickname text UNIQUE NOT NULL CHECK (nickname != 'new' AND nickname ~ '^[0-9a-z\-\_]{1,20}$'),
     "private" boolean NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now()
 );
