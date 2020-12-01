@@ -465,7 +465,15 @@
             _ne: true
   - role: user
     permission:
-      columns: []
+      columns:
+      - id
+      - player_id
+      - note_id
+      - score
+      - combo_flag
+      - sync_flag
+      - start
+      - end
       filter:
         _or:
         - dx_intl_player:
