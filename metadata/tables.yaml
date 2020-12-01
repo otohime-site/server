@@ -327,7 +327,17 @@
   select_permissions:
   - role: anonymous
     permission:
-      columns: []
+      columns:
+      - id
+      - player_id
+      - card_name
+      - title
+      - trophy
+      - rating
+      - max_rating
+      - grade
+      - start
+      - end
       filter:
         dx_intl_player:
           private:
