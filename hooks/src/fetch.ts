@@ -24,7 +24,7 @@ if (segaId === undefined || segaPassword === undefined) {
 
 const router = new Router()
 
-router.get('/', async (ctx, next) => {
+router.post('/', async (ctx, next) => {
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM('<!DOCTYPE html><html></html>').window.DOMParser

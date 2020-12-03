@@ -3,3 +3,8 @@
   schedule: '* * * * *'
   include_in_metadata: true
   payload: {}
+- name: Update songs
+  webhook: http://hooks:8787/fetch
+  schedule: 5 22 * * 4
+  include_in_metadata: true
+  payload: {}
