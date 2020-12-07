@@ -90,7 +90,7 @@ router.post('/', async (ctx, next) => {
           levels: []
         }
         if (variant.version === -1) {
-          console.warn(`Cannot find level for ${curr.title}!`)
+          console.warn(`Cannot find version for ${curr.title}!`)
           variant.version = CURRENT_VERSION
         }
         variant.levels[curr.difficulty] = curr.level
