@@ -1,5 +1,21 @@
 - table:
     schema: public
+    name: dx_intl_base_rating
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - count
+      - range
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - range
+      - count
+      filter: {}
+- table:
+    schema: public
     name: dx_intl_notes
   object_relationships:
   - name: dx_intl_variant
