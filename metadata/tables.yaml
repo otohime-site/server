@@ -455,6 +455,24 @@
             _eq: X-Hasura-User-Id
 - table:
     schema: public
+    name: dx_intl_scores_stats
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - note_id
+      - range
+      - count
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - note_id
+      - count
+      - range
+      filter: {}
+- table:
+    schema: public
     name: dx_intl_scores_with_history
   object_relationships:
   - name: dx_intl_note
