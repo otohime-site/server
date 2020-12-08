@@ -86,6 +86,6 @@ CREATE OR REPLACE VIEW dx_intl_scores_stats AS
             'AP+'
         ]) AS description
     )
-    SELECT s.note_id, MIN(st.description) AS range, COUNT(s.score) AS count FROM dx_intl_scores s 
+    SELECT s.note_id, MIN(st.description) AS range, COUNT(s.score) AS count FROM dx_intl_public_scores s 
     INNER JOIN range_table st ON st.score_range @> s.score
     GROUP BY s.note_id, st.score_range ORDER BY st.score_range DESC;
