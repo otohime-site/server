@@ -10,7 +10,7 @@ import fetchCookie from 'fetch-cookie/node-fetch'
 import { ScoresParseEntry } from '@otohime-site/parser/dx_intl/scores'
 import DxIntlVersions from './dx_intl_versions'
 
-const CURRENT_VERSION = 14
+const CURRENT_VERSION = 15
 type VariantMap = Map<Boolean, {
   version: number
   levels: Array<ScoresParseEntry['level']>
