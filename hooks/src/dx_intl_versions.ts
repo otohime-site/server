@@ -385,6 +385,7 @@ const versions: Array<Array<string | [string, number]>> = [
     'The wheel to the right'
   ],
   [
+    '前前前世',
     '真・ハンサム体操でズンドコホイ',
     'GET!! 夢&DREAM',
     '日本の米は世界一',
