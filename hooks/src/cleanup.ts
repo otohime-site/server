@@ -1,10 +1,10 @@
-import pool from './db'
-import Router from 'koa-router'
+import pool from "./db"
+import Router from "koa-router"
 const router = new Router()
 
-router.post('/', async (ctx, next) => {
+router.post("/", async (ctx, next) => {
   const client = await pool.connect()
-  await client.query('BEGIN')
+  await client.query("BEGIN")
   try {
     await client.query(`
       SELECT periods.drop_system_versioning('dx_intl_records');
@@ -19,12 +19,12 @@ router.post('/', async (ctx, next) => {
       COMMIT;
     `)
   } catch (e) {
-    await client.query('ROLLBACK')
+    await client.query("ROLLBACK")
     throw e
   } finally {
     client.release()
   }
-  ctx.body = 'ok!'
+  ctx.body = "ok!"
 })
 
 export default router

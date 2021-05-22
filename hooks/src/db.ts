@@ -1,3 +1,3 @@
-import { Pool } from 'pg'
+import { Pool } from "pg"
 
 export default new Pool()
