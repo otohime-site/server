@@ -19,17 +19,8 @@ docker-compose up
 
 You need to append `sudo` if your docker requires `root`.
 
-Then you need to set up the Hasura migration and metadata.
-
-Install the Hasura CLI by following [the official docs](https://hasura.io/docs/1.0/graphql/core/hasura-cli/install-hasura-cli.html). Then run the following commmand:
-
-```
-hasura migrate apply
-hasura metadata apply
-```
-
 Finally we need to update the song list. Use the following command to update it:
 
 ```
-docker-compose run db wget --post-data '' http://hooks:8787/fetch
+docker-compose run hooks npm run ts-node src/fetch.ts
 ```
