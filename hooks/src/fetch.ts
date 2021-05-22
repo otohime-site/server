@@ -2,12 +2,18 @@
 import pool from "./db"
 import Router from "koa-router"
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
-import { combineLatest, concat, from, of, throwError } from "rxjs"
+import {
+  combineLatest,
+  concat,
+  from,
+  lastValueFrom,
+  of,
+  throwError,
+} from "rxjs"
 import {
   catchError,
   delay,
   finalize,
-  flatMap,
   map,
   mergeMap,
   reduce,
@@ -36,9 +42,7 @@ if (segaId === undefined || segaPassword === undefined) {
   throw new Error("Please assign SEGA_ID and SEGA_PASSWORD to use /fetch")
 }
 
-const router = new Router()
-
-router.post("/", async (ctx, next) => {
+const fetch = async (): Promise<void> => {
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM(
@@ -46,8 +50,8 @@ router.post("/", async (ctx, next) => {
   ).window.DOMParser
 
   // First, trying to sign in
-  await from(fetch("https://maimaidx-eng.com/", { redirect: "follow" }))
-    .pipe(
+  await lastValueFrom(
+    from(fetch("https://maimaidx-eng.com/", { redirect: "follow" })).pipe(
       switchMap((resp) =>
         fetch("https://lng-tgk-aime-gw.am-all.net/common_auth/login/sid/", {
           method: "POST",
@@ -91,7 +95,10 @@ router.post("/", async (ctx, next) => {
         )
       ),
       // Aggregate results and get versions
-      reduce<ScoresParseEntry[]>((acc, curr) => [...acc, ...curr], []),
+      reduce<ScoresParseEntry[], ScoresParseEntry[]>(
+        (acc, curr) => [...acc, ...curr],
+        []
+      ),
       map((result) => {
         return result.reduce<Array<Map<string, VariantMap>>>(
           (accr, curr) => {
@@ -139,12 +146,12 @@ router.post("/", async (ctx, next) => {
       // Insert songs and notes into the database
       switchMap((result) => combineLatest([of(result), pool.connect()])),
       tap(() => console.log("Writing into database...")),
-      flatMap(([result, client]) =>
+      mergeMap(([result, client]) =>
         from(client.query("BEGIN")).pipe(
-          flatMap(() =>
+          mergeMap(() =>
             client.query("UPDATE dx_intl_variants SET active = false;")
           ),
-          flatMap(() =>
+          mergeMap(() =>
             from(
               result.reduce<Array<{ query: string; values?: any[] }>>(
                 (accr, categoryMap, index) => {
@@ -234,15 +241,28 @@ router.post("/", async (ctx, next) => {
             )
           ),
           takeLast(1),
-          flatMap(() => client.query("COMMIT")),
+          mergeMap(() => client.query("COMMIT")),
           catchError((e) => concat(client.query("ROLLBACK"), throwError(e))),
           finalize(() => client.release())
         )
       )
     )
-    .toPromise()
+  )
+}
 
+const router = new Router()
+
+router.post("/", async (ctx, next) => {
+  await fetch()
   ctx.body = "ok!"
 })
 
 export default router
+
+if (require.main === module) {
+  fetch()
+    .then(() => console.log("ok!"))
+    .catch((e) => {
+      throw e
+    })
+}
