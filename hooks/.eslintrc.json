@@ -2,5 +2,16 @@
   "extends": ["standard-with-typescript", "prettier"],
   "parserOptions": {
     "project": "tsconfig.json"
+  },
+  "rules": {
+    "import/order": "error",
+    "no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ]
   }
 }
