@@ -1,5 +1,5 @@
-import pool from "./db"
 import Router from "koa-router"
+import pool from "./db"
 const router = new Router()
 
 router.post("/", async (ctx, next) => {
@@ -13,7 +13,6 @@ router.post("/", async (ctx, next) => {
       GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
       DELETE FROM dx_intl_records_history WHERE player_id NOT IN (SELECT id FROM dx_intl_players);
       DELETE FROM dx_intl_scores_history WHERE player_id  NOT IN (SELECT id FROM dx_intl_players);
-      DELETE FROM dx_intl_scores_history WHERE note_id  NOT IN (SELECT id FROM dx_intl_notes);
       SELECT periods.add_system_versioning('dx_intl_records');
       SELECT periods.add_system_versioning('dx_intl_scores');
       COMMIT;
