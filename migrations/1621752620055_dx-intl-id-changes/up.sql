@@ -43,7 +43,7 @@ CREATE TABLE dx_intl_notes (
 CREATE TABLE dx_intl_scores (
     id BIGSERIAL PRIMARY KEY,
     player_id integer NOT NULL REFERENCES dx_intl_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
-    song_id varchar(64),
+    song_id varchar(64) NOT NULL,
     deluxe boolean NOT NULL,
     difficulty smallint NOT NULL,
     score numeric(7, 4) NOT NULL CHECK (score >= 0 AND score <= 101.00),
