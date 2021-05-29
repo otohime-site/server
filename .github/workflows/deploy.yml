@@ -19,15 +19,15 @@ jobs:
           context: docker-db 
           push: true
           tags: |
-            ghcr.io/${{ github.registry }}/db:${{ github.sha }}
-            ghcr.io/${{ github.registry }}/db:${{ github.ref }}
+            ghcr.io/${{ github.repository }}/db:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/db:${{ github.ref }}
       - uses: docker/build-push-action@v2
         with:
           context: hooks
           push: true
           tags: |
-            ghcr.io/${{ github.registry }}/hooks:${{ github.sha }}
-            ghcr.io/${{ github.registry }}/hooks:${{ github.ref }}
+            ghcr.io/${{ github.repository }}/hooks:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/hooks:${{ github.ref }}
 
   deploy:
     runs-on: ubuntu-latest
