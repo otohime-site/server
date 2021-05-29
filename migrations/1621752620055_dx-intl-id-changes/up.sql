@@ -1,4 +1,6 @@
 SELECT periods.drop_system_versioning('dx_intl_scores');
+DROP TRIGGER dx_intl_scores_check_changed ON dx_intl_scores;
+DROP FUNCTION dx_intl_scores_check_changed;
 
 /* Rename old tables */
 
@@ -55,6 +57,7 @@ CREATE TABLE dx_intl_scores (
 SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');
 SELECT periods.drop_system_versioning('dx_intl_scores');
+SELECT periods.drop_system_time_period('dx_intl_scores');
 GRANT INSERT ON dx_intl_scores_history TO CURRENT_USER;
 CREATE INDEX ON dx_intl_scores_history (player_id);
 
@@ -116,7 +119,19 @@ INSERT INTO dx_intl_scores_history (
     FROM dx_intl_scores_history_old AS old
     JOIN dx_intl_notes AS note ON note.old_id = old.note_id;
 
+SELECT periods.add_system_time_period('dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('dx_intl_scores');
+
+/* Rebuild trigger */
+CREATE FUNCTION dx_intl_scores_check_changed() RETURNS TRIGGER LANGUAGE plpgsql AS $func$
+BEGIN
+    RETURN CASE WHEN OLD IS DISTINCT FROM NEW THEN NEW ELSE NULL END;
+END;
+$func$;
+
+CREATE TRIGGER dx_intl_scores_check_changed
+BEFORE UPDATE ON dx_intl_scores FOR EACH ROW
+EXECUTE PROCEDURE dx_intl_scores_check_changed();
 
 /* Replace views */
 DROP VIEW dx_intl_players_timelines;
