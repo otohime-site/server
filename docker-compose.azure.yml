@@ -1,3 +1,4 @@
+# https://docs.microsoft.com/azure/app-service/tutorial-multi-container-app
 version: "3.6"
 services:
   db:
@@ -10,15 +11,13 @@ services:
       - POSTGRES_DB_USER=otohime
       - POSTGRES_DB_PASSWORD
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - ${WEBAPP_STORAGE_HOME}/site/postgres-data:/var/lib/postgresql/data
   hasura:
     image: hasura/graphql-engine:v1.3.3
     ports:
-      - "127.0.0.1:8580:8080"
-    depends_on:
-      - "db"
+      - "80:8080"
     restart: always
-    environment:
+    nvironment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://otohime:${POSTGRES_DB_PASSWORD}@db:5432/otohime
       HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
       HASURA_GRAPHQL_DEV_MODE: "true"
@@ -38,5 +37,3 @@ services:
       PGDATABASE: otohime
       PGHOST: db
       PGPASSWORD: ${POSTGRES_DB_PASSWORD}
-volumes:
-  dbdata:

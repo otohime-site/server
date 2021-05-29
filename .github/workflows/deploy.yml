@@ -1,0 +1,38 @@
+name: Package and Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  buildi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: docker-db 
+          push: true
+          tags: |
+            ghcr.io/${{ github.registry }}/db:${{ github.sha }}
+            ghcr.io/${{ github.registry }}/db:${{ github.ref }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: hooks
+          push: true
+          tags: |
+            ghcr.io/${{ github.registry }}/hooks:${{ github.sha }}
+            ghcr.io/${{ github.registry }}/hooks:${{ github.ref }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
