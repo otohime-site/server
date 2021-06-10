@@ -227,6 +227,16 @@ CREATE VIEW dx_intl_scores_stats AS
 ALTER TABLE dx_intl_songs DROP COLUMN old_id;
 ALTER TABLE dx_intl_notes DROP COLUMN old_id;
 
+/* Fix serial https://stackoverflow.com/questions/244243/ */
+BEGIN;
+LOCK TABLE dx_intl_scores IN EXCLUSIVE MODE;
+SELECT setval(
+    pg_get_serial_sequence('dx_intl_scores', 'id'),
+    COALESCE((SELECT MAX(id) + 1 FROM dx_intl_scores), 1),
+    false
+);
+COMMIT;
+
 /* Drop old tables */
 DROP TABLE dx_intl_scores_old;
 DROP TABLE dx_intl_scores_history_old;

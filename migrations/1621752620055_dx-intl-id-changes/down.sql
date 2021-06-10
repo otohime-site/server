@@ -32,7 +32,7 @@ CREATE TABLE dx_intl_variants (
 );
 
 CREATE TABLE dx_intl_notes (
-    old_song_id varchar(64) UNIQUE,
+    old_song_id varchar(64),
     id SERIAL PRIMARY KEY,
     song_id integer,
     deluxe boolean NOT NULL,
@@ -74,8 +74,9 @@ INSERT INTO dx_intl_variants (song_id, deluxe, "version", active) SELECT
     JOIN dx_intl_songs AS song ON song.old_id = old.song_id;
 
 INSERT INTO dx_intl_notes (
-    song_id, deluxe, difficulty, "level"
+    old_song_id, song_id, deluxe, difficulty, "level"
     ) SELECT
+    old.song_id,
     song.id,
     old.deluxe,
     old.difficulty,
@@ -215,6 +216,16 @@ CREATE VIEW dx_intl_scores_stats AS
 /* Drop columns */
 ALTER TABLE dx_intl_songs DROP COLUMN old_id;
 ALTER TABLE dx_intl_notes DROP COLUMN old_song_id;
+
+/* Fix serial https://stackoverflow.com/questions/244243/ */
+BEGIN;
+LOCK TABLE dx_intl_scores IN EXCLUSIVE MODE;
+SELECT setval(
+    pg_get_serial_sequence('dx_intl_scores', 'id'),
+    COALESCE((SELECT MAX(id) + 1 FROM dx_intl_scores), 1),
+    false
+);
+COMMIT;
 
 /* Drop old tables */
 DROP TABLE dx_intl_scores_old;
