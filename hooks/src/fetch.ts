@@ -7,7 +7,7 @@ import nodeFetch from "node-fetch"
 import fetchCookie from "fetch-cookie/node-fetch"
 import { ScoresParseEntry } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db"
-import DxIntlVersions from "./dx_intl_versions"
+import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
 
 const CURRENT_VERSION = 15
 interface VariantProps {
@@ -83,7 +83,9 @@ const fetch = async (): Promise<void> => {
       const variant = variantMap.get(deluxe) ?? {
         version: DxIntlVersions.findIndex(
           (verSongs, verIndex) =>
-            ((deluxe ? verIndex >= 13 : verIndex < 13) &&
+            ((deluxe || newVersionStds.includes(title)
+              ? verIndex >= 13
+              : verIndex < 13) &&
               verSongs.includes(title)) ||
             verSongs.some(
               (verSong) =>
