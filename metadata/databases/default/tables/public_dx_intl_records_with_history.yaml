@@ -14,16 +14,18 @@ object_relationships:
 select_permissions:
 - permission:
     columns:
-    - id
-    - player_id
     - card_name
+    - class_rank
+    - course_rank
+    - end
+    - grade
+    - id
+    - max_rating
+    - player_id
+    - rating
+    - start
     - title
     - trophy
-    - rating
-    - max_rating
-    - grade
-    - start
-    - end
     filter:
       dx_intl_player:
         private:
@@ -31,16 +33,18 @@ select_permissions:
   role: anonymous
 - permission:
     columns:
-    - id
-    - player_id
     - card_name
+    - class_rank
+    - course_rank
+    - end
+    - grade
+    - id
+    - max_rating
+    - player_id
+    - rating
+    - start
     - title
     - trophy
-    - rating
-    - max_rating
-    - grade
-    - start
-    - end
     filter:
       _or:
       - dx_intl_player:

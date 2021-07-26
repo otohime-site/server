@@ -9,7 +9,8 @@ import { ScoresParseEntry } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db"
 import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
 
-const CURRENT_VERSION = 15
+const CURRENT_VERSION =
+  new Date() > new Date("2021-07-30T06:00:00+09:00") ? 16 : 15
 interface VariantProps {
   version: number
 }
