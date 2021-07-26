@@ -4,7 +4,9 @@ alter table "public"."dx_intl_variants" add constraint "dx_intl_variants_version
 
 SELECT periods.drop_system_versioning('dx_intl_records');
 
-alter table "public"."dx_intl_records" drop constraint "dx_intl_records_cross_version_check";
+alter table "public"."dx_intl_records" drop constraint "dx_intl_records_ranks_check";
+alter table "public"."dx_intl_records" drop constraint "dx_intl_records_rating_check";
+alter table "public"."dx_intl_records" drop constraint "dx_intl_records_rating_legacy_check";
 
 alter table "public"."dx_intl_records"
     alter column grade SET NOT NULL,

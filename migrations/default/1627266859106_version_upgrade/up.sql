@@ -19,17 +19,23 @@ alter table "public"."dx_intl_records_history"
     add column class_rank smallint,
     add column rating_legacy boolean not null default true;
 
-alter table "public"."dx_intl_records" add constraint "dx_intl_records_cross_version_check"
+alter table "public"."dx_intl_records" add constraint "dx_intl_records_ranks_check"
     CHECK ((
         course_rank IS NULL AND
         class_rank IS NULL AND
-        grade IS NOT NULL AND (grade >= 1 AND grade <= 25) AND
-        (rating >= 0 AND rating < 15000)
+        grade IS NOT NULL AND (grade >= 1 AND grade <= 25)
     ) OR (
         course_rank IS NOT NULL AND course_rank >= 0 AND course_rank <= 22 AND course_rank != 11 AND
         class_rank IS NOT NULL AND class_rank >= 0 AND class_rank <= 25 AND
-        grade IS NULL AND
-        rating >= 0 AND rating <= 17000
+        grade IS NULL
     ));
+alter table "public"."dx_intl_records" add constraint "dx_intl_records_rating_check"
+    CHECK (
+        rating >= 0 AND rating <= 17000
+    );
+alter table "public"."dx_intl_records" add constraint "dx_intl_records_rating_legacy_check"
+    CHECK (
+        rating <= 10350 OR rating_legacy is false
+    );
 
 SELECT periods.add_system_versioning('dx_intl_records');
