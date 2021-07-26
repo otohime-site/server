@@ -23,6 +23,7 @@ select_permissions:
     - max_rating
     - player_id
     - rating
+    - rating_legacy
     - start
     - title
     - trophy
@@ -42,6 +43,7 @@ select_permissions:
     - max_rating
     - player_id
     - rating
+    - rating_legacy
     - start
     - title
     - trophy

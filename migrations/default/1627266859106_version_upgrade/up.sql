@@ -10,12 +10,14 @@ alter table "public"."dx_intl_records" drop constraint "dx_intl_records_rating_c
 alter table "public"."dx_intl_records"
     alter column grade DROP NOT NULL,
     add column course_rank smallint,
-    add column class_rank smallint;
+    add column class_rank smallint,
+    add column rating_legacy boolean not null default true;
 
 alter table "public"."dx_intl_records_history"
     alter column grade DROP NOT NULL,
     add column course_rank smallint,
-    add column class_rank smallint;
+    add column class_rank smallint,
+    add column rating_legacy boolean not null default true;
 
 alter table "public"."dx_intl_records" add constraint "dx_intl_records_cross_version_check"
     CHECK ((
