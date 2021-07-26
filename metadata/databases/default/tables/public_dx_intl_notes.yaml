@@ -1,0 +1,51 @@
+table:
+  name: dx_intl_notes
+  schema: public
+object_relationships:
+- name: dx_intl_variant
+  using:
+    manual_configuration:
+      column_mapping:
+        deluxe: deluxe
+        song_id: song_id
+      insertion_order: null
+      remote_table:
+        name: dx_intl_variants
+        schema: public
+array_relationships:
+- name: dx_intl_scores
+  using:
+    manual_configuration:
+      column_mapping:
+        deluxe: deluxe
+        difficulty: difficulty
+        song_id: song_id
+      insertion_order: null
+      remote_table:
+        name: dx_intl_scores
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - song_id
+    - deluxe
+    - difficulty
+    - level
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - deluxe
+    - level
+    - difficulty
+    - song_id
+    filter: {}
+  role: importer
+- permission:
+    columns:
+    - deluxe
+    - level
+    - difficulty
+    - song_id
+    filter: {}
+  role: user

@@ -1,6 +1,6 @@
 - name: Cleanup Players
   webhook: http://hooks:8787/cleanup
-  schedule: "* * * * *"
+  schedule: '* * * * *'
   include_in_metadata: true
   payload: {}
 - name: Update songs

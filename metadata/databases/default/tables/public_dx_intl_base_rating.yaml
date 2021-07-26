@@ -1,0 +1,16 @@
+table:
+  name: dx_intl_base_rating
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - count
+    - range
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - range
+    - count
+    filter: {}
+  role: user

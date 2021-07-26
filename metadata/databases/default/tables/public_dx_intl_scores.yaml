@@ -1,0 +1,88 @@
+table:
+  name: dx_intl_scores
+  schema: public
+object_relationships:
+- name: dx_intl_note
+  using:
+    manual_configuration:
+      column_mapping:
+        deluxe: deluxe
+        difficulty: difficulty
+        song_id: song_id
+      insertion_order: null
+      remote_table:
+        name: dx_intl_notes
+        schema: public
+- name: dx_intl_player
+  using:
+    foreign_key_constraint_on: player_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - combo_flag
+    - deluxe
+    - difficulty
+    - player_id
+    - score
+    - song_id
+    - sync_flag
+  role: importer
+select_permissions:
+- permission:
+    columns:
+    - deluxe
+    - combo_flag
+    - sync_flag
+    - difficulty
+    - player_id
+    - id
+    - score
+    - end
+    - start
+    - song_id
+    filter:
+      dx_intl_player:
+        private:
+          _ne: true
+  role: anonymous
+- permission:
+    columns:
+    - deluxe
+    - combo_flag
+    - sync_flag
+    - difficulty
+    - player_id
+    - id
+    - score
+    - end
+    - start
+    - song_id
+    filter:
+      _or:
+      - dx_intl_player:
+          private:
+            _ne: true
+      - dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - combo_flag
+    - score
+    - sync_flag
+    filter:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+  role: importer

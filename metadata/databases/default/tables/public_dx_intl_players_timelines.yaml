@@ -1,0 +1,50 @@
+table:
+  name: dx_intl_players_timelines
+  schema: public
+object_relationships:
+- name: player
+  using:
+    manual_configuration:
+      column_mapping:
+        id: id
+      insertion_order: null
+      remote_table:
+        name: dx_intl_players
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - id
+    - nickname
+    - timelines
+    filter:
+      player:
+        private:
+          _ne: true
+  role: anonymous
+- permission:
+    columns:
+    - id
+    - nickname
+    - timelines
+    filter:
+      player:
+        _or:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - private:
+            _ne: true
+  role: importer
+- permission:
+    columns:
+    - id
+    - nickname
+    - timelines
+    filter:
+      player:
+        _or:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - private:
+            _ne: true
+  role: user

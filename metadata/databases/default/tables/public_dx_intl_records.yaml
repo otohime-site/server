@@ -1,0 +1,97 @@
+table:
+  name: dx_intl_records
+  schema: public
+object_relationships:
+- name: dx_intl_player
+  using:
+    foreign_key_constraint_on: player_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - card_name
+    - grade
+    - max_rating
+    - player_id
+    - rating
+    - title
+    - trophy
+  role: importer
+select_permissions:
+- permission:
+    columns:
+    - id
+    - player_id
+    - card_name
+    - title
+    - trophy
+    - rating
+    - max_rating
+    - grade
+    - start
+    - end
+    filter:
+      dx_intl_player:
+        private:
+          _ne: true
+  role: anonymous
+- permission:
+    columns:
+    - id
+    - player_id
+    - card_name
+    - title
+    - trophy
+    - rating
+    - max_rating
+    - grade
+    - start
+    - end
+    filter:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+  role: importer
+- permission:
+    columns:
+    - id
+    - player_id
+    - card_name
+    - title
+    - trophy
+    - rating
+    - max_rating
+    - grade
+    - start
+    - end
+    filter:
+      _or:
+      - dx_intl_player:
+          private:
+            _ne: true
+      - dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - card_name
+    - grade
+    - max_rating
+    - rating
+    - title
+    - trophy
+    filter:
+      dx_intl_player:
+        user_id:
+          _eq: X-Hasura-User-Id
+  role: importer

@@ -1,0 +1,52 @@
+table:
+  name: users
+  schema: public
+object_relationships:
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        id: user_id
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+array_relationships:
+- name: dx_intl_players
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: dx_intl_players
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      id:
+        _eq: X-Hasura-User-Id
+    columns: []
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - id
+    - created_at
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns: []
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user

@@ -1,0 +1,22 @@
+table:
+  name: dx_intl_scores_stats
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - song_id
+    - deluxe
+    - difficulty
+    - range
+    - count
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - deluxe
+    - difficulty
+    - count
+    - range
+    - song_id
+    filter: {}
+  role: user

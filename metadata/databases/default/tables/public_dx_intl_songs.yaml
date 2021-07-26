@@ -1,0 +1,36 @@
+table:
+  name: dx_intl_songs
+  schema: public
+array_relationships:
+- name: dx_intl_variants
+  using:
+    foreign_key_constraint_on:
+      column: song_id
+      table:
+        name: dx_intl_variants
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - id
+    - category
+    - title
+    - order
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - id
+    - category
+    - title
+    - order
+    filter: {}
+  role: importer
+- permission:
+    columns:
+    - category
+    - id
+    - title
+    - order
+    filter: {}
+  role: user
