@@ -1,5 +1,5 @@
 table:
-  name: dx_intl_base_rating
+  name: dx_intl_new_rating_stats
   schema: public
 select_permissions:
 - permission:

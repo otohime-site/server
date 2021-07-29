@@ -1,4 +1,4 @@
-- "!include public_dx_intl_base_rating.yaml"
+- "!include public_dx_intl_new_rating_stats.yaml"
 - "!include public_dx_intl_notes.yaml"
 - "!include public_dx_intl_players.yaml"
 - "!include public_dx_intl_players_timelines.yaml"
