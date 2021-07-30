@@ -765,7 +765,7 @@ const versions: Array<Array<string | [string, number]>> = [
     "マイオドレ！舞舞タイム",
     "ぼくたちいつでも　しゅわっしゅわ！",
     "≠彡\"/了→",
-    // "BREaK! BREaK! BREaK!", // it is expected to be switched to PLUS
+    "BREaK! BREaK! BREaK!",
     "シアトリカル・ケース",
     "ワンダーシャッフェンの法則",
     "BIRTH",
