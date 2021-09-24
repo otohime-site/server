@@ -5,12 +5,14 @@ import { query, join, value, compile } from "pg-sql2"
 import { JSDOM, CookieJar } from "jsdom"
 import nodeFetch from "node-fetch"
 import fetchCookie from "fetch-cookie/node-fetch"
-import { ScoresParseEntry } from "@otohime-site/parser/dx_intl/scores"
+import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db"
 import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
+import InternalLvJson from "./internal_lv.json"
 
 const CURRENT_VERSION =
   new Date() > new Date("2021-07-30T06:00:00+09:00") ? 16 : 15
+
 interface VariantProps {
   version: number
 }
@@ -21,6 +23,34 @@ interface SongToWrite {
   order: number
   title: string
   variants: Array<[boolean, VariantProps]>
+}
+
+interface ScoreEntry extends ScoresParseEntryWithoutScore {
+  internal_lv?: number
+}
+
+const internalLvDict: Record<string, number> = InternalLvJson
+const validInternalLv = (
+  level: ScoreEntry["level"],
+  internalLv: number
+): boolean => {
+  switch (level) {
+    case "12":
+      return internalLv >= 12.0 && internalLv <= 12.6
+    case "12+":
+      return internalLv >= 12.7 && internalLv <= 12.9
+    case "13":
+      return internalLv >= 13.0 && internalLv <= 13.6
+    case "13+":
+      return internalLv >= 13.7 && internalLv <= 13.9
+    case "14":
+      return internalLv >= 14.0 && internalLv <= 14.6
+    case "14+":
+      return internalLv >= 14.7 && internalLv <= 14.9
+    case "15":
+      return internalLv === 15.0
+  }
+  return false
 }
 
 const segaId = process.env.SEGA_ID
@@ -56,7 +86,7 @@ const fetch = async (): Promise<void> => {
   // Assume the player can be parsed correctly
   parsePlayer(await loginResp.text())
 
-  const parsedScores = await [...Array(5)].reduce<Promise<ScoresParseEntry[]>>(
+  const parsedScores = await [...Array(5)].reduce<Promise<ScoreEntry[]>>(
     async (prevPromise, _, difficulty) => {
       const prev = await prevPromise
       console.log(`Running difficulty ${difficulty}...`)
@@ -68,7 +98,33 @@ const fetch = async (): Promise<void> => {
       }
       const result = parseScores(await resp.text(), undefined, true)
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      return [...prev, ...result]
+      return [
+        ...prev,
+        ...result.map((entry) => {
+          const dictKey = `${entry.category}_${entry.title}_${
+            entry.deluxe ? "t" : "f"
+          }_${entry.difficulty}`
+          const internalLv = internalLvDict[dictKey]
+          if (internalLv == null) {
+            if (
+              ["12", "12+", "13", "13+", "14", "14+", "15"].includes(
+                entry.level
+              )
+            ) {
+              console.log(`Internal Lv not found on ${dictKey}`)
+            }
+            return entry
+          }
+          if (!validInternalLv(entry.level, internalLv)) {
+            console.log(`Internal Lv is not matched with level on ${dictKey}`)
+            return entry
+          }
+          return {
+            ...entry,
+            internal_lv: internalLv,
+          }
+        }),
+      ]
     },
     Promise.resolve([])
   )
@@ -164,25 +220,28 @@ const fetch = async (): Promise<void> => {
     for await (const _ of variantQueries.map(
       async ({ text, values }) => await client.query(text, values)
     )) {
+      // pass
     }
 
     // Write notes
     const noteQueries = parsedScores.map((score) =>
       compile(query`
-      INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level) VALUES
+      INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level, internal_lv) VALUES
       (
         encode(sha256(${value(`${score.category}_${score.title}`)}), 'hex'),
         ${value(score.deluxe)},
         ${value(score.difficulty)},
-        ${value(score.level)}
+        ${value(score.level)},
+        ${value(score.internal_lv)}
       )
-      ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET level = excluded.level;
+      ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET level = excluded.level, internal_lv = excluded.internal_lv;
       `)
     )
 
     for await (const _ of noteQueries.map(
       async ({ text, values }) => await client.query(text, values)
     )) {
+      // pass
     }
     await client.query("COMMIT")
   } catch (e) {
