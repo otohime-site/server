@@ -27,25 +27,28 @@ array_relationships:
 select_permissions:
 - permission:
     columns:
-    - song_id
     - deluxe
     - difficulty
+    - internal_lv
     - level
+    - song_id
     filter: {}
   role: anonymous
 - permission:
     columns:
     - deluxe
-    - level
     - difficulty
+    - internal_lv
+    - level
     - song_id
     filter: {}
   role: importer
 - permission:
     columns:
     - deluxe
-    - level
     - difficulty
+    - internal_lv
+    - level
     - song_id
     filter: {}
   role: user
