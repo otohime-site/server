@@ -9,7 +9,7 @@
   "dependencies": {
     "@otohime-site/parser": "^21.7.2",
     "fetch-cookie": "^1.0.0",
-    "jsdom": "^17.0.0",
+    "jsdom": "^19.0.0",
     "jwks-rsa": "^2.0.4",
     "koa": "^2.13.1",
     "koa-jwt": "^4.0.0",
