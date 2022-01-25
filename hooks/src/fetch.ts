@@ -10,8 +10,7 @@ import pool from "./db"
 import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
 import InternalLvJson from "./internal_lv.json"
 
-const CURRENT_VERSION =
-  new Date() > new Date("2021-07-30T06:00:00+09:00") ? 16 : 15
+const CURRENT_VERSION = 17
 
 interface VariantProps {
   version: number
