@@ -1,4 +1,8 @@
-export const newVersionStds = ["全世界共通リズム感テスト", "Technicians High"]
+export const newVersionStds = [
+  "全世界共通リズム感テスト",
+  "Technicians High",
+  "Destr0yer",
+]
 
 const versions: Array<Array<string | [string, number]>> = [
   [

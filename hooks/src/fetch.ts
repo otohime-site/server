@@ -9,6 +9,7 @@ import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/score
 import pool from "./db"
 import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
 import InternalLvJson from "./internal_lv.json"
+import InternalLvUniverseJson from "./internal_lv_universe.json"
 
 const CURRENT_VERSION = 17
 
@@ -28,7 +29,10 @@ interface ScoreEntry extends ScoresParseEntryWithoutScore {
   internal_lv?: number
 }
 
-const internalLvDict: Record<string, number> = InternalLvJson
+const internalLvDict: Record<string, number> =
+  new Date() > new Date("2022-01-27T03:00:00+09:00")
+    ? InternalLvUniverseJson
+    : InternalLvJson
 const validInternalLv = (
   level: ScoreEntry["level"],
   internalLv: number
