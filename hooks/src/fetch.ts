@@ -4,7 +4,7 @@ import { query, join, value, compile } from "pg-sql2"
 
 import { JSDOM, CookieJar } from "jsdom"
 import nodeFetch from "node-fetch"
-import fetchCookie from "fetch-cookie/node-fetch"
+import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db"
 import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"

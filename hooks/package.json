@@ -8,7 +8,7 @@
   "main": "index.js",
   "dependencies": {
     "@otohime-site/parser": "^21.7.2",
-    "fetch-cookie": "^1.0.0",
+    "fetch-cookie": "^2.0.3",
     "jsdom": "^19.0.0",
     "jwks-rsa": "^2.0.4",
     "koa": "^2.13.1",
