@@ -7,7 +7,7 @@ import nodeFetch from "node-fetch"
 import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db"
-import DxIntlVersions, { newVersionStds } from "./dx_intl_versions"
+import Versions from "./versions.json"
 import InternalLvJson from "./internal_lv.json"
 import InternalLvUniverseJson from "./internal_lv_universe.json"
 
@@ -140,23 +140,12 @@ const fetch = async (): Promise<void> => {
       const categoryMap = accr[category - 1]
       const variantMap: VariantMap = categoryMap.get(title) ?? new Map()
       categoryMap.set(title, variantMap)
+      const verKey = `${curr.category}_${curr.title}_${curr.deluxe ? "t" : "f"}`
       const variant = variantMap.get(deluxe) ?? {
-        version: DxIntlVersions.findIndex(
-          (verSongs, verIndex) =>
-            ((deluxe || newVersionStds.includes(title)
-              ? verIndex >= 13
-              : verIndex < 13) &&
-              verSongs.includes(title)) ||
-            verSongs.some(
-              (verSong) =>
-                Array.isArray(verSong) &&
-                verSong[0] === title &&
-                verSong[1] === category
-            )
-        ),
+        version: Versions.findIndex((verSongs) => verSongs.includes(verKey)),
       }
       if (variant.version === -1) {
-        console.warn(`Cannot find version for ${curr.title}!`)
+        console.warn(`Version missing: ${JSON.stringify(verKey)}`)
         variant.version = CURRENT_VERSION
       }
       variantMap.set(deluxe, variant)
