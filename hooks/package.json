@@ -2,7 +2,7 @@
   "name": "hooks",
   "type": "module",
   "scripts": {
-    "lint": "eslint index.ts",
+    "lint": "eslint",
     "ts-node": "ts-node --esm",
     "tsc": "tsc"
   },
@@ -20,11 +20,17 @@
     "pg-sql2": "^4.12.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "@types/jsdom": "^16.2.14",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/koa": "^2.13.4",
     "@types/koa-router": "^7.4.4",
     "@types/pg": "^8.6.1",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
   },
