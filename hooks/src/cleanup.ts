@@ -1,5 +1,5 @@
 import Router from "koa-router"
-import pool from "./db"
+import pool from "./db.js"
 const router = new Router()
 
 router.post("/", async (ctx, next) => {

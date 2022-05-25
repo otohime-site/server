@@ -1,4 +1,4 @@
-FROM node:16-buster-slim
+FROM node:18-bullseye-slim
 RUN npm install -g pm2
 RUN mkdir /app
 ADD package.json /app

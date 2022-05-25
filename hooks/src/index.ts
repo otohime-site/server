@@ -1,8 +1,8 @@
 import Koa from "koa"
 import Router from "koa-router"
-import authRouter from "./auth"
-import fetchRouter from "./fetch"
-import cleanupRouter from "./cleanup"
+import authRouter from "./auth.js"
+import fetchRouter from "./fetch.js"
+import cleanupRouter from "./cleanup.js"
 
 const app = new Koa()
 const router = new Router()

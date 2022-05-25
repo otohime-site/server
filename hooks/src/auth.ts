@@ -1,4 +1,4 @@
-import pool from "./db"
+import pool from "./db.js"
 import Router from "koa-router"
 import jwt from "koa-jwt"
 import jwksRsa from "jwks-rsa"

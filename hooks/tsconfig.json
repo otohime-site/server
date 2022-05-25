@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "NodeNext",
     "noImplicitAny": true,
     "outDir": "build",
     "sourceMap": true,
     "strict": true,
     "target": "es2015",
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true
+  },
+  "ts-node": {
+    "experimentalResolver": true
   },
   "include": ["src"]
 }

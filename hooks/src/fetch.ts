@@ -4,12 +4,13 @@ import { query, join, value, compile } from "pg-sql2"
 
 import { JSDOM, CookieJar } from "jsdom"
 import nodeFetch from "node-fetch"
+// @ts-ignore https://github.com/valeriangalliat/fetch-cookie/issues/71
 import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
-import pool from "./db"
-import Versions from "./versions.json"
-import InternalLvJson from "./internal_lv.json"
-import InternalLvUniverseJson from "./internal_lv_universe.json"
+import pool from "./db.js"
+import Versions from "./versions.json" assert { "type": "json" }
+import InternalLvJson from "./internal_lv.json" assert { "type": "json" }
+import InternalLvUniverseJson from "./internal_lv_universe.json" assert { "type": "json" }
 
 const CURRENT_VERSION = 17
 
@@ -62,7 +63,7 @@ if (segaId === undefined || segaPassword === undefined) {
   throw new Error("Please assign SEGA_ID and SEGA_PASSWORD to use /fetch")
 }
 
-const fetch = async (): Promise<void> => {
+export const fetch = async (): Promise<void> => {
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM(
@@ -253,11 +254,3 @@ router.post("/", async (ctx) => {
 })
 
 export default router
-
-if (require.main === module) {
-  fetch()
-    .then(() => console.log("ok!"))
-    .catch((e) => {
-      throw e
-    })
-}
