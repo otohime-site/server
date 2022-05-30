@@ -1,0 +1,12 @@
+DROP VIEW finale_scores_with_history;
+DROP VIEW finale_records_with_history;
+DROP TABLE finale_scores_history;
+DROP TABLE finale_records_history;
+DROP TABLE finale_scores;
+DROP TABLE finale_records;
+DROP TABLE finale_players;
+DROP TABLE finale_notes;
+DROP TABLE finale_songs;
+DROP TYPE finale_sync_flag;
+DROP TYPE finale_combo_flag;
+DROP TYPE finale_level;
