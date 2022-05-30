@@ -11,7 +11,7 @@ CREATE TABLE finale_songs (
     id smallint PRIMARY KEY,
     category smallint NOT NULL,
     title text NOT NULL,
-    english_title text NOT NULL,
+    english_title text,
     "order" smallint NOT NULL,
     active boolean NOT NULL,
     japan_only boolean NOT NULL,
