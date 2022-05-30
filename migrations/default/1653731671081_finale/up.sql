@@ -49,7 +49,7 @@ CREATE TABLE finale_records (
 
 CREATE TABLE finale_records_history (
     id SERIAL PRIMARY KEY,
-    player_id integer NOT NULL UNIQUE REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
+    player_id integer NOT NULL REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
     card_name text NOT NULL,
     title text NOT NULL,
     rating NUMERIC(4, 2) NOT NULL,
