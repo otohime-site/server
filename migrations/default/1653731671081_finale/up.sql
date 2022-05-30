@@ -85,7 +85,7 @@ UNION ALL
 
 CREATE TABLE finale_scores (
     id BIGSERIAL PRIMARY KEY,
-    player_id integer NOT NULL UNIQUE REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
+    player_id integer NOT NULL REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
     song_id SMALLINT NOT NULL,
     difficulty smallint NOT NULL,
     score numeric(5, 2) NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE finale_scores (
 
 CREATE TABLE finale_scores_history (
     id BIGSERIAL PRIMARY KEY,
-    player_id integer NOT NULL UNIQUE REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
+    player_id integer NOT NULL REFERENCES finale_players (id) ON UPDATE RESTRICT ON DELETE CASCADE,
     song_id SMALLINT NOT NULL,
     difficulty smallint NOT NULL,
     score numeric(5, 2) NOT NULL,
