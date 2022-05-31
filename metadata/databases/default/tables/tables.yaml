@@ -11,6 +11,7 @@
 - "!include public_dx_intl_variants.yaml"
 - "!include public_finale_notes.yaml"
 - "!include public_finale_players.yaml"
+- "!include public_finale_players_timelines.yaml"
 - "!include public_finale_records.yaml"
 - "!include public_finale_records_with_history.yaml"
 - "!include public_finale_scores.yaml"
