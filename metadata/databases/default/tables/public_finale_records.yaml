@@ -1,0 +1,44 @@
+table:
+  schema: public
+  name: finale_records
+object_relationships:
+  - name: finale_player
+    using:
+      foreign_key_constraint_on: player_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - player_id
+        - card_name
+        - title
+        - rating
+        - max_rating
+        - class
+        - start
+        - end
+      filter:
+        finale_player:
+          private:
+            _ne: true
+  - role: user
+    permission:
+      columns:
+        - id
+        - player_id
+        - max_rating
+        - rating
+        - card_name
+        - class
+        - title
+        - end
+        - start
+      filter:
+        _or:
+          - finale_player:
+              private:
+                _ne: true
+          - finale_player:
+              user_id:
+                _eq: X-Hasura-User-Id

@@ -1,16 +1,16 @@
 table:
-  name: dx_intl_new_rating_stats
   schema: public
+  name: dx_intl_new_rating_stats
 select_permissions:
-- permission:
-    columns:
-    - count
-    - range
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - range
-    - count
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - count
+        - range
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - range
+        - count
+      filter: {}

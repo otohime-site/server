@@ -1,52 +1,59 @@
 table:
-  name: users
   schema: public
+  name: users
 object_relationships:
-- name: token
-  using:
-    manual_configuration:
-      column_mapping:
-        id: user_id
-      insertion_order: null
-      remote_table:
-        name: tokens
-        schema: public
+  - name: token
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: tokens
+        insertion_order: null
+        column_mapping:
+          id: user_id
 array_relationships:
-- name: dx_intl_players
-  using:
-    foreign_key_constraint_on:
-      column: user_id
-      table:
-        name: dx_intl_players
-        schema: public
+  - name: dx_intl_players
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: dx_intl_players
+  - name: finale_players
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: finale_players
 insert_permissions:
-- permission:
-    backend_only: false
-    check:
-      id:
-        _eq: X-Hasura-User-Id
-    columns: []
-  role: user
+  - role: user
+    permission:
+      check:
+        id:
+          _eq: X-Hasura-User-Id
+      columns: []
+      backend_only: false
 select_permissions:
-- permission:
-    columns:
-    - id
-    - created_at
-    filter:
-      id:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      columns:
+        - id
+        - created_at
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
 update_permissions:
-- permission:
-    check: null
-    columns: []
-    filter:
-      id:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      columns: []
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
 delete_permissions:
-- permission:
-    filter:
-      id:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      filter:
+        id:
+          _eq: X-Hasura-User-Id

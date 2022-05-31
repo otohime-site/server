@@ -1,13 +1,13 @@
 table:
   schema: public
-  name: dx_intl_records_with_history
+  name: finale_records_with_history
 object_relationships:
-  - name: dx_intl_player
+  - name: finale_player
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: dx_intl_players
+          name: finale_players
         insertion_order: null
         column_mapping:
           player_id: id
@@ -15,44 +15,36 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - card_name
-        - class_rank
-        - course_rank
-        - end
-        - grade
         - id
-        - max_rating
         - player_id
-        - rating
-        - rating_legacy
-        - start
+        - card_name
         - title
-        - trophy
+        - rating
+        - max_rating
+        - class
+        - start
+        - end
       filter:
-        dx_intl_player:
+        finale_player:
           private:
             _ne: true
   - role: user
     permission:
       columns:
-        - card_name
-        - class_rank
-        - course_rank
-        - end
-        - grade
         - id
-        - max_rating
         - player_id
+        - max_rating
         - rating
-        - rating_legacy
-        - start
+        - card_name
+        - class
         - title
-        - trophy
+        - end
+        - start
       filter:
         _or:
-          - dx_intl_player:
+          - finale_player:
               private:
                 _ne: true
-          - dx_intl_player:
+          - finale_player:
               user_id:
                 _eq: X-Hasura-User-Id

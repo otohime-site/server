@@ -1,43 +1,43 @@
 table:
-  name: dx_intl_variants
   schema: public
+  name: dx_intl_variants
 object_relationships:
-- name: dx_intl_song
-  using:
-    foreign_key_constraint_on: song_id
+  - name: dx_intl_song
+    using:
+      foreign_key_constraint_on: song_id
 array_relationships:
-- name: dx_intl_notes
-  using:
-    manual_configuration:
-      column_mapping:
-        deluxe: deluxe
-        song_id: song_id
-      insertion_order: null
-      remote_table:
-        name: dx_intl_notes
-        schema: public
+  - name: dx_intl_notes
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_notes
+        insertion_order: null
+        column_mapping:
+          song_id: song_id
+          deluxe: deluxe
 select_permissions:
-- permission:
-    columns:
-    - song_id
-    - deluxe
-    - version
-    - active
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - song_id
-    - deluxe
-    - version
-    - active
-    filter: {}
-  role: importer
-- permission:
-    columns:
-    - active
-    - deluxe
-    - version
-    - song_id
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - song_id
+        - deluxe
+        - version
+        - active
+      filter: {}
+  - role: importer
+    permission:
+      columns:
+        - song_id
+        - deluxe
+        - version
+        - active
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - active
+        - deluxe
+        - version
+        - song_id
+      filter: {}

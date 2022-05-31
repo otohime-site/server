@@ -1,14 +1,14 @@
 table:
   schema: public
-  name: dx_intl_songs
+  name: finale_songs
 array_relationships:
-  - name: dx_intl_variants
+  - name: finale_notes
     using:
       foreign_key_constraint_on:
         column: song_id
         table:
           schema: public
-          name: dx_intl_variants
+          name: finale_notes
 select_permissions:
   - role: anonymous
     permission:
@@ -16,7 +16,11 @@ select_permissions:
         - id
         - category
         - title
+        - english_title
         - order
+        - active
+        - japan_only
+        - version
       filter: {}
   - role: importer
     permission:
@@ -24,13 +28,21 @@ select_permissions:
         - id
         - category
         - title
+        - english_title
         - order
+        - active
+        - japan_only
+        - version
       filter: {}
   - role: user
     permission:
       columns:
-        - category
         - id
+        - category
         - title
+        - english_title
         - order
+        - active
+        - japan_only
+        - version
       filter: {}

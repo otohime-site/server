@@ -1,54 +1,40 @@
 table:
   schema: public
-  name: dx_intl_notes
+  name: finale_notes
 object_relationships:
-  - name: dx_intl_variant
+  - name: finale_song
     using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_variants
-        insertion_order: null
-        column_mapping:
-          song_id: song_id
-          deluxe: deluxe
+      foreign_key_constraint_on: song_id
 array_relationships:
-  - name: dx_intl_scores
+  - name: finale_scores
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: dx_intl_scores
+          name: finale_scores
         insertion_order: null
         column_mapping:
           song_id: song_id
-          deluxe: deluxe
           difficulty: difficulty
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - deluxe
         - difficulty
-        - internal_lv
-        - level
         - song_id
+        - level
       filter: {}
   - role: importer
     permission:
       columns:
-        - deluxe
         - difficulty
-        - internal_lv
-        - level
         - song_id
+        - level
       filter: {}
   - role: user
     permission:
       columns:
-        - deluxe
         - difficulty
-        - internal_lv
-        - level
         - song_id
+        - level
       filter: {}

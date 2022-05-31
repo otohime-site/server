@@ -1,24 +1,23 @@
 table:
   schema: public
-  name: dx_intl_scores_with_history
+  name: finale_scores_with_history
 object_relationships:
-  - name: dx_intl_note
+  - name: finale_note
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: dx_intl_notes
+          name: finale_scores
         insertion_order: null
         column_mapping:
           song_id: song_id
-          deluxe: deluxe
           difficulty: difficulty
-  - name: dx_intl_player
+  - name: finale_player
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: dx_intl_players
+          name: finale_players
         insertion_order: null
         column_mapping:
           player_id: id
@@ -29,35 +28,35 @@ select_permissions:
         - id
         - player_id
         - song_id
-        - deluxe
         - difficulty
         - score
+        - raw_score
         - combo_flag
         - sync_flag
         - start
         - end
       filter:
-        dx_intl_player:
+        finale_player:
           private:
             _ne: true
   - role: user
     permission:
       columns:
-        - deluxe
-        - combo_flag
-        - sync_flag
-        - difficulty
-        - player_id
         - id
+        - player_id
+        - raw_score
         - score
+        - difficulty
+        - song_id
         - end
         - start
-        - song_id
+        - combo_flag
+        - sync_flag
       filter:
         _or:
-          - dx_intl_player:
+          - finale_player:
               private:
                 _ne: true
-          - dx_intl_player:
+          - finale_player:
               user_id:
                 _eq: X-Hasura-User-Id

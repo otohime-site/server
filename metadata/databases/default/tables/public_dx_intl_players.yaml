@@ -1,114 +1,114 @@
 table:
-  name: dx_intl_players
   schema: public
+  name: dx_intl_players
 object_relationships:
-- name: dx_intl_record
-  using:
-    manual_configuration:
-      column_mapping:
-        id: player_id
-      insertion_order: null
-      remote_table:
-        name: dx_intl_records
-        schema: public
-- name: timelines
-  using:
-    manual_configuration:
-      column_mapping:
-        id: id
-      insertion_order: null
-      remote_table:
-        name: dx_intl_players_timelines
-        schema: public
-- name: user
-  using:
-    foreign_key_constraint_on: user_id
+  - name: dx_intl_record
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_records
+        insertion_order: null
+        column_mapping:
+          id: player_id
+  - name: timelines
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: dx_intl_players_timelines
+        insertion_order: null
+        column_mapping:
+          id: id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
 array_relationships:
-- name: dx_intl_scores
-  using:
-    foreign_key_constraint_on:
-      column: player_id
-      table:
-        name: dx_intl_scores
-        schema: public
+  - name: dx_intl_scores
+    using:
+      foreign_key_constraint_on:
+        column: player_id
+        table:
+          schema: public
+          name: dx_intl_scores
 computed_fields:
-- comment: ""
-  definition:
-    function:
-      name: dx_intl_players_updated_at
-      schema: public
-  name: updated_at
+  - name: updated_at
+    definition:
+      function:
+        schema: public
+        name: dx_intl_players_updated_at
+    comment: ""
 insert_permissions:
-- permission:
-    backend_only: false
-    check:
-      user_id:
-        _eq: X-Hasura-User-Id
-    columns:
-    - nickname
-    - private
-    - user_id
-    set:
-      user_id: x-hasura-User-Id
-  role: user
-select_permissions:
-- permission:
-    columns:
-    - created_at
-    - id
-    - nickname
-    - private
-    - user_id
-    computed_fields:
-    - updated_at
-    filter:
-      private:
-        _ne: true
-  role: anonymous
-- permission:
-    columns:
-    - created_at
-    - id
-    - nickname
-    - private
-    - user_id
-    computed_fields:
-    - updated_at
-    filter:
-      user_id:
-        _eq: X-Hasura-User-Id
-  role: importer
-- permission:
-    columns:
-    - private
-    - id
-    - nickname
-    - user_id
-    - created_at
-    computed_fields:
-    - updated_at
-    filter:
-      _or:
-      - private:
-          _ne: true
-      - user_id:
+  - role: user
+    permission:
+      check:
+        user_id:
           _eq: X-Hasura-User-Id
-  role: user
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+        - nickname
+        - private
+        - user_id
+      backend_only: false
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - id
+        - nickname
+        - private
+        - user_id
+      computed_fields:
+        - updated_at
+      filter:
+        private:
+          _ne: true
+  - role: importer
+    permission:
+      columns:
+        - created_at
+        - id
+        - nickname
+        - private
+        - user_id
+      computed_fields:
+        - updated_at
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+  - role: user
+    permission:
+      columns:
+        - private
+        - id
+        - nickname
+        - user_id
+        - created_at
+      computed_fields:
+        - updated_at
+      filter:
+        _or:
+          - private:
+              _ne: true
+          - user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
-- permission:
-    check:
-      user_id:
-        _eq: X-Hasura-User-Id
-    columns:
-    - nickname
-    - private
-    filter:
-      user_id:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      columns:
+        - nickname
+        - private
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
 delete_permissions:
-- permission:
-    filter:
-      user_id:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

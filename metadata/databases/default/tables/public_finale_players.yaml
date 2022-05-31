@@ -1,0 +1,54 @@
+table:
+  schema: public
+  name: finale_players
+object_relationships:
+  - name: finale_record
+    using:
+      foreign_key_constraint_on:
+        column: player_id
+        table:
+          schema: public
+          name: finale_records
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+array_relationships:
+  - name: finale_scores
+    using:
+      foreign_key_constraint_on:
+        column: player_id
+        table:
+          schema: public
+          name: finale_scores
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - user_id
+        - nickname
+        - private
+        - created_at
+      filter:
+        private:
+          _ne: true
+  - role: user
+    permission:
+      columns:
+        - private
+        - id
+        - nickname
+        - user_id
+        - created_at
+      filter:
+        _or:
+          - private:
+              _ne: true
+          - user_id:
+              _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

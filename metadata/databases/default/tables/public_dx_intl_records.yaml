@@ -1,112 +1,112 @@
 table:
-  name: dx_intl_records
   schema: public
+  name: dx_intl_records
 object_relationships:
-- name: dx_intl_player
-  using:
-    foreign_key_constraint_on: player_id
+  - name: dx_intl_player
+    using:
+      foreign_key_constraint_on: player_id
 insert_permissions:
-- permission:
-    backend_only: false
-    check:
-      dx_intl_player:
-        user_id:
-          _eq: X-Hasura-User-Id
-    columns:
-    - card_name
-    - class_rank
-    - course_rank
-    - grade
-    - max_rating
-    - player_id
-    - rating
-    - rating_legacy
-    - title
-    - trophy
-  role: importer
-select_permissions:
-- permission:
-    columns:
-    - card_name
-    - class_rank
-    - course_rank
-    - end
-    - grade
-    - id
-    - max_rating
-    - player_id
-    - rating
-    - rating_legacy
-    - start
-    - title
-    - trophy
-    filter:
-      dx_intl_player:
-        private:
-          _ne: true
-  role: anonymous
-- permission:
-    columns:
-    - card_name
-    - class_rank
-    - course_rank
-    - end
-    - grade
-    - id
-    - max_rating
-    - player_id
-    - rating
-    - rating_legacy
-    - start
-    - title
-    - trophy
-    filter:
-      dx_intl_player:
-        user_id:
-          _eq: X-Hasura-User-Id
-  role: importer
-- permission:
-    columns:
-    - card_name
-    - class_rank
-    - course_rank
-    - end
-    - grade
-    - id
-    - max_rating
-    - player_id
-    - rating
-    - rating_legacy
-    - start
-    - title
-    - trophy
-    filter:
-      _or:
-      - dx_intl_player:
-          private:
-            _ne: true
-      - dx_intl_player:
+  - role: importer
+    permission:
+      check:
+        dx_intl_player:
           user_id:
             _eq: X-Hasura-User-Id
-  role: user
+      columns:
+        - card_name
+        - class_rank
+        - course_rank
+        - grade
+        - max_rating
+        - player_id
+        - rating
+        - rating_legacy
+        - title
+        - trophy
+      backend_only: false
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - card_name
+        - class_rank
+        - course_rank
+        - end
+        - grade
+        - id
+        - max_rating
+        - player_id
+        - rating
+        - rating_legacy
+        - start
+        - title
+        - trophy
+      filter:
+        dx_intl_player:
+          private:
+            _ne: true
+  - role: importer
+    permission:
+      columns:
+        - card_name
+        - class_rank
+        - course_rank
+        - end
+        - grade
+        - id
+        - max_rating
+        - player_id
+        - rating
+        - rating_legacy
+        - start
+        - title
+        - trophy
+      filter:
+        dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: user
+    permission:
+      columns:
+        - card_name
+        - class_rank
+        - course_rank
+        - end
+        - grade
+        - id
+        - max_rating
+        - player_id
+        - rating
+        - rating_legacy
+        - start
+        - title
+        - trophy
+      filter:
+        _or:
+          - dx_intl_player:
+              private:
+                _ne: true
+          - dx_intl_player:
+              user_id:
+                _eq: X-Hasura-User-Id
 update_permissions:
-- permission:
-    check:
-      dx_intl_player:
-        user_id:
-          _eq: X-Hasura-User-Id
-    columns:
-    - card_name
-    - class_rank
-    - course_rank
-    - grade
-    - max_rating
-    - rating
-    - rating_legacy
-    - title
-    - trophy
-    filter:
-      dx_intl_player:
-        user_id:
-          _eq: X-Hasura-User-Id
-  role: importer
+  - role: importer
+    permission:
+      columns:
+        - card_name
+        - class_rank
+        - course_rank
+        - grade
+        - max_rating
+        - rating
+        - rating_legacy
+        - title
+        - trophy
+      filter:
+        dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check:
+        dx_intl_player:
+          user_id:
+            _eq: X-Hasura-User-Id
