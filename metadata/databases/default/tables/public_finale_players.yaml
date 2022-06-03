@@ -20,6 +20,12 @@ array_relationships:
         table:
           schema: public
           name: finale_scores
+computed_fields:
+  - name: updated_at
+    definition:
+      function:
+        schema: public
+        name: finale_players_updated_at
 select_permissions:
   - role: anonymous
     permission:
