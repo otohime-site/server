@@ -8,7 +8,6 @@ import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
-import InternalLvJson from "./internal_lv.json" assert { "type": "json" }
 import InternalLvUniverseJson from "./internal_lv_universe.json" assert { "type": "json" }
 
 const CURRENT_VERSION = 17
@@ -29,10 +28,7 @@ interface ScoreEntry extends ScoresParseEntryWithoutScore {
   internal_lv?: number
 }
 
-const internalLvDict: Record<string, number> =
-  new Date() > new Date("2022-01-27T03:00:00+09:00")
-    ? InternalLvUniverseJson
-    : InternalLvJson
+const internalLvDict: Record<string, number> = InternalLvUniverseJson
 const validInternalLv = (
   level: ScoreEntry["level"],
   internalLv: number
