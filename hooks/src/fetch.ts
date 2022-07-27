@@ -106,7 +106,7 @@ export const fetch = async (): Promise<void> => {
           const internalLv = internalLvDict[dictKey]
           if (internalLv == null) {
             if (
-              ["12", "12+", "13", "13+", "14", "14+", "15"].includes(
+              ["12+", "13", "13+", "14", "14+", "15"].includes(
                 entry.level
               )
             ) {
