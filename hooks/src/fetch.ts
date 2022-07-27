@@ -8,9 +8,9 @@ import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
-import InternalLvUniverseJson from "./internal_lv_universe.json" assert { "type": "json" }
+import InternalLvJson from "./internal_lv_universe_plus.json" assert { "type": "json" }
 
-const CURRENT_VERSION = 17
+const CURRENT_VERSION = 18
 
 interface VariantProps {
   version: number
@@ -28,7 +28,7 @@ interface ScoreEntry extends ScoresParseEntryWithoutScore {
   internal_lv?: number
 }
 
-const internalLvDict: Record<string, number> = InternalLvUniverseJson
+const internalLvDict: Record<string, number> = InternalLvJson
 const validInternalLv = (
   level: ScoreEntry["level"],
   internalLv: number
