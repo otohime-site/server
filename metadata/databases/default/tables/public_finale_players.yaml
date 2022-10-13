@@ -35,6 +35,8 @@ select_permissions:
         - nickname
         - private
         - created_at
+      computed_fields:
+        - updated_at
       filter:
         private:
           _ne: true
@@ -46,6 +48,8 @@ select_permissions:
         - nickname
         - user_id
         - created_at
+      computed_fields:
+        - updated_at
       filter:
         _or:
           - private:
