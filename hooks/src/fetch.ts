@@ -9,8 +9,10 @@ import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/score
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
 import InternalLvJson from "./internal_lv_universe_plus.json" assert { "type": "json" }
+import InternalLvJsonFestival from "./internal_lv_festival.json" assert { "type": "json" }
 
-const CURRENT_VERSION = 18
+const CURRENT_VERSION =
+  new Date() > new Date("2023-01-19T03:00:00+09:00") ? 19 : 18
 
 interface VariantProps {
   version: number
@@ -28,7 +30,6 @@ interface ScoreEntry extends ScoresParseEntryWithoutScore {
   internal_lv?: number
 }
 
-const internalLvDict: Record<string, number> = InternalLvJson
 const validInternalLv = (
   level: ScoreEntry["level"],
   internalLv: number
@@ -59,6 +60,10 @@ if (segaId === undefined || segaPassword === undefined) {
 }
 
 export const fetch = async (): Promise<void> => {
+  const internalLvDict: Record<string, number> =
+    new Date() > new Date("2023-01-19T03:00:00+09:00")
+      ? InternalLvJsonFestival
+      : InternalLvJson
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM(
@@ -105,11 +110,7 @@ export const fetch = async (): Promise<void> => {
           }_${entry.difficulty}`
           const internalLv = internalLvDict[dictKey]
           if (internalLv == null) {
-            if (
-              ["12+", "13", "13+", "14", "14+", "15"].includes(
-                entry.level
-              )
-            ) {
+            if (["12+", "13", "13+", "14", "14+", "15"].includes(entry.level)) {
               console.log(`Internal Lv not found on ${dictKey}`)
             }
             return entry
