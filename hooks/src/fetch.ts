@@ -11,9 +11,6 @@ import Versions from "./versions.json" assert { "type": "json" }
 import InternalLvJson from "./internal_lv_universe_plus.json" assert { "type": "json" }
 import InternalLvJsonFestival from "./internal_lv_festival.json" assert { "type": "json" }
 
-const CURRENT_VERSION =
-  new Date() > new Date("2023-01-19T03:00:00+09:00") ? 19 : 18
-
 interface VariantProps {
   version: number
 }
@@ -60,10 +57,9 @@ if (segaId === undefined || segaPassword === undefined) {
 }
 
 export const fetch = async (): Promise<void> => {
-  const internalLvDict: Record<string, number> =
-    new Date() > new Date("2023-01-19T03:00:00+09:00")
-      ? InternalLvJsonFestival
-      : InternalLvJson
+  const internalLvDict: Record<string, number> = InternalLvJsonFestival
+  const CURRENT_VERSION = 19
+
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM(
