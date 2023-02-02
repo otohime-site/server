@@ -8,7 +8,6 @@ import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
-import InternalLvJson from "./internal_lv_universe_plus.json" assert { "type": "json" }
 import InternalLvJsonFestival from "./internal_lv_festival.json" assert { "type": "json" }
 
 interface VariantProps {
