@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint",
-    "ts-node": "ts-node --esm",
+    "ts-node": "node --loader ts-node/esm" ,
     "tsc": "tsc"
   },
   "main": "index.js",
