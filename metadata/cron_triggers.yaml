@@ -5,6 +5,6 @@
   payload: {}
 - name: Update songs
   webhook: http://hooks:8787/fetch
-  schedule: 5 22 * * *
+  schedule: 5 1 * * *
   include_in_metadata: true
   payload: {}
