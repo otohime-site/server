@@ -9,6 +9,7 @@ import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/score
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
 import InternalLvJsonFestival from "./internal_lv_festival.json" assert { "type": "json" }
+import InternalLvJsonFestivalPlus from "./internal_lv_festival_plus.json" assert { "type": "json" }
 
 interface VariantProps {
   version: number
@@ -56,8 +57,11 @@ if (segaId === undefined || segaPassword === undefined) {
 }
 
 export const fetch = async (): Promise<void> => {
-  const internalLvDict: Record<string, number> = InternalLvJsonFestival
-  const CURRENT_VERSION = 19
+  const CURRENT_VERSION =
+    new Date() > new Date("2023-07-27T03:00:00+09:00") ? 20 : 19
+
+  const internalLvDict: Record<string, number> =
+    CURRENT_VERSION === 20 ? InternalLvJsonFestivalPlus : InternalLvJsonFestival
 
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
