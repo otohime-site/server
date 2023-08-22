@@ -24,3 +24,9 @@ Finally we need to update the song list. Use the following command to update it:
 ```
 docker-compose run hooks npm run ts-node src/fetch-cli.ts
 ```
+
+#### Data sources
+
+* The maimai Internal Lv JSONs in `hooks/src` are using sources from spreadsheet made by
+Japan player groups (`@maiLv_Chihooooo` on X, previously known as Twitter),
+which stated the data can be used freely.
