@@ -8,8 +8,8 @@ import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import pool from "./db.js"
 import Versions from "./versions.json" assert { "type": "json" }
-import InternalLvJsonFestival from "./internal_lv_festival.json" assert { "type": "json" }
 import InternalLvJsonFestivalPlus from "./internal_lv_festival_plus.json" assert { "type": "json" }
+import InternalLvJsonBuddies from "./internal_lv_buddies.json" assert { "type": "json" }
 
 interface VariantProps {
   version: number
@@ -58,10 +58,10 @@ if (segaId === undefined || segaPassword === undefined) {
 
 export const fetch = async (): Promise<void> => {
   const CURRENT_VERSION =
-    new Date() > new Date("2023-07-27T03:00:00+09:00") ? 20 : 19
+    new Date() > new Date("2024-01-18T04:00:00+09:00") ? 21 : 20
 
   const internalLvDict: Record<string, number> =
-    CURRENT_VERSION === 20 ? InternalLvJsonFestivalPlus : InternalLvJsonFestival
+    CURRENT_VERSION === 21 ? InternalLvJsonBuddies : InternalLvJsonFestivalPlus
 
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
