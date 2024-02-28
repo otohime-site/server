@@ -45,7 +45,7 @@ const validInternalLv = (
     case "14+":
       return internalLv >= 14.7 && internalLv <= 14.9
     case "15":
-      return internalLv === 15.0
+      return internalLv >= 15.0 && internalLv <= 15.6
   }
   return false
 }
