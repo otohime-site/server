@@ -10,7 +10,7 @@ services:
       - POSTGRES_DB_USER=otohime
       - POSTGRES_DB_PASSWORD
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - dbdata_16:/var/lib/postgresql/data
     shm_size: 256mb
   hasura:
     image: hasura/graphql-engine:v2.36.1-ce
@@ -41,4 +41,4 @@ services:
       PGHOST: db
       PGPASSWORD: ${POSTGRES_DB_PASSWORD}
 volumes:
-  dbdata:
+  dbdata_16:

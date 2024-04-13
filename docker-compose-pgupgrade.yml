@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+  db_16:
+    build:
+      context: docker-db/
+      dockerfile: Dockerfile.pgupgrade
+    volumes:
+      - dbdata:/var/lib/postgresql/13/data    
+      - dbdata_16:/var/lib/postgresql/16/data
+    restart: always
+    environment:
+      - PGDATA=/var/lib/postgresql/16/data/pgdata
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB=otohime
+      - POSTGRES_DB_USER=otohime
+      - POSTGRES_DB_PASSWORD
+    shm_size: 256mb
+volumes:
+  dbdata:
+  dbdata_16:
