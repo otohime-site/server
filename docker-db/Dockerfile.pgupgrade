@@ -1,7 +1,0 @@
-FROM postgres:16-bookworm
-RUN sed -i 's/$/ 13/' /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update && \
-    apt-get install -y postgresql-13-periods postgresql-16-periods &&\
-    rm -rf /var/lib/apt/lists/*
-COPY ./upgrade.sh /usr/local/bin
-ENTRYPOINT ["upgrade.sh"]
