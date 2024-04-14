@@ -2,7 +2,7 @@ table:
   name: dx_intl_notes
   schema: public
 object_relationships:
-  - name: dx_intl_scores_stats
+  - name: dx_intl_scores_rates
     using:
       manual_configuration:
         column_mapping:
@@ -11,7 +11,7 @@ object_relationships:
           song_id: song_id
         insertion_order: null
         remote_table:
-          name: dx_intl_scores_stats
+          name: dx_intl_scores_rates
           schema: public
   - name: dx_intl_variant
     using:
