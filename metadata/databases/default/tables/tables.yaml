@@ -5,6 +5,7 @@
 - "!include public_dx_intl_records.yaml"
 - "!include public_dx_intl_records_with_history.yaml"
 - "!include public_dx_intl_scores.yaml"
+- "!include public_dx_intl_scores_rates.yaml"
 - "!include public_dx_intl_scores_stats.yaml"
 - "!include public_dx_intl_scores_with_history.yaml"
 - "!include public_dx_intl_songs.yaml"

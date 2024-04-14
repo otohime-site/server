@@ -2,6 +2,17 @@ table:
   name: dx_intl_notes
   schema: public
 object_relationships:
+  - name: dx_intl_scores_stats
+    using:
+      manual_configuration:
+        column_mapping:
+          deluxe: deluxe
+          difficulty: difficulty
+          song_id: song_id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_scores_stats
+          schema: public
   - name: dx_intl_variant
     using:
       manual_configuration:

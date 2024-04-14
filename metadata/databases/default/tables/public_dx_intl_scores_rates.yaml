@@ -1,0 +1,28 @@
+table:
+  name: dx_intl_scores_rates
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - play
+        - deluxe
+        - song_id
+        - ap_rate
+        - fc_rate
+        - sss_rate
+        - difficulty
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - play
+        - deluxe
+        - song_id
+        - ap_rate
+        - fc_rate
+        - sss_rate
+        - difficulty
+      filter: {}
+    comment: ""

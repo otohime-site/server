@@ -8,6 +8,12 @@
   schedule: '* * * * *'
   include_in_metadata: true
   payload: {}
+- name: Refresh materialized views
+  webhook: http://hooks:8787/refresh
+  schedule: '*/10 * * * *'
+  include_in_metadata: true
+  payload: {}
+  comment: ""
 - name: Update songs
   webhook: http://hooks:8787/fetch
   schedule: 5 1 * * *
