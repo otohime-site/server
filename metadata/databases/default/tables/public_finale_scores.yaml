@@ -1,17 +1,17 @@
 table:
-  schema: public
   name: finale_scores
+  schema: public
 object_relationships:
   - name: finale_note
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: finale_notes
-        insertion_order: null
         column_mapping:
-          song_id: song_id
           difficulty: difficulty
+          song_id: song_id
+        insertion_order: null
+        remote_table:
+          name: finale_notes
+          schema: public
   - name: finale_player
     using:
       foreign_key_constraint_on: player_id

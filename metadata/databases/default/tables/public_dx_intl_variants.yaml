@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: dx_intl_variants
+  schema: public
 object_relationships:
   - name: dx_intl_song
     using:
@@ -9,13 +9,13 @@ array_relationships:
   - name: dx_intl_notes
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_notes
-        insertion_order: null
         column_mapping:
-          song_id: song_id
           deluxe: deluxe
+          song_id: song_id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_notes
+          schema: public
 select_permissions:
   - role: anonymous
     permission:

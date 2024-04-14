@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: dx_intl_new_rating_stats
+  schema: public
 select_permissions:
   - role: anonymous
     permission:

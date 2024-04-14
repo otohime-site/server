@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: dx_intl_records
+  schema: public
 object_relationships:
   - name: dx_intl_player
     using:
@@ -23,7 +23,6 @@ insert_permissions:
         - rating_legacy
         - title
         - trophy
-      backend_only: false
 select_permissions:
   - role: anonymous
     permission:

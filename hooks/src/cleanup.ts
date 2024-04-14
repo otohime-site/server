@@ -26,4 +26,15 @@ router.post("/", async (ctx, next) => {
   ctx.body = "ok!"
 })
 
+router.post("/daily", async (ctx, next) => {
+  const client = await pool.connect()
+  const result = await client.query(`
+    DELETE FROM hdb_catalog.hdb_cron_events
+    WHERE status IN ('delivered', 'error', 'dead')
+    AND scheduled_time < now() - interval '3 months';
+  `)
+  console.log(`${result.rowCount} rows affected `)
+  ctx.body = { affected: result.rowCount }
+})
+
 export default router

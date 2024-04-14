@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: finale_records
+  schema: public
 object_relationships:
   - name: finale_player
     using:

@@ -1,25 +1,25 @@
 table:
-  schema: public
   name: dx_intl_players
+  schema: public
 object_relationships:
   - name: dx_intl_record
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_records
-        insertion_order: null
         column_mapping:
           id: player_id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_records
+          schema: public
   - name: timelines
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_players_timelines
-        insertion_order: null
         column_mapping:
           id: id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_players_timelines
+          schema: public
   - name: user
     using:
       foreign_key_constraint_on: user_id
@@ -29,14 +29,14 @@ array_relationships:
       foreign_key_constraint_on:
         column: player_id
         table:
-          schema: public
           name: dx_intl_scores
+          schema: public
 computed_fields:
   - name: updated_at
     definition:
       function:
-        schema: public
         name: dx_intl_players_updated_at
+        schema: public
     comment: ""
 insert_permissions:
   - role: user
@@ -50,7 +50,6 @@ insert_permissions:
         - nickname
         - private
         - user_id
-      backend_only: false
 select_permissions:
   - role: anonymous
     permission:

@@ -1,13 +1,13 @@
 table:
-  schema: public
   name: finale_players_timelines
+  schema: public
 object_relationships:
   - name: player
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: finale_players
-        insertion_order: null
         column_mapping:
           id: id
+        insertion_order: null
+        remote_table:
+          name: finale_players
+          schema: public

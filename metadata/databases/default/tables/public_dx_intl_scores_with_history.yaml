@@ -1,27 +1,27 @@
 table:
-  schema: public
   name: dx_intl_scores_with_history
+  schema: public
 object_relationships:
   - name: dx_intl_note
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_notes
-        insertion_order: null
         column_mapping:
-          song_id: song_id
           deluxe: deluxe
           difficulty: difficulty
+          song_id: song_id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_notes
+          schema: public
   - name: dx_intl_player
     using:
       manual_configuration:
-        remote_table:
-          schema: public
-          name: dx_intl_players
-        insertion_order: null
         column_mapping:
           player_id: id
+        insertion_order: null
+        remote_table:
+          name: dx_intl_players
+          schema: public
 select_permissions:
   - role: anonymous
     permission:

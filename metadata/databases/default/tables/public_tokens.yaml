@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: tokens
+  schema: public
 object_relationships:
   - name: user
     using:
@@ -14,7 +14,6 @@ insert_permissions:
       set:
         user_id: x-hasura-User-Id
       columns: []
-      backend_only: false
 select_permissions:
   - role: user
     permission:

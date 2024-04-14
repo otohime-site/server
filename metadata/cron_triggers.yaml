@@ -1,3 +1,8 @@
+- name: Cleanup Hasura Logs
+  webhook: http://hooks:8787/cleanup/daily
+  schedule: 0 20 * * *
+  include_in_metadata: true
+  payload: {}
 - name: Cleanup Players
   webhook: http://hooks:8787/cleanup
   schedule: '* * * * *'

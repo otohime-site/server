@@ -1,14 +1,14 @@
 table:
-  schema: public
   name: dx_intl_songs
+  schema: public
 array_relationships:
   - name: dx_intl_variants
     using:
       foreign_key_constraint_on:
         column: song_id
         table:
-          schema: public
           name: dx_intl_variants
+          schema: public
 select_permissions:
   - role: anonymous
     permission:

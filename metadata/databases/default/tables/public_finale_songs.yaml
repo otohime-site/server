@@ -1,14 +1,14 @@
 table:
-  schema: public
   name: finale_songs
+  schema: public
 array_relationships:
   - name: finale_notes
     using:
       foreign_key_constraint_on:
         column: song_id
         table:
-          schema: public
           name: finale_notes
+          schema: public
 select_permissions:
   - role: anonymous
     permission:
