@@ -37,7 +37,7 @@ GROUP BY song_id,
   difficulty,
   "range"
 ORDER BY "range" asc;
-CREATE UNIQUE INDEX ON dx_intl_scores_stats (song_id, deluxe, difficulty);
+CREATE UNIQUE INDEX ON dx_intl_scores_stats (song_id, deluxe, difficulty, "range");
 CREATE MATERIALIZED VIEW dx_intl_scores_rates AS WITH st AS (
   SELECT song_id,
     deluxe,
