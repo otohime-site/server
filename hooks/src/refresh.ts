@@ -9,6 +9,7 @@ router.post("/", async (ctx, next) => {
     await client.query(`
       REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_stats;
       REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;
+      COMMIT;
     `)
   } catch (e) {
     await client.query("ROLLBACK")
