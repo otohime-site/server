@@ -22,7 +22,7 @@ You need to append `sudo` if your docker requires `root`.
 Finally we need to update the song list. Use the following command to update it:
 
 ```
-docker-compose run hooks npm run ts-node src/fetch-cli.ts
+docker compose run hooks node /app/build/fetch-cli.js
 ```
 
 #### Data sources
