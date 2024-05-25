@@ -27,8 +27,7 @@ router.post("/", async (ctx, next) => {
 })
 
 router.post("/daily", async (ctx, next) => {
-  const client = await pool.connect()
-  const result = await client.query(`
+  const result = await pool.query(`
     DELETE FROM hdb_catalog.hdb_cron_events
     WHERE status IN ('delivered', 'error', 'dead')
     AND scheduled_time < now() - interval '3 months';
