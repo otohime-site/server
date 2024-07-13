@@ -8,6 +8,7 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@koa/bodyparser": "^5.1.1",
     "@otohime-site/parser": "^24.1.1",
     "fetch-cookie": "^3.0.1",
     "jsdom": "^24.0.0",

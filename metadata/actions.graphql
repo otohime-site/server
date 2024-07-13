@@ -1,0 +1,12 @@
+type Mutation {
+  tokenTransfer(
+    token: String!
+  ): TokenTransferOutput
+}
+
+type TokenTransferOutput {
+  token: String
+  dx_intl_players_count: Int
+  finale_players_count: Int
+}
+

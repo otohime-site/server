@@ -1,6 +1,14 @@
-actions: []
+actions:
+  - name: tokenTransfer
+    definition:
+      kind: synchronous
+      handler: http://hooks:8787/token-transfer
+    permissions:
+      - role: user
+    comment: Token Transfer
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+    - name: TokenTransferOutput
   scalars: []

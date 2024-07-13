@@ -1,7 +1,7 @@
-import pool from "./db.js"
-import Router from "koa-router"
-import jwt from "koa-jwt"
 import jwksRsa from "jwks-rsa"
+import jwt from "koa-jwt"
+import Router from "koa-router"
+import pool from "./db.js"
 
 const firebaseProjectId = process.env.FIREBASE_ID
 if (firebaseProjectId === undefined) {
@@ -24,7 +24,7 @@ router.use(
     audience: firebaseProjectId,
     issuer: `https://securetoken.google.com/${firebaseProjectId}`,
     passthrough: true,
-  })
+  }),
 )
 router.get("/", async (ctx, next) => {
   if ("user" in ctx.state) {
@@ -40,7 +40,7 @@ router.get("/", async (ctx, next) => {
     // Create new database entry once logged in
     await pool.query(
       "INSERT INTO users (id) VALUES ($1) ON CONFLICT DO NOTHING",
-      [userId]
+      [userId],
     )
     return await next()
   }
@@ -62,7 +62,7 @@ router.get("/", async (ctx, next) => {
   }
   const res = await pool.query(
     "SELECT id, user_id FROM tokens WHERE id = $1;",
-    [authVal[1]]
+    [authVal[1]],
   )
   if (res.rowCount === 0) {
     ctx.throw(401, "Bad Token")
