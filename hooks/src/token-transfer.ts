@@ -35,7 +35,7 @@ router.post("/", async (ctx, next) => {
     }
     const validToken = /^[0-9a-f]{32}$/
     if (!validToken.test(body.input.token)) {
-      ctx.throw(400, body.input.token)
+      ctx.throw(400, "bad_token")
     }
     const res = await client.query(
       "SELECT id, user_id FROM tokens WHERE id = $1 AND user_id != $2;",
