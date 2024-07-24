@@ -1,15 +1,14 @@
-import Router from "koa-router"
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
-import { query, join, value, compile } from "pg-sql2"
+import Router from "koa-router"
+import { compile, join, query, value } from "pg-sql2"
 
-import { JSDOM, CookieJar } from "jsdom"
-import nodeFetch from "node-fetch"
-import fetchCookie from "fetch-cookie"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
+import fetchCookie from "fetch-cookie"
+import { CookieJar, JSDOM } from "jsdom"
+import nodeFetch from "node-fetch"
 import pool from "./db.js"
-import Versions from "./versions.json" assert { "type": "json" }
-import InternalLvJsonFestivalPlus from "./internal_lv_festival_plus.json" assert { "type": "json" }
-import InternalLvJsonBuddies from "./internal_lv_buddies.json" assert { "type": "json" }
+import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" assert { type: "json" }
+import Versions from "./versions.json" assert { type: "json" }
 
 interface VariantProps {
   version: number
@@ -29,21 +28,21 @@ interface ScoreEntry extends ScoresParseEntryWithoutScore {
 
 const validInternalLv = (
   level: ScoreEntry["level"],
-  internalLv: number
+  internalLv: number,
 ): boolean => {
   switch (level) {
     case "12":
-      return internalLv >= 12.0 && internalLv <= 12.6
+      return internalLv >= 12.0 && internalLv <= 12.5
     case "12+":
-      return internalLv >= 12.7 && internalLv <= 12.9
+      return internalLv >= 12.6 && internalLv <= 12.9
     case "13":
-      return internalLv >= 13.0 && internalLv <= 13.6
+      return internalLv >= 13.0 && internalLv <= 13.5
     case "13+":
-      return internalLv >= 13.7 && internalLv <= 13.9
+      return internalLv >= 13.6 && internalLv <= 13.9
     case "14":
-      return internalLv >= 14.0 && internalLv <= 14.6
+      return internalLv >= 14.0 && internalLv <= 14.5
     case "14+":
-      return internalLv >= 14.7 && internalLv <= 14.9
+      return internalLv >= 14.6 && internalLv <= 14.9
     case "15":
       return internalLv === 15.0
   }
@@ -57,16 +56,14 @@ if (segaId === undefined || segaPassword === undefined) {
 }
 
 export const fetch = async (): Promise<void> => {
-  const CURRENT_VERSION =
-    new Date() > new Date("2024-01-18T04:00:00+09:00") ? 21 : 20
+  const CURRENT_VERSION = 22
 
-  const internalLvDict: Record<string, number> =
-    CURRENT_VERSION === 21 ? InternalLvJsonBuddies : InternalLvJsonFestivalPlus
+  const internalLvDict: Record<string, number> = InternalLvJsonBuddiesPlus
 
   const jar = new CookieJar()
   const fetch = fetchCookie(nodeFetch, jar)
   globalThis.DOMParser = new JSDOM(
-    "<!DOCTYPE html><html></html>"
+    "<!DOCTYPE html><html></html>",
   ).window.DOMParser
 
   // First, trying to sign in
@@ -81,7 +78,7 @@ export const fetch = async (): Promise<void> => {
         password: segaPassword,
       }),
       redirect: "follow",
-    }
+    },
   )
   if (!loginResp.url.startsWith("https://maimaidx-eng.com/")) {
     throw new Error("Login failure")
@@ -94,7 +91,7 @@ export const fetch = async (): Promise<void> => {
       const prev = await prevPromise
       console.log(`Running difficulty ${difficulty}...`)
       const resp = await fetch(
-        `https://maimaidx-eng.com/maimai-mobile/record/musicGenre/search/?genre=99&diff=${difficulty}`
+        `https://maimaidx-eng.com/maimai-mobile/record/musicGenre/search/?genre=99&diff=${difficulty}`,
       )
       if (!resp.ok) {
         throw new Error("Network Error!")
@@ -125,7 +122,7 @@ export const fetch = async (): Promise<void> => {
         }),
       ]
     },
-    Promise.resolve([])
+    Promise.resolve([]),
   )
 
   // Add version, then group by category -> title -> variant
@@ -147,7 +144,7 @@ export const fetch = async (): Promise<void> => {
       variantMap.set(deluxe, variant)
       return accr
     },
-    [...Array(6)].map(() => new Map())
+    [...Array(6)].map(() => new Map()),
   )
 
   // Flat the previous group for easy writing.
@@ -166,11 +163,11 @@ export const fetch = async (): Promise<void> => {
               variants: [...variantMap.entries()],
             },
           ],
-          []
+          [],
         ),
       ]
     },
-    []
+    [],
   )
 
   console.log("Writing into database...")
@@ -188,7 +185,7 @@ export const fetch = async (): Promise<void> => {
           ${value(deluxe)},
           ${value(variantProps.version)},
           true
-        )`
+        )`,
       )
       return compile(query`
     WITH song as (
@@ -206,7 +203,7 @@ export const fetch = async (): Promise<void> => {
     })
 
     for await (const _ of variantQueries.map(
-      async ({ text, values }) => await client.query(text, values)
+      async ({ text, values }) => await client.query(text, values),
     )) {
       // pass
     }
@@ -223,11 +220,11 @@ export const fetch = async (): Promise<void> => {
         ${value(score.internal_lv)}
       )
       ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET level = excluded.level, internal_lv = excluded.internal_lv;
-      `)
+      `),
     )
 
     for await (const _ of noteQueries.map(
-      async ({ text, values }) => await client.query(text, values)
+      async ({ text, values }) => await client.query(text, values),
     )) {
       // pass
     }
