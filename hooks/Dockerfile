@@ -1,4 +1,4 @@
-FROM node:20-bookworm-slim
+FROM node:22-bookworm-slim
 RUN npm install -g pm2
 RUN mkdir /app
 ADD package.json /app
