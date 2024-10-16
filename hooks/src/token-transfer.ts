@@ -7,6 +7,7 @@ router.use(bodyParser())
 router.use(async (ctx, next) => {
   try {
     await next()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     ctx.status = err.status || err.statusCode || 500
     ctx.body = { message: err.message }
@@ -23,7 +24,7 @@ interface TokenTransferPayload {
   }
 }
 
-router.post("/", async (ctx, next) => {
+router.post("/", async (ctx) => {
   const body: TokenTransferPayload = ctx.request.body
   const client = await pool.connect()
   await client.query("BEGIN")
@@ -66,7 +67,7 @@ router.post("/", async (ctx, next) => {
       `,
         [oldToken, oldUserId, newUserId],
       )
-    } catch (e: any) {
+    } catch {
       ctx.throw(400, "transfer_used")
     }
     await client.query(

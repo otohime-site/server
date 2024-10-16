@@ -202,6 +202,7 @@ export const fetch = async (): Promise<void> => {
     `)
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for await (const _ of variantQueries.map(
       async ({ text, values }) => await client.query(text, values),
     )) {
@@ -223,6 +224,7 @@ export const fetch = async (): Promise<void> => {
       `),
     )
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for await (const _ of noteQueries.map(
       async ({ text, values }) => await client.query(text, values),
     )) {

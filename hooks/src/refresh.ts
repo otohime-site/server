@@ -2,7 +2,7 @@ import Router from "koa-router"
 import pool from "./db.js"
 const router = new Router()
 
-router.post("/", async (ctx, next) => {
+router.post("/", async (ctx) => {
   const client = await pool.connect()
   await client.query("BEGIN")
   try {

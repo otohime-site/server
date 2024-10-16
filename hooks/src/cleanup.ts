@@ -2,7 +2,7 @@ import Router from "koa-router"
 import pool from "./db.js"
 const router = new Router()
 
-router.post("/", async (ctx, next) => {
+router.post("/", async (ctx) => {
   const client = await pool.connect()
   await client.query("BEGIN")
   try {
@@ -26,7 +26,7 @@ router.post("/", async (ctx, next) => {
   ctx.body = "ok!"
 })
 
-router.post("/daily", async (ctx, next) => {
+router.post("/daily", async (ctx) => {
   const resultCron = await pool.query(`
     DELETE FROM hdb_catalog.hdb_cron_events
     WHERE status IN ('delivered', 'error', 'dead')
