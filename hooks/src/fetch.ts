@@ -3,9 +3,8 @@ import Router from "koa-router"
 import { compile, join, query, value } from "pg-sql2"
 
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
-import fetchCookie from "fetch-cookie"
+import makeFetchCookie from "fetch-cookie"
 import { CookieJar, JSDOM } from "jsdom"
-import nodeFetch from "node-fetch"
 import pool from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
@@ -55,20 +54,20 @@ if (segaId === undefined || segaPassword === undefined) {
   throw new Error("Please assign SEGA_ID and SEGA_PASSWORD to use /fetch")
 }
 
-export const fetch = async (): Promise<void> => {
+export const fetchSongs = async (): Promise<void> => {
   const CURRENT_VERSION = 22
 
   const internalLvDict: Record<string, number> = InternalLvJsonBuddiesPlus
 
   const jar = new CookieJar()
-  const fetch = fetchCookie(nodeFetch, jar)
-  globalThis.DOMParser = new JSDOM(
+  const fetchCookie = makeFetchCookie(global.fetch, jar)
+    globalThis.DOMParser = new JSDOM(
     "<!DOCTYPE html><html></html>",
   ).window.DOMParser
 
   // First, trying to sign in
-  await fetch("https://maimaidx-eng.com/", { redirect: "follow" })
-  const loginResp = await fetch(
+  await fetchCookie("https://maimaidx-eng.com/", { redirect: "follow" })
+  const loginResp = await fetchCookie(
     "https://lng-tgk-aime-gw.am-all.net/common_auth/login/sid/",
     {
       method: "POST",
@@ -90,7 +89,7 @@ export const fetch = async (): Promise<void> => {
     async (prevPromise, _, difficulty) => {
       const prev = await prevPromise
       console.log(`Running difficulty ${difficulty}...`)
-      const resp = await fetch(
+      const resp = await fetchCookie(
         `https://maimaidx-eng.com/maimai-mobile/record/musicGenre/search/?genre=99&diff=${difficulty}`,
       )
       if (!resp.ok) {
@@ -243,7 +242,7 @@ export const fetch = async (): Promise<void> => {
 const router = new Router()
 
 router.post("/", async (ctx) => {
-  await fetch()
+  await fetchSongs()
   ctx.body = "ok!"
 })
 
