@@ -61,7 +61,7 @@ export const fetchSongs = async (): Promise<void> => {
 
   const jar = new CookieJar()
   const fetchCookie = makeFetchCookie(global.fetch, jar)
-    globalThis.DOMParser = new JSDOM(
+  globalThis.DOMParser = new JSDOM(
     "<!DOCTYPE html><html></html>",
   ).window.DOMParser
 
