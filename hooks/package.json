@@ -11,7 +11,7 @@
     "@koa/bodyparser": "^5.1.1",
     "@otohime-site/parser": "^24.1.1",
     "fetch-cookie": "^3.0.1",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "jwks-rsa": "^3.0.1",
     "koa": "^2.14.2",
     "koa-jwt": "^4.0.4",
