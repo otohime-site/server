@@ -7,6 +7,7 @@ import makeFetchCookie from "fetch-cookie"
 import { CookieJar, JSDOM } from "jsdom"
 import pool from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
+import InternalLvJsonPrism from "./internal_lv_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
 interface VariantProps {
@@ -55,9 +56,11 @@ if (segaId === undefined || segaPassword === undefined) {
 }
 
 export const fetchSongs = async (): Promise<void> => {
-  const CURRENT_VERSION = 22
+  const CURRENT_VERSION =
+    new Date() > new Date("2025-01-16T04:00:00+09:00") ? 23 : 22
 
-  const internalLvDict: Record<string, number> = InternalLvJsonBuddiesPlus
+  const internalLvDict: Record<string, number> =
+    CURRENT_VERSION === 23 ? InternalLvJsonPrism : InternalLvJsonBuddiesPlus
 
   const jar = new CookieJar()
   const fetchCookie = makeFetchCookie(global.fetch, jar)
