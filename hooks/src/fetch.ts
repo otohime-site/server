@@ -5,11 +5,11 @@ import { compile, join, query, value } from "pg-sql2"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import makeFetchCookie from "fetch-cookie"
 import { CookieJar, JSDOM } from "jsdom"
+import { appendNotes } from "./append-notes.js"
 import pool from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
 import InternalLvJsonPrism from "./internal_lv_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
-import { appendNotes } from "./append-notes.js"
 
 interface VariantProps {
   version: number
