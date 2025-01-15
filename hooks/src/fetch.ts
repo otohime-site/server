@@ -9,6 +9,7 @@ import pool from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
 import InternalLvJsonPrism from "./internal_lv_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
+import { appendNotes } from "./append-notes.js"
 
 interface VariantProps {
   version: number
@@ -98,7 +99,7 @@ export const fetchSongs = async (): Promise<void> => {
       if (!resp.ok) {
         throw new Error("Network Error!")
       }
-      const result = parseScores(await resp.text(), undefined, true)
+      const result = appendNotes(parseScores(await resp.text(), undefined, true), difficulty)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       return [
         ...prev,
