@@ -246,8 +246,12 @@ export const fetchSongs = async (): Promise<void> => {
 const router = new Router()
 
 router.post("/", async (ctx) => {
-  await fetchSongs()
-  ctx.body = "ok!"
+  try {
+    await fetchSongs()
+    ctx.body = "ok!"
+  } catch {
+    ctx.throw(500)
+  }
 })
 
 export default router
