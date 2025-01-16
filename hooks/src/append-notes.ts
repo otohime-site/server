@@ -60,7 +60,9 @@ export const appendNotes = (
     const appendIndex = appendedScores.findIndex(
       (s) => s.title === rule.followingTitle,
     )
-    if (appendIndex >= 0 && rule.levels[difficulty]) {
+    const entryIndex = appendedScores.findIndex((s) => s.title === rule.title)
+
+    if (appendIndex >= 0 && entryIndex === -1 && rule.levels[difficulty]) {
       const toBeAppended: ScoresParseEntryWithoutScore = {
         category: rule.category,
         title: rule.title,
