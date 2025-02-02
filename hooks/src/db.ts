@@ -1,3 +1,5 @@
-import pg from "pg" // SyntaxError on named exports
+import postgres from "postgres"
 
-export default new pg.Pool()
+const sql = postgres()
+
+export default sql

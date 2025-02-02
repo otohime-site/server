@@ -16,8 +16,7 @@
     "koa": "^2.14.2",
     "koa-jwt": "^4.0.4",
     "koa-router": "^13.0.1",
-    "pg": "^8.11.0",
-    "pg-sql2": "^4.13.0"
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",

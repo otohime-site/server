@@ -1,7 +1,7 @@
 import jwksRsa from "jwks-rsa"
 import jwt from "koa-jwt"
 import Router from "koa-router"
-import pool from "./db.js"
+import sql from "./db.js"
 
 const firebaseProjectId = process.env.FIREBASE_ID
 if (firebaseProjectId === undefined) {
@@ -38,10 +38,7 @@ router.get("/", async (ctx, next) => {
       "X-Hasura-Role": "user",
     }
     // Create new database entry once logged in
-    await pool.query(
-      "INSERT INTO users (id) VALUES ($1) ON CONFLICT DO NOTHING",
-      [userId],
-    )
+    await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT DO NOTHING`
     return await next()
   }
   // Allow anonymous access
@@ -60,15 +57,14 @@ router.get("/", async (ctx, next) => {
   ) {
     ctx.throw(401, "Bad Auth")
   }
-  const res = await pool.query(
-    "SELECT id, user_id FROM tokens WHERE id = $1;",
-    [authVal[1]],
-  )
-  if (res.rowCount === 0) {
+  const results = await sql<
+    { id: string; user_id: string }[]
+  >`SELECT id, user_id FROM tokens WHERE id = ${authVal[1]};`
+  if (results.length === 0) {
     ctx.throw(401, "Bad Token")
   }
   ctx.body = {
-    "X-Hasura-User-Id": res.rows[0].user_id,
+    "X-Hasura-User-Id": results[0].user_id,
     "X-Hasura-Role": "importer",
   }
 })

@@ -1,12 +1,12 @@
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
+import { createHash } from "crypto"
 import Router from "koa-router"
-import { compile, join, query, value } from "pg-sql2"
 
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import makeFetchCookie from "fetch-cookie"
 import { CookieJar, JSDOM } from "jsdom"
 import { appendNotes } from "./append-notes.js"
-import pool from "./db.js"
+import sql from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
 import InternalLvJsonPrism from "./internal_lv_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
@@ -16,11 +16,26 @@ interface VariantProps {
 }
 type VariantMap = Map<boolean, VariantProps>
 
-interface SongToWrite {
+interface SongRow {
+  id: string
   category: number
-  order: number
   title: string
-  variants: Array<[boolean, VariantProps]>
+  order: number
+}
+
+interface VariantRow {
+  song_id: string
+  deluxe: boolean
+  version: number
+  active: boolean
+}
+
+interface NoteRow {
+  song_id: string
+  deluxe: boolean
+  difficulty: number
+  level: ScoreEntry["level"]
+  internal_lv: number | null
 }
 
 interface ScoreEntry extends ScoresParseEntryWithoutScore {
@@ -55,6 +70,9 @@ const segaPassword = process.env.SEGA_PASSWORD
 if (segaId === undefined || segaPassword === undefined) {
   throw new Error("Please assign SEGA_ID and SEGA_PASSWORD to use /fetch")
 }
+
+const sha256Sum = (text: string): string =>
+  createHash("sha256").update(text).digest("hex")
 
 export const fetchSongs = async (): Promise<void> => {
   const CURRENT_VERSION =
@@ -99,7 +117,10 @@ export const fetchSongs = async (): Promise<void> => {
       if (!resp.ok) {
         throw new Error("Network Error!")
       }
-      const result = appendNotes(parseScores(await resp.text(), undefined, true), difficulty)
+      const result = appendNotes(
+        parseScores(await resp.text(), undefined, true),
+        difficulty,
+      )
       await new Promise((resolve) => setTimeout(resolve, 1000))
       return [
         ...prev,
@@ -130,7 +151,9 @@ export const fetchSongs = async (): Promise<void> => {
 
   // Add version, then group by category -> title -> variant
   // For determine its order and version
-  const groupedVariants = parsedScores.reduce<Array<Map<string, VariantMap>>>(
+  const groupedSongVariants = parsedScores.reduce<
+    Array<Map<string, VariantMap>>
+  >(
     (accr, curr) => {
       const { title, category, deluxe } = curr
       const categoryMap = accr[category - 1]
@@ -150,99 +173,60 @@ export const fetchSongs = async (): Promise<void> => {
     [...Array(6)].map(() => new Map()),
   )
 
-  // Flat the previous group for easy writing.
-  const songsToWrite = groupedVariants.reduce<SongToWrite[]>(
-    (prev, categoryMap, index) => {
-      const category = index + 1
-      return [
-        ...prev,
-        ...[...categoryMap.entries()].reduce<SongToWrite[]>(
-          (innerPrev, [title, variantMap], innerIndex) => [
-            ...innerPrev,
-            {
-              category,
-              title,
-              order: innerIndex + 1,
-              variants: [...variantMap.entries()],
-            },
-          ],
-          [],
-        ),
-      ]
-    },
-    [],
+  // Prepare songs, variants notes to be written to database
+  // as list of objects for Postgres.js to insert them.
+  const songRows: SongRow[] = []
+  const variantRows: VariantRow[] = []
+  for (const [index, categoryMap] of groupedSongVariants.entries()) {
+    const category = index + 1
+    let order = 1
+    for (const [title, variantMap] of categoryMap) {
+      songRows.push({
+        id: sha256Sum(`${category}_${title}`),
+        category,
+        title,
+        order,
+      })
+      order += 1
+      for (const [deluxe, { version }] of variantMap) {
+        variantRows.push({
+          song_id: sha256Sum(`${category}_${title}`),
+          deluxe,
+          version,
+          active: true,
+        })
+      }
+    }
+  }
+  const noteRows: NoteRow[] = parsedScores.map(
+    ({ category, title, deluxe, difficulty, level, internal_lv }) => ({
+      song_id: sha256Sum(`${category}_${title}`),
+      deluxe,
+      difficulty,
+      level,
+      // Postgres.js will not like undefined
+      internal_lv: internal_lv ?? null,
+    }),
   )
 
   console.log("Writing into database...")
-  const client = await pool.connect()
 
-  try {
-    await client.query("BEGIN")
-    // Write songs and variants
-    await client.query("UPDATE dx_intl_variants SET active = false;")
-    const variantQueries = songsToWrite.map((song) => {
-      const variantQueries = song.variants.map(
-        ([deluxe, variantProps]) => query`
-        (
-          (SELECT id FROM song),
-          ${value(deluxe)},
-          ${value(variantProps.version)},
-          true
-        )`,
-      )
-      return compile(query`
-    WITH song as (
-      INSERT INTO dx_intl_songs (id, category, title, "order") VALUES (
-        encode(sha256(${value(`${song.category}_${song.title}`)}), 'hex'),
-        ${value(song.category)},
-        ${value(song.title)},
-        ${value(song.order)}
-      )
-      ON CONFLICT (category, title) DO UPDATE SET "order" = excluded.order RETURNING id
-    ) INSERT INTO dx_intl_variants(song_id, deluxe, version, active) VALUES
-      ${join(variantQueries, ", ")}
-      ON CONFLICT (song_id, deluxe) DO UPDATE SET active = excluded.active, version = excluded.version
-    `)
-    })
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for await (const _ of variantQueries.map(
-      async ({ text, values }) => await client.query(text, values),
-    )) {
-      // pass
-    }
-
-    // Write notes
-    const noteQueries = parsedScores.map((score) =>
-      compile(query`
-      INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level, internal_lv) VALUES
-      (
-        encode(sha256(${value(`${score.category}_${score.title}`)}), 'hex'),
-        ${value(score.deluxe)},
-        ${value(score.difficulty)},
-        ${value(score.level)},
-        ${value(score.internal_lv)}
-      )
-      ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET level = excluded.level, internal_lv = excluded.internal_lv;
-      `),
-    )
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for await (const _ of noteQueries.map(
-      async ({ text, values }) => await client.query(text, values),
-    )) {
-      // pass
-    }
-    await client.query("COMMIT")
-  } catch (e) {
-    console.log("rolling back...")
-    await client.query("ROLLBACK")
-    throw e
-  } finally {
-    client.release()
-  }
+  // Perform the upserts.
+  await sql.begin(async (tx) => {
+    await tx`UPDATE dx_intl_variants SET active = false;`
+    await tx`
+      INSERT INTO dx_intl_songs ${sql(songRows)}
+      ON CONFLICT (category, title) DO UPDATE SET "order" = excluded.order;`
+    await tx`
+      INSERT INTO dx_intl_variants ${sql(variantRows)}
+      ON CONFLICT (song_id, deluxe) DO UPDATE SET
+      active = excluded.active, version = excluded.version;`
+    await tx`
+      INSERT INTO dx_intl_notes ${sql(noteRows)}
+      ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET
+      level = excluded.level, internal_lv = excluded.internal_lv;`
+  })
 }
-
 const router = new Router()
 
 router.post("/", async (ctx) => {

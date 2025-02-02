@@ -1,22 +1,13 @@
 import Router from "koa-router"
-import pool from "./db.js"
+import sql from "./db.js"
+
 const router = new Router()
 
 router.post("/", async (ctx) => {
-  const client = await pool.connect()
-  await client.query("BEGIN")
-  try {
-    await client.query(`
-      REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_stats;
-      REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;
-      COMMIT;
-    `)
-  } catch (e) {
-    await client.query("ROLLBACK")
-    throw e
-  } finally {
-    client.release()
-  }
+  await sql.begin(async (tx) => {
+    await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_stats;`
+    await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;`
+  })
   ctx.body = "ok!"
 })
 
