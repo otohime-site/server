@@ -1,4 +1,3 @@
-version: "3.6"
 services:
   db:
     build: docker-db/
@@ -29,6 +28,7 @@ services:
       HASURA_GRAPHQL_ENABLED_APIS: "${HASURA_GRAPHQL_ENABLED_APIS}"
   hooks:
     build: hooks/
+    restart: always
     depends_on:
       - "db"
       - "hasura"
