@@ -1,9 +1,9 @@
-import Router from "koa-router"
+import { Hono } from "hono"
 import sql from "./db.js"
 
-const router = new Router()
+const app = new Hono()
 
-router.post("/", async (ctx) => {
+app.post("/", async (c) => {
   await sql.begin(async (tx) => {
     // Use `simple()` to allow multiple statements
     await tx`
@@ -17,10 +17,10 @@ router.post("/", async (ctx) => {
       SELECT periods.add_system_versioning('dx_intl_scores');
     `.simple()
   })
-  ctx.body = "ok!"
+  return c.text("ok!")
 })
 
-router.post("/daily", async (ctx) => {
+app.post("/daily", async (c) => {
   const resultCron = await sql`
     DELETE FROM hdb_catalog.hdb_cron_events
     WHERE status IN ('delivered', 'error', 'dead')
@@ -32,12 +32,12 @@ router.post("/daily", async (ctx) => {
     WHERE created_at < now() - interval '3 months';
   `
   console.log(`token_transfers: ${resultTransfers.length} rows affected `)
-  ctx.body = {
+  return c.json({
     affected: {
       cron: resultCron.length,
       transfers: resultTransfers.length,
     },
-  }
+  })
 })
 
-export default router
+export default app

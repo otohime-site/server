@@ -1,6 +1,7 @@
-import jwksRsa from "jwks-rsa"
-import jwt from "koa-jwt"
-import Router from "koa-router"
+import { Hono } from "hono"
+import { HTTPException } from "hono/http-exception"
+import { jwk } from "hono/jwk"
+import { JwtVariables } from "hono/jwt"
 import sql from "./db.js"
 
 const firebaseProjectId = process.env.FIREBASE_ID
@@ -11,62 +12,60 @@ if (firebaseProjectId === undefined) {
 // As we need to support both JWT and long-lived token,
 // it is better to be served with a webhook. :(
 
-const router = new Router()
-router.use(
-  jwt({
-    secret: jwksRsa.koaJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 2,
-      jwksUri:
-        "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
-    }),
-    audience: firebaseProjectId,
-    issuer: `https://securetoken.google.com/${firebaseProjectId}`,
-    passthrough: true,
+const app = new Hono<{ Variables: JwtVariables }>()
+app.use(
+  jwk({
+    jwks_uri:
+      "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
   }),
 )
-router.get("/", async (ctx, next) => {
-  if ("user" in ctx.state) {
+app.get("/", async (c) => {
+  const jwtPayload = c.get("jwtPayload")
+  if (jwtPayload) {
     // If JWT verification is successful
-    const userId = ctx.state?.user?.sub ?? ""
-    if (userId.length === 0) {
-      ctx.throw(403, "Wrong token")
-    }
-    ctx.body = {
-      "X-Hasura-User-Id": userId,
-      "X-Hasura-Role": "user",
+    const userId = jwtPayload.sub
+    if (
+      jwtPayload.aud !== firebaseProjectId ||
+      jwtPayload.iss !==
+        `https://securetoken.google.com/${firebaseProjectId}` ||
+      !userId ||
+      typeof userId !== "string"
+    ) {
+      throw new HTTPException(403, { message: "Wrong token" })
     }
     // Create new database entry once logged in
     await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT DO NOTHING`
-    return await next()
+    return c.json({
+      "X-Hasura-User-Id": userId,
+      "X-Hasura-Role": "user",
+    })
   }
+  const authHeader = c.req.header("Authorization")
   // Allow anonymous access
-  if (!("authorization" in ctx.header)) {
-    ctx.body = {
+  if (!authHeader) {
+    return c.json({
       "X-Hasura-Role": "anonymous",
-    }
-    return
+    })
   }
   // Switch to test long-lived token
-  const authVal = (ctx.header.authorization ?? "").trim().split(" ")
+  const authVal = authHeader.trim().split(" ")
   if (
     authVal.length !== 2 ||
     !/^Bearer$/i.test(authVal[0]) ||
     /[^0-9a-z]/i.test(authVal[1])
   ) {
-    ctx.throw(401, "Bad Auth")
+    throw new HTTPException(401, { message: "Bad Auth" })
   }
   const results = await sql<
     { id: string; user_id: string }[]
   >`SELECT id, user_id FROM tokens WHERE id = ${authVal[1]};`
   if (results.length === 0) {
-    ctx.throw(401, "Bad Token")
+    throw new HTTPException(401, { message: "Bad Token" })
   }
-  ctx.body = {
+  return c.json({
     "X-Hasura-User-Id": results[0].user_id,
     "X-Hasura-Role": "importer",
-  }
+  })
 })
 
-export default router
+export default app

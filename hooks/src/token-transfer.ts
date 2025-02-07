@@ -1,19 +1,8 @@
-import { bodyParser } from "@koa/bodyparser"
-import Router from "koa-router"
+import { Hono } from "hono"
+import { HTTPException } from "hono/http-exception"
 import sql from "./db.js"
 
-const router = new Router()
-router.use(bodyParser())
-router.use(async (ctx, next) => {
-  try {
-    await next()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    ctx.status = err.status || err.statusCode || 500
-    ctx.body = { message: err.message }
-    ctx.app.emit("error", err, ctx)
-  }
-})
+const app = new Hono()
 
 interface TokenTransferPayload {
   action: { name: string }
@@ -24,23 +13,22 @@ interface TokenTransferPayload {
   }
 }
 
-router.post("/", async (ctx) => {
-  const body: TokenTransferPayload = ctx.request.body
+app.post("/", async (c) => {
+  const body = await c.req.json<TokenTransferPayload>()
   const newUserId = body.session_variables["x-hasura-user-id"]
   if (!newUserId) {
-    ctx.throw(400, "not_allowed")
-    return // make TypeScript understands
+    throw new HTTPException(400, { message: "not_allowed" })
   }
   const validToken = /^[0-9a-f]{32}$/
   if (!validToken.test(body.input.token)) {
-    ctx.throw(400, "bad_token")
+    throw new HTTPException(400, { message: "bad_token" })
   }
   await sql.begin(async (tx) => {
     const results = await tx<
       { id: string; user_id: string }[]
     >`SELECT id, user_id FROM tokens WHERE id = ${body.input.token} AND user_id != ${newUserId};`
     if (results.length === 0) {
-      ctx.throw(400, "bad_token")
+      throw new HTTPException(400, { message: "bad_token" })
     }
     const oldToken = results[0].id
     const oldUserId = results[0].user_id
@@ -59,7 +47,7 @@ router.post("/", async (ctx) => {
         VALUES (${oldToken}, ${oldUserId}, ${newUserId});
       `
     } catch {
-      ctx.throw(400, "transfer_used")
+      throw new HTTPException(400, { message: "transfer_used" })
     }
     await tx`UPDATE dx_intl_players SET user_id = ${newUserId} WHERE user_id = ${oldUserId};`
     await tx`UPDATE finale_players SET user_id = ${newUserId} WHERE user_id = ${oldUserId};`
@@ -68,12 +56,12 @@ router.post("/", async (ctx) => {
       INSERT INTO tokens (user_id) values (${newUserId}) ON CONFLICT (user_id) 
       DO UPDATE SET id = gen_random_uuid() RETURNING id;
       `
-    ctx.body = {
+    return c.json({
       token: tokenResult[0].id,
       dx_intl_players_count: parseInt(countRes[0].dx_intl_players_count, 10),
       finale_players_count: parseInt(countRes[0].finale_players_count, 10),
-    }
+    })
   })
 })
 
-export default router
+export default app

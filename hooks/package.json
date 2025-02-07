@@ -9,15 +9,10 @@
   "main": "index.js",
   "dependencies": {
     "@hono/node-server": "^1.13.8",
-    "@koa/bodyparser": "^5.1.1",
     "@otohime-site/parser": "^24.1.1",
     "fetch-cookie": "^3.0.1",
     "hono": "^4.7.0",
     "jsdom": "^26.0.0",
-    "jwks-rsa": "^3.0.1",
-    "koa": "^2.14.2",
-    "koa-jwt": "^4.0.4",
-    "koa-router": "^13.0.1",
     "postgres": "^3.4.5"
   },
   "devDependencies": {
@@ -25,8 +20,6 @@
     "@types/eslint__js": "^8.42.3",
     "@types/jsdom": "^21.1.1",
     "@types/jsonwebtoken": "^9.0.2",
-    "@types/koa": "^2.13.6",
-    "@types/koa-router": "^7.4.4",
     "@types/pg": "^8.10.1",
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^10.0.1",

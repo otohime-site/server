@@ -1,9 +1,9 @@
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
 import { createHash } from "crypto"
-import Router from "koa-router"
 
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import makeFetchCookie from "fetch-cookie"
+import { Hono } from "hono"
 import { CookieJar, JSDOM } from "jsdom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
@@ -227,11 +227,11 @@ export const fetchSongs = async (): Promise<void> => {
       level = excluded.level, internal_lv = excluded.internal_lv;`
   })
 }
-const router = new Router()
+const app = new Hono()
 
-router.post("/", async (ctx) => {
+app.post("/", async (c) => {
   await fetchSongs()
-  ctx.body = "ok!"
+  return c.text("ok!")
 })
 
-export default router
+export default app

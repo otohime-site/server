@@ -3,7 +3,7 @@
 It contains:
 
 - Hasura running with `docker-compose`
-- Hooks written with TypeScript / Koa to serve JWT/long-lived tokens auth, song list fetching, database cleanups, etc.
+- Hooks written with TypeScript / Hono / Postgres.js to serve JWT/long-lived tokens auth, song list fetching, database cleanups, etc.
 
 #### Get Started
 

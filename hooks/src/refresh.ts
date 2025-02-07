@@ -1,14 +1,14 @@
-import Router from "koa-router"
+import { Hono } from "hono"
 import sql from "./db.js"
 
-const router = new Router()
+const app = new Hono()
 
-router.post("/", async (ctx) => {
+app.post("/", async (c) => {
   await sql.begin(async (tx) => {
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_stats;`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;`
   })
-  ctx.body = "ok!"
+  return c.text("ok!")
 })
 
-export default router
+export default app
