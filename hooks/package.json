@@ -13,7 +13,7 @@
     "fetch-cookie": "^3.0.1",
     "hono": "^4.7.0",
     "jose": "^5.9.6",
-    "jsdom": "^26.0.0",
+    "linkedom": "^0.18.9",
     "postgres": "^3.4.5"
   },
   "devDependencies": {

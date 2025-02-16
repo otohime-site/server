@@ -4,7 +4,7 @@ import { createHash } from "crypto"
 import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import makeFetchCookie from "fetch-cookie"
 import { Hono } from "hono"
-import { CookieJar, JSDOM } from "jsdom"
+import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
 import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
@@ -81,11 +81,9 @@ export const fetchSongs = async (): Promise<void> => {
   const internalLvDict: Record<string, number> =
     CURRENT_VERSION === 23 ? InternalLvJsonPrism : InternalLvJsonBuddiesPlus
 
-  const jar = new CookieJar()
-  const fetchCookie = makeFetchCookie(global.fetch, jar)
-  globalThis.DOMParser = new JSDOM(
-    "<!DOCTYPE html><html></html>",
-  ).window.DOMParser
+  const fetchCookie = makeFetchCookie(global.fetch)
+  // @ts-expect-error The DOMParser did not match the TypeScript definition
+  globalThis.DOMParser = DOMParser
 
   // First, trying to sign in
   await fetchCookie("https://maimaidx-eng.com/", { redirect: "follow" })
