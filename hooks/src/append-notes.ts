@@ -29,7 +29,7 @@ export const rules: AppendNoteRule[] = [
     levels: ["4", "8", "10+", "13+"],
   },
   {
-    followingTitle: "果ての空、僕らが見た光。",
+    followingTitle: "プリズム△▽リズム",
     category: 5,
     title: "Cryptarithm",
     deluxe: true,
@@ -48,6 +48,13 @@ export const rules: AppendNoteRule[] = [
     title: "有明/Ariake",
     deluxe: true,
     levels: ["5", "8", "12", "14"],
+  },
+  {
+    followingTitle: "雨露霜雪",
+    category: 5,
+    title: "宙天",
+    deluxe: true,
+    levels: ["6", "8+", "13", "14+"],
   },
 ]
 
