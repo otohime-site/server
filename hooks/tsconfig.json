@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "erasableSyntaxOnly": true
   },
   "ts-node": {
     "experimentalResolver": true
