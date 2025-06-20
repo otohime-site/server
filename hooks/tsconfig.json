@@ -11,8 +11,5 @@
     "skipLibCheck": true,
     "erasableSyntaxOnly": true
   },
-  "ts-node": {
-    "experimentalResolver": true
-  },
   "include": ["src"]
 }

@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint",
-    "ts-node": "node --loader ts-node/esm",
+    "tsx": "tsx",
     "tsc": "tsc"
   },
   "main": "index.js",
@@ -25,7 +25,7 @@
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^10.1.1",
     "prettier-plugin-organize-imports": "^4.0.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.20.3",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.9.0"
   },
