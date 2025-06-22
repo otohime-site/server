@@ -7,7 +7,7 @@ import { Hono } from "hono"
 import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
-import InternalLvJsonBuddiesPlus from "./internal_lv_buddies_plus.json" with { type: "json" }
+import InternalLvJsonBuddiesPlus from "./internal_lvs/22_buddies_plus.json" with { type: "json" }
 import InternalLvJsonPrism from "./internal_lvs/23_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
