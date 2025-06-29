@@ -16,6 +16,8 @@ select_permissions:
         - id
         - category
         - title
+        - artist
+        - title_kana
         - order
       filter: {}
   - role: importer
@@ -24,6 +26,8 @@ select_permissions:
         - id
         - category
         - title
+        - artist
+        - title_kana
         - order
       filter: {}
   - role: user
@@ -32,5 +36,7 @@ select_permissions:
         - category
         - id
         - title
+        - artist
+        - title_kana
         - order
       filter: {}

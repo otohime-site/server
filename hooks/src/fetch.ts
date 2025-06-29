@@ -7,7 +7,7 @@ import { Hono } from "hono"
 import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
-import InternalLvJsonBuddiesPlus from "./internal_lvs/22_buddies_plus.json" with { type: "json" }
+import Infos from "./infos.json" with { type: "json" }
 import InternalLvJsonPrism from "./internal_lvs/23_prism.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
@@ -75,11 +75,13 @@ const sha256Sum = (text: string): string =>
   createHash("sha256").update(text).digest("hex")
 
 export const fetchSongs = async (): Promise<void> => {
-  const CURRENT_VERSION =
-    new Date() > new Date("2025-01-16T04:00:00+09:00") ? 23 : 22
+  // TODO: Version update date is not yet finalized
+  const CURRENT_VERSION = 23
+  //  new Date() > new Date("2025-09-01T04:00:00+09:00") ? 24 : 23
 
-  const internalLvDict: Record<string, number> =
-    CURRENT_VERSION === 23 ? InternalLvJsonPrism : InternalLvJsonBuddiesPlus
+  const internalLvDict: Record<string, number> = InternalLvJsonPrism
+  //  CURRENT_VERSION === 24 ? InternalLvJsonPrismPlus : InternalLvJsonPrism
+  const infoDict: Record<string, { artist: string; title_kana: string }> = Infos
 
   const fetchCookie = makeFetchCookie(global.fetch)
   // @ts-expect-error The DOMParser did not match the TypeScript definition
@@ -179,11 +181,17 @@ export const fetchSongs = async (): Promise<void> => {
     const category = index + 1
     let order = 1
     for (const [title, variantMap] of categoryMap) {
+      // TODO: Remove this temporary workaround
+      const info =
+        infoDict[
+          `${category}_${title == "Help me, ERINNNNNN!!" ? "Help me, ERINNNNNN!!（Band ver.）" : title}`
+        ]
       songRows.push({
         id: sha256Sum(`${category}_${title}`),
         category,
         title,
         order,
+        ...info,
       })
       order += 1
       for (const [deluxe, { version }] of variantMap) {
@@ -214,7 +222,8 @@ export const fetchSongs = async (): Promise<void> => {
     await tx`UPDATE dx_intl_variants SET active = false;`
     await tx`
       INSERT INTO dx_intl_songs ${sql(songRows)}
-      ON CONFLICT (category, title) DO UPDATE SET "order" = excluded.order;`
+      ON CONFLICT (category, title) DO UPDATE SET
+      "order" = excluded.order, artist = excluded.artist, title_kana = excluded.title_kana;`
     await tx`
       INSERT INTO dx_intl_variants ${sql(variantRows)}
       ON CONFLICT (song_id, deluxe) DO UPDATE SET
