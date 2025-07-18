@@ -56,6 +56,38 @@ export const rules: AppendNoteRule[] = [
     deluxe: true,
     levels: ["6", "8+", "13", "14+"],
   },
+  {
+    followingTitle: "Feel The Luv",
+    category: 5,
+    title: "Åntinomiε",
+    deluxe: true,
+    levels: ["6", "9", "12+", "14+"],
+  },
+  {
+    followingTitle: "忙シー日",
+    category: 5,
+    title: "FLΛME/FRΦST",
+    deluxe: true,
+    levels: ["5", "8", "12+", "14+"],
+  },
+  // LEGEND song will be added once match announced
+  // (it won't be available till then)
+  /*{
+    followingTitle: "Åntinomiε",
+    category: 5,
+    title: "ATLAS RUSH",
+    deluxe: true,
+    levels: ["5", "7+", "12+", "14+"],
+  },*/
+  {
+    followingTitle: "Amereistr",
+    category: 5,
+    title: "World's end BLACKBOX",
+    deluxe: true,
+    levels: ["7+", "10", "13", "14+"],
+  },
+  // TODO: KALEIDXSCOPE conclusion songs will be added
+  // once they are added into official JSON song file
 ]
 
 export const appendNotes = (
