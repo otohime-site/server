@@ -8,7 +8,8 @@ import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
 import Infos from "./infos.json" with { type: "json" }
-import InternalLvJsonPrism from "./internal_lvs/23_prism.json" with { type: "json" }
+import InternalLvJson23Prism from "./internal_lvs/23_prism.json" with { type: "json" }
+import InternalLvJson24PrismPlus from "./internal_lvs/24_prism_plus.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
 interface VariantProps {
@@ -75,11 +76,12 @@ const sha256Sum = (text: string): string =>
   createHash("sha256").update(text).digest("hex")
 
 export const fetchSongs = async (): Promise<void> => {
-  // TODO: Version update date is not yet finalized
-  const CURRENT_VERSION = 23
-  //  new Date() > new Date("2025-09-01T04:00:00+09:00") ? 24 : 23
+  const CURRENT_VERSION =
+    new Date() > new Date("2025-07-24T04:00:00+09:00") ? 24 : 23
 
-  const internalLvDict: Record<string, number> = InternalLvJsonPrism
+  const internalLvDict: Record<string, number> =
+    CURRENT_VERSION === 24 ? InternalLvJson24PrismPlus : InternalLvJson23Prism
+
   //  CURRENT_VERSION === 24 ? InternalLvJsonPrismPlus : InternalLvJsonPrism
   const infoDict: Record<string, { artist: string; title_kana: string }> = Infos
 
