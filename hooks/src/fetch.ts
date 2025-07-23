@@ -47,6 +47,14 @@ const validInternalLv = (
   internalLv: number,
 ): boolean => {
   switch (level) {
+    case "10":
+      return internalLv >= 10.0 && internalLv <= 10.5
+    case "10+":
+      return internalLv >= 10.6 && internalLv <= 10.9
+    case "11":
+      return internalLv >= 11.0 && internalLv <= 11.5
+    case "11+":
+      return internalLv >= 11.6 && internalLv <= 11.9
     case "12":
       return internalLv >= 12.0 && internalLv <= 12.5
     case "12+":
@@ -127,7 +135,21 @@ export const fetchSongs = async (): Promise<void> => {
           }_${entry.difficulty}`
           const internalLv = internalLvDict[dictKey]
           if (internalLv == null) {
-            if (["12+", "13", "13+", "14", "14+", "15"].includes(entry.level)) {
+            if (
+              [
+                "10",
+                "10+",
+                "11",
+                "11+",
+                "12",
+                "12+",
+                "13",
+                "13+",
+                "14",
+                "14+",
+                "15",
+              ].includes(entry.level)
+            ) {
               console.log(`Internal Lv not found on ${dictKey}`)
             }
             return entry
@@ -178,7 +200,12 @@ export const fetchSongs = async (): Promise<void> => {
     const category = index + 1
     let order = 1
     for (const [title, variantMap] of categoryMap) {
-      const info = infoDict[`${category}_${title}`]
+      // Postgres.js will also fail with UNDEFINED_VALUE
+      // if key is not present in some of the entry.
+      const info = infoDict[`${category}_${title}`] ?? {
+        artist: null,
+        title_kana: null,
+      }
       songRows.push({
         id: sha256Sum(`${category}_${title}`),
         category,
