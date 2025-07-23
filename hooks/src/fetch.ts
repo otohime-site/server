@@ -8,7 +8,6 @@ import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
 import Infos from "./infos.json" with { type: "json" }
-import InternalLvJson23Prism from "./internal_lvs/23_prism.json" with { type: "json" }
 import InternalLvJson24PrismPlus from "./internal_lvs/24_prism_plus.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
@@ -76,13 +75,9 @@ const sha256Sum = (text: string): string =>
   createHash("sha256").update(text).digest("hex")
 
 export const fetchSongs = async (): Promise<void> => {
-  const CURRENT_VERSION =
-    new Date() > new Date("2025-07-24T04:00:00+09:00") ? 24 : 23
+  const CURRENT_VERSION = 24
 
-  const internalLvDict: Record<string, number> =
-    CURRENT_VERSION === 24 ? InternalLvJson24PrismPlus : InternalLvJson23Prism
-
-  //  CURRENT_VERSION === 24 ? InternalLvJsonPrismPlus : InternalLvJsonPrism
+  const internalLvDict: Record<string, number> = InternalLvJson24PrismPlus
   const infoDict: Record<string, { artist: string; title_kana: string }> = Infos
 
   const fetchCookie = makeFetchCookie(global.fetch)
@@ -183,11 +178,7 @@ export const fetchSongs = async (): Promise<void> => {
     const category = index + 1
     let order = 1
     for (const [title, variantMap] of categoryMap) {
-      // TODO: Remove this temporary workaround
-      const info =
-        infoDict[
-          `${category}_${title == "Help me, ERINNNNNN!!" ? "Help me, ERINNNNNN!!（Band ver.）" : title}`
-        ]
+      const info = infoDict[`${category}_${title}`]
       songRows.push({
         id: sha256Sum(`${category}_${title}`),
         category,
