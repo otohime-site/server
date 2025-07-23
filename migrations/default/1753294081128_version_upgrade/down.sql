@@ -11,6 +11,11 @@ title = 'Help me, ERINNNNNN!!' WHERE id = 'f03c27010e7a0edc9ffba698d0c33481e6ef0
 UPDATE dx_intl_scores_history SET song_id = '9545c71fdbed4fbef1212e686ee4f2fd19f7eca4d1cd53321d5d112ba9bd48ab'
 WHERE song_id = 'f03c27010e7a0edc9ffba698d0c33481e6ef0a24a3dd3cad5b5b136d7ebd259e';
 
+UPDATE dx_intl_songs SET id = '90e12ff39fdcf9b506582ead6e65fce2d57bc0aa39a1f0cfb0d0cdfbe9d5934c',
+title = 'Bad Apple!! feat nomico' WHERE id = 'f635155add1ee6fc702c5b42b4a79c7307c664432078b0bf82d927a2c209560c';
+UPDATE dx_intl_scores_history SET song_id = '90e12ff39fdcf9b506582ead6e65fce2d57bc0aa39a1f0cfb0d0cdfbe9d5934c'
+WHERE song_id = 'f635155add1ee6fc702c5b42b4a79c7307c664432078b0bf82d927a2c209560c';
+
 SELECT periods.add_system_time_period('public.dx_intl_scores', 'start', 'end');
 SELECT periods.add_system_versioning('public.dx_intl_scores');
 
