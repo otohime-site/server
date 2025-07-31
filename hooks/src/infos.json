@@ -5342,5 +5342,21 @@
   "6_Tidal Wave": {
     "artist": "D-Cee",
     "title_kana": "TIDALWAVE"
+  },
+  "5_AFTER PANDORA": {
+    "artist": "削除",
+    "title_kana": "AFTERPANDORA"
+  },
+  "5_World's end BLACKBOX": {
+    "artist": "打打だいず",
+    "title_kana": "WORLDSENDBLACKBOX"
+  },
+  "5_Xaleid◆scopiX": {
+    "artist": "xi",
+    "title_kana": "XALEIDSCOPIX"
+  },
+  "5_Ref:rain (for 7th Heaven)": {
+    "artist": "カモメサノエレクトリックオーケストラ include Limonène",
+    "title_kana": "REFRAINFOR7THHEAVEN"
   }
 }
