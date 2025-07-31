@@ -68,27 +68,22 @@ export const rules: AppendNoteRule[] = [
     levels: ["4", "6", "9", "13"],
   },
   {
-    // Although there will be DX and STD variants,
-    // We expected STD variant appeneed above will appear first in DXNET.
     followingTitle: "5_プリズム△▽リズム_f",
     title: "5_Believe the Rainbow_t",
     levels: ["2", "6", "9+", "13"],
   },
   {
-    // Same reason as above.
     followingTitle: "5_Believe the Rainbow_t",
     title: "5_AFTER PANDORA_f",
     levels: ["3", "7+", "12", "14"],
   },
   {
-    // Same reason as above.
     followingTitle: "5_AFTER PANDORA_f",
     title: "5_Xaleid◆scopiX_t",
     levels: ["7+", "11", "13+", "14+", "15"],
     long: true,
   },
   {
-    // Same reason as above.
     followingTitle: "5_Xaleid◆scopiX_t",
     title: "5_Ref:rain (for 7th Heaven)_t",
     levels: ["4", "8", "12", "14"],
