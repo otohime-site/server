@@ -14,9 +14,7 @@ It will be changed once the international version is updated.
 // append another song ater it.
 interface AppendNoteRule {
   followingTitle: string
-  category: number
   title: string
-  deluxe: boolean
   levels: ScoresParseEntry["level"][]
   // Reserved for future database usage.
   // TODO: can we get it from DXNET?
@@ -25,111 +23,91 @@ interface AppendNoteRule {
 
 export const rules: AppendNoteRule[] = [
   {
-    followingTitle: "184億回のマルチトニック",
-    category: 5,
-    title: "果ての空、僕らが見た光。",
-    deluxe: true,
+    followingTitle: "5_184億回のマルチトニック_t",
+    title: "5_果ての空、僕らが見た光。_t",
     levels: ["4", "8", "10+", "13+"],
   },
   {
-    followingTitle: "プリズム△▽リズム",
-    category: 5,
-    title: "Cryptarithm",
-    deluxe: true,
-    levels: ["6", "8", "13", "14+"],
-  },
-  {
-    followingTitle: "Deicide",
-    category: 5,
-    title: "氷滅の135小節",
-    deluxe: true,
+    followingTitle: "5_Deicide_t",
+    title: "5_氷滅の135小節_t",
     levels: ["7", "9+", "13", "14+"],
   },
   {
-    followingTitle: "シスターシスター",
-    category: 5,
-    title: "有明/Ariake",
-    deluxe: true,
+    followingTitle: "5_シスターシスター_t",
+    title: "5_有明/Ariake_t",
     levels: ["5", "8", "12", "14"],
   },
   {
-    followingTitle: "雨露霜雪",
-    category: 5,
-    title: "宙天",
-    deluxe: true,
+    followingTitle: "5_雨露霜雪_t",
+    title: "5_宙天_t",
     levels: ["6", "8+", "13", "14+"],
   },
   {
-    followingTitle: "Feel The Luv",
-    category: 5,
-    title: "Åntinomiε",
-    deluxe: true,
+    followingTitle: "5_Feel The Luv_t",
+    title: "5_Åntinomiε_t",
     levels: ["6", "9", "12+", "14+"],
   },
   {
-    followingTitle: "忙シー日",
-    category: 5,
-    title: "FLΛME/FRΦST",
-    deluxe: true,
-    levels: ["5", "8", "12+", "14+"],
-  },
-  {
-    followingTitle: "Åntinomiε",
-    category: 5,
-    title: "ATLAS RUSH",
-    deluxe: true,
+    followingTitle: "5_Åntinomiε_t",
+    title: "5_ATLAS RUSH_t",
     levels: ["5", "7+", "12+", "14+"],
   },
   {
-    followingTitle: "Amereistr",
-    category: 5,
-    title: "World's end BLACKBOX",
-    deluxe: true,
+    followingTitle: "5_忙シー日_t",
+    title: "5_FLΛME/FRΦST_t",
+    levels: ["5", "8", "12+", "14+"],
+  },
+  {
+    followingTitle: "5_Amereistr_t",
+    title: "5_World's end BLACKBOX_t",
     levels: ["7+", "10", "13", "14+"],
   },
   {
-    followingTitle: "World's end BLACKBOX",
-    category: 5,
-    title: "プリズム△▽リズム",
-    deluxe: false,
+    followingTitle: "5_World's end BLACKBOX_t",
+    title: "5_プリズム△▽リズム_f",
     levels: ["4", "6", "9", "13"],
   },
   {
     // Although there will be DX and STD variants,
     // We expected STD variant appeneed above will appear first in DXNET.
-    followingTitle: "プリズム△▽リズム",
-    category: 5,
-    title: "Believe the Rainbow",
-    deluxe: false,
+    followingTitle: "5_プリズム△▽リズム_f",
+    title: "5_Believe the Rainbow_t",
     levels: ["2", "6", "9+", "13"],
   },
   {
     // Same reason as above.
-    followingTitle: "Believe the Rainbow",
-    category: 5,
-    title: "AFTER PANDORA",
-    deluxe: false,
+    followingTitle: "5_Believe the Rainbow_t",
+    title: "5_AFTER PANDORA_f",
     levels: ["3", "7+", "12", "14"],
   },
   {
     // Same reason as above.
-    followingTitle: "AFTER PANDORA",
-    category: 5,
-    title: "Xaleid◆scopiX",
-    deluxe: true,
+    followingTitle: "5_AFTER PANDORA_f",
+    title: "5_Xaleid◆scopiX_t",
     levels: ["7+", "11", "13+", "14+", "15"],
-    long: true
+    long: true,
   },
   {
     // Same reason as above.
-    followingTitle: "Xaleid◆scopiX",
-    category: 5,
-    title: "Ref:rain (for 7th Heaven)",
-    deluxe: true,
+    followingTitle: "5_Xaleid◆scopiX_t",
+    title: "5_Ref:rain (for 7th Heaven)_t",
     levels: ["4", "8", "12", "14"],
-    long: true
-  }
+    long: true,
+  },
 ]
+
+const splitInfo = (
+  rawTitle: string,
+): { category: number; title: string; deluxe: boolean } => {
+  const firstDash = rawTitle.indexOf("_")
+  const lastDash = rawTitle.lastIndexOf("_")
+
+  return {
+    category: parseInt(rawTitle.substring(0, firstDash), 10),
+    title: rawTitle.substring(firstDash + 1, lastDash),
+    deluxe: rawTitle.substring(lastDash + 1, rawTitle.length) === "t",
+  }
+}
 
 export const appendNotes = (
   scores: ScoresParseEntry[],
@@ -137,21 +115,32 @@ export const appendNotes = (
 ): ScoresParseEntry[] => {
   const appendedScores = [...scores]
   for (const rule of rules) {
+    const followingInfo = splitInfo(rule.followingTitle)
+    const entryInfo = splitInfo(rule.title)
+
     const appendIndex = appendedScores.findIndex(
-      (s) => s.title === rule.followingTitle,
+      (s) =>
+        s.category === followingInfo.category &&
+        s.title === followingInfo.title &&
+        s.deluxe === followingInfo.deluxe,
     )
-    const entryIndex = appendedScores.findIndex((s) => s.title === rule.title)
+    const entryIndex = appendedScores.findIndex(
+      (s) =>
+        s.category === entryInfo.category &&
+        s.title === entryInfo.title &&
+        s.deluxe === entryInfo.deluxe,
+    )
 
     if (appendIndex >= 0 && entryIndex === -1 && rule.levels[difficulty]) {
       const toBeAppended: ScoresParseEntryWithoutScore = {
-        category: rule.category,
-        title: rule.title,
-        deluxe: rule.deluxe,
+        category: entryInfo.category,
+        title: entryInfo.title,
+        deluxe: entryInfo.deluxe,
         difficulty: difficulty,
         level: rule.levels[difficulty],
       }
       console.log(
-        `Inserting ${toBeAppended.title} after ${rule.followingTitle}`,
+        `Inserting ${rule.title} after ${rule.followingTitle}`,
       )
       appendedScores.splice(appendIndex + 1, 0, toBeAppended)
     }
