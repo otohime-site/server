@@ -1,4 +1,4 @@
-FROM node:24-bookworm-slim
+FROM node:24-trixie-slim
 RUN mkdir /app
 ADD package.json /app
 ADD package-lock.json /app
