@@ -5358,5 +5358,57 @@
   "5_Ref:rain (for 7th Heaven)": {
     "artist": "カモメサノエレクトリックオーケストラ include Limonène",
     "title_kana": "REFRAINFOR7THHEAVEN"
+  },
+  "2_MIRA": {
+    "artist": "Kanaria",
+    "title_kana": "MIRA"
+  },
+  "2_空回りライブラリ": {
+    "artist": "雪乃イト",
+    "title_kana": "カラマワリライフラリ"
+  },
+  "2_お呪い": {
+    "artist": "なきそ",
+    "title_kana": "オマシナイ"
+  },
+  "2_ありきたりな恋の歌": {
+    "artist": "GYARI",
+    "title_kana": "アリキタリナコイノウタ"
+  },
+  "4_∀": {
+    "artist": "ああああ",
+    "title_kana": "9999991"
+  },
+  "2_少女レイ": {
+    "artist": "みきとP",
+    "title_kana": "シヨウシヨレイ"
+  },
+  "2_少女A": {
+    "artist": "椎名もた",
+    "title_kana": "シヨウシヨA"
+  },
+  "2_帝国少女": {
+    "artist": "R Sound Design",
+    "title_kana": "テイコクシヨウシヨ"
+  },
+  "4_NO ONE YES MAN": {
+    "artist": "MYUKKE.",
+    "title_kana": "NOONEYESMAN"
+  },
+  "4_Leave All Behind": {
+    "artist": "rider",
+    "title_kana": "LEAVEALLBEHIND"
+  },
+  "4_Retribution ～ Cycle of Redemption ～": {
+    "artist": "Ardolf vs. Daily天利 (原曲： nm-y & Kry.exe)",
+    "title_kana": "RETRIBUTIONCYCLEOFREDEMPTION"
+  },
+  "4_Luminescence": {
+    "artist": "米虾Fomiki & 初云CLoudie",
+    "title_kana": "LUMINESCENCE"
+  },
+  "4_Pixel Galaxy": {
+    "artist": "Snail's House",
+    "title_kana": "PIXELGALAXY"
   }
 }
