@@ -1245,7 +1245,7 @@
   },
   "2_ECHO": {
     "artist": "CIRCRUSH",
-    "title_kana": "ECHO"
+    "title_kana": "ECHO1"
   },
   "2_Hand in Hand": {
     "artist": "livetune",
@@ -3677,7 +3677,7 @@
   },
   "6_電光石火": {
     "artist": "HiTECH NINJA",
-    "title_kana": "テンコウセツカ"
+    "title_kana": "テンコウセツカ1"
   },
   "6_Hainuwele": {
     "artist": "ETIA.",
@@ -5410,5 +5410,129 @@
   "4_Pixel Galaxy": {
     "artist": "Snail's House",
     "title_kana": "PIXELGALAXY"
+  },
+  "5_CiRCLE CAMPAiGN": {
+    "artist": "サツキ feat.天音かなた",
+    "title_kana": "CIRCLECAMPAIGN"
+  },
+  "5_Magical Paradox": {
+    "artist": "Mr.Asyu",
+    "title_kana": "MAGICALPARADOX"
+  },
+  "5_殿ッ！？ご乱心！？": {
+    "artist": "Shu feat. 天羽しろっぷ",
+    "title_kana": "トノツコランシン"
+  },
+  "5_False Amber (from the Black Bazaar, Or by A Kervan Trader from the Lands Afar, Or Buried Beneath the Shifting Sands That Lead Everywhere but Nowhere)": {
+    "artist": "かめりあ",
+    "title_kana": "FALSEAMBERFROMTHEBLACKBAZAARORBYAKERVANTRADERFROMTHELANDSAFARORBURIEDBENEATHTHESHIFTINGSANDSTHATLEADEVERYWHEREBUTNOWHERE"
+  },
+  "6_イーヴィルガール": {
+    "artist": "Fushi feat.吉乃",
+    "title_kana": "イイウイルカアル"
+  },
+  "6_Dazzle hop": {
+    "artist": "Sampling Masters MEGA",
+    "title_kana": "DAZZLEHOP"
+  },
+  "4_Unwelcome School": {
+    "artist": "Mitsukiyo「ブルーアーカイブ -Blue Archive-」",
+    "title_kana": "UNWELCOMESCHOOL"
+  },
+  "4_彩りキャンバス": {
+    "artist": "SUGAR RUSH「ブルーアーカイブ -Blue Archive-」",
+    "title_kana": "イロトリキヤンハス"
+  },
+  "1_死ぬな！": {
+    "artist": "こっちのけんと",
+    "title_kana": "シヌナ"
+  },
+  "1_どんぐりGAME": {
+    "artist": "こっちのけんと",
+    "title_kana": "トンクリGAME"
+  },
+  "1_君だったから": {
+    "artist": "中野家の五つ子",
+    "title_kana": "キミタツタカラ"
+  },
+  "1_Overdose": {
+    "artist": "なとり",
+    "title_kana": "OVERDOSE"
+  },
+  "1_Bring it on": {
+    "artist": "ROF-MAO",
+    "title_kana": "BRINGITON"
+  },
+  "2_モニタリング": {
+    "artist": "DECO*27",
+    "title_kana": "モニタリンク"
+  },
+  "2_テトリス": {
+    "artist": "柊マグネタイト",
+    "title_kana": "テトリス"
+  },
+  "3_有頂天ドリーマーズ": {
+    "artist": "森羅万象",
+    "title_kana": "ウチヨウテントリイマアス"
+  },
+  "4_Eureka": {
+    "artist": "sasakure.UK × ArmyTom (w/z Bitplane)",
+    "title_kana": "EUREKA"
+  },
+  "4_ニルヴの心臓": {
+    "artist": "TJ.hangneil + Atomic Sphere feat.Annabel",
+    "title_kana": "ニルウノシンソウ"
+  },
+  "4_エンジェル ドリーム": {
+    "artist": "「太鼓の達人」より",
+    "title_kana": "エンシエルトリイム"
+  },
+  "4_Hurtling Boys": {
+    "artist": "さだきち イシカダス「太鼓の達人」より",
+    "title_kana": "HURTLINGBOYS"
+  },
+  "2_しゅ～しん？変身☆ハカイシンzzZ": {
+    "artist": "YOFUKASHi Sound Team feat.編井うも",
+    "title_kana": "シユウシンヘンシンハカイシンZZZ"
+  },
+  "2_命テステス": {
+    "artist": "ぱりぱりさらうどん",
+    "title_kana": "イノチテステス"
+  },
+  "2_拝啓、最高の思い出たち": {
+    "artist": "ヤレギノ",
+    "title_kana": "ハイケイサイコウノオモイテタチ"
+  },
+  "2_おべんきょうたいむ": {
+    "artist": "litmus*",
+    "title_kana": "オヘンキヨウタイム"
+  },
+  "2_るろうらんる": {
+    "artist": "ちから",
+    "title_kana": "ルロウランル"
+  },
+  "2_はじまりの未来": {
+    "artist": "40mP × sasakure.UK / 初音ミク「劇場版プロジェクトセカイ　壊れたセカイと歌えないミク」",
+    "title_kana": "ハシマリノミライ"
+  },
+  "2_Worlders": {
+    "artist": "じん / バーチャル・シンガー、Leo/need、MORE MORE JUMP！、Vivid BAD SQUAD、ワンダーランズ×ショウタイム、25時、ナイトコードで。「劇場版プロジェクトセカイ　壊れたセカイと歌えないミク」",
+    "title_kana": "WORLDERS"
+  },
+  "2_ヒアソビ": {
+    "artist": "かめりあ",
+    "title_kana": "ヒアソヒ"
+  },
+  "2_サイエンス": {
+    "artist": "MIMI",
+    "title_kana": "サイエンス"
+  },
+  "5_廃墟にいますキャンペーン": {
+    "artist": "吉田夜世 feat.ちっく。",
+    "title_kana": "ハイキヨニイマスキヤンヘエン"
+  },
+  "5_Customized Justice": {
+    "artist": "Kobaryo",
+    "title_kana": "CUSTOMIZEDJUSTICE"
   }
 }
