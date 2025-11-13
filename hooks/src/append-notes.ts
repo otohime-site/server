@@ -110,7 +110,12 @@ export const appendNotes = (
 ): ScoresParseEntry[] => {
   const appendedScores = [...scores]
   for (const rule of rules) {
-    const followingInfo = splitInfo(rule.followingTitle)
+    // Unfortunately we have to hardcode this one exception...
+    const followingTitle =
+      rule.title === "5_Xaleid◆scopiX_t" && difficulty === 4
+        ? "5_系ぎて_t"
+        : rule.followingTitle
+    const followingInfo = splitInfo(followingTitle)
     const entryInfo = splitInfo(rule.title)
 
     const appendIndex = appendedScores.findIndex(
@@ -134,9 +139,7 @@ export const appendNotes = (
         difficulty: difficulty,
         level: rule.levels[difficulty],
       }
-      console.log(
-        `Inserting ${rule.title} after ${rule.followingTitle}`,
-      )
+      console.log(`Inserting ${rule.title} after ${followingTitle}`)
       appendedScores.splice(appendIndex + 1, 0, toBeAppended)
     }
   }
