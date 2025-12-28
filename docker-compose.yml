@@ -12,7 +12,7 @@ services:
       - dbdata_16:/var/lib/postgresql/data
     shm_size: 256mb
   hasura:
-    image: hasura/graphql-engine:v2.48.4-ce
+    image: hasura/graphql-engine:v2.48.9-ce
     ports:
       - "127.0.0.1:8580:8080"
     depends_on:
