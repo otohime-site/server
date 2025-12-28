@@ -38,6 +38,8 @@ The PostgreSQL database uses [PERIODs](https://github.com/xocolatl/periods) exte
 
 #### Data sources
 
-* The maimai Internal Lv JSONs in `hooks/src` are using sources from spreadsheet made by
+* The maimai Internal Lv JSONs in `hooks/src` before `23_prism.json` are using sources from spreadsheet made by
 Japan player groups (`@maiLv_Chihooooo` on X, previously known as Twitter),
 which stated the data can be used freely.
+
+  (after `24_prism_plus.json`, it is automatically aggregated with [Data Tools](https://github.com/otohime-site/data-tools/))
