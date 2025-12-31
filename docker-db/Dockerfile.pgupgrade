@@ -1,8 +1,0 @@
-FROM postgres:18-trixie
-RUN sed -i 's/$/ 16/' /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update && \
-    apt-get install -y postgresql-16-periods postgresql-18-periods &&\
-    rm -rf /var/lib/apt/lists/*
-COPY ./upgrade.sh /usr/local/bin
-RUN chmod a+x /usr/local/bin/upgrade.sh
-ENTRYPOINT ["upgrade.sh"]
