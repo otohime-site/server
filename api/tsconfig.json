@@ -5,7 +5,7 @@
     "outDir": "build",
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
+    "target": "esnext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,

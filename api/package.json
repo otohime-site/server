@@ -4,8 +4,10 @@
   "description": "",
   "license": "MIT",
   "author": "",
-  "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc src/index.ts --outDir dist"
+  },
   "dependencies": {
     "@elysiajs/node": "^1.4.3",
     "@otohime-site/parser": "^24.1.1",
