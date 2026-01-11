@@ -1,0 +1,39 @@
+services:
+  db:
+    build: docker-db/
+    dockerfile: Dockerfile.18
+    restart: always
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB=otohime
+      - POSTGRES_DB_USER=otohime
+      - POSTGRES_DB_PASSWORD
+    volumes:
+      - dbdata_18:/var/lib/postgresql/data
+    shm_size: 256mb
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./new-migrations:/migrations
+    command: ["-path", "/migrations", "-database", "postgres://otohime:${POSTGRES_DB_PASSWORD}@db:5432/otohime?sslmode=disable", "up"]
+    depends_on:
+      - "db"
+    restart: on-failure
+    profiles:
+      - migration
+  api:
+    build: api/
+    restart: always
+    depends_on:
+      - "db"
+    environment:
+      FIREBASE_ID: ${FIREBASE_ID}
+      SEGA_ID: ${SEGA_ID}
+      SEGA_PASSWORD: ${SEGA_PASSWORD}
+      PGUSER: otohime
+      PGDATABASE: otohime
+      PGHOST: db
+      PGPASSWORD: ${POSTGRES_DB_PASSWORD}
+volumes:
+  dbdata_18:
