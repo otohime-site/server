@@ -9,6 +9,7 @@ import { appendNotes } from "./append-notes.js"
 import sql from "./db.js"
 import Infos from "./infos.json" with { type: "json" }
 import InternalLvJson24PrismPlus from "./internal_lvs/24_prism_plus.json" with { type: "json" }
+import InternalLvJson25Circle from "./internal_lvs/25_circle.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
 interface VariantProps {
@@ -83,9 +84,11 @@ const sha256Sum = (text: string): string =>
   createHash("sha256").update(text).digest("hex")
 
 export const fetchSongs = async (): Promise<void> => {
-  const CURRENT_VERSION = 24
+  const CURRENT_VERSION =
+    new Date() > new Date("2026-01-22T04:00:00+09:00") ? 25 : 24
 
-  const internalLvDict: Record<string, number> = InternalLvJson24PrismPlus
+  const internalLvDict: Record<string, number> =
+    CURRENT_VERSION === 25 ? InternalLvJson25Circle : InternalLvJson24PrismPlus
   const infoDict: Record<string, { artist: string; title_kana: string }> = Infos
 
   const fetchCookie = makeFetchCookie(global.fetch)
