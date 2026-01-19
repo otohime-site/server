@@ -6,6 +6,7 @@ const app = new Hono()
 app.post("/", async (c) => {
   await sql.begin(async (tx) => {
     // Use `simple()` to allow multiple statements
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`
       SELECT periods.drop_system_versioning('dx_intl_records');
       SELECT periods.drop_system_versioning('dx_intl_scores');

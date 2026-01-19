@@ -24,6 +24,7 @@ app.post("/", async (c) => {
     throw new HTTPException(400, { message: "bad_token" })
   }
   await sql.begin(async (tx) => {
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     const results = await tx<
       { id: string; user_id: string }[]
     >`SELECT id, user_id FROM tokens WHERE id = ${body.input.token} AND user_id != ${newUserId};`
@@ -32,6 +33,7 @@ app.post("/", async (c) => {
     }
     const oldToken = results[0].id
     const oldUserId = results[0].user_id
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     const countRes = await tx`
       SELECT (
           SELECT COUNT(*) FROM dx_intl_players WHERE user_id = ${oldUserId}
@@ -42,6 +44,7 @@ app.post("/", async (c) => {
       `
     // Abandon the old token and generate a new one instead.
     try {
+      // @ts-expect-error https://github.com/porsager/postgres/issues/1143
       await tx`
         INSERT INTO token_transfers (token_id, old_user_id, new_user_id)
         VALUES (${oldToken}, ${oldUserId}, ${newUserId});
@@ -49,9 +52,12 @@ app.post("/", async (c) => {
     } catch {
       throw new HTTPException(400, { message: "transfer_used" })
     }
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`UPDATE dx_intl_players SET user_id = ${newUserId} WHERE user_id = ${oldUserId};`
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`UPDATE finale_players SET user_id = ${newUserId} WHERE user_id = ${oldUserId};`
 
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     const tokenResult = await tx`
       INSERT INTO tokens (user_id) values (${newUserId}) ON CONFLICT (user_id) 
       DO UPDATE SET id = gen_random_uuid() RETURNING id;

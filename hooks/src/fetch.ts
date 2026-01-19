@@ -242,15 +242,19 @@ export const fetchSongs = async (): Promise<void> => {
 
   // Perform the upserts.
   await sql.begin(async (tx) => {
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`UPDATE dx_intl_variants SET active = false;`
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`
       INSERT INTO dx_intl_songs ${sql(songRows)}
       ON CONFLICT (category, title) DO UPDATE SET
       "order" = excluded.order, artist = excluded.artist, title_kana = excluded.title_kana;`
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`
       INSERT INTO dx_intl_variants ${sql(variantRows)}
       ON CONFLICT (song_id, deluxe) DO UPDATE SET
       active = excluded.active, version = excluded.version;`
+    // @ts-expect-error https://github.com/porsager/postgres/issues/1143
     await tx`
       INSERT INTO dx_intl_notes ${sql(noteRows)}
       ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET
