@@ -89,6 +89,11 @@ export const rules: AppendNoteRule[] = [
     levels: ["4", "8", "12", "14"],
     long: true,
   },
+  {
+    followingTitle: "5_悪戯_f",
+    title: "5_廃墟にいますキャンペーン_t",
+    levels: ["5", "8", "10+", "13+"],
+  },
 ]
 
 const splitInfo = (
