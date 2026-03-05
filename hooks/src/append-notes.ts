@@ -23,57 +23,52 @@ interface AppendNoteRule {
 
 export const rules: AppendNoteRule[] = [
   {
-    followingTitle: "5_184億回のマルチトニック_t",
+    followingTitle: "5_VERTeX (rintaro soma deconstructed remix)_t",
     title: "5_果ての空、僕らが見た光。_t",
     levels: ["4", "8", "10+", "13+"],
   },
   {
-    followingTitle: "5_Deicide_t",
+    followingTitle: "5_果ての空、僕らが見た光。_t",
     title: "5_氷滅の135小節_t",
     levels: ["7", "9+", "13", "14+"],
   },
   {
-    followingTitle: "5_シスターシスター_t",
+    followingTitle: "5_氷滅の135小節_t",
     title: "5_有明/Ariake_t",
     levels: ["5", "8", "12", "14"],
   },
   {
-    followingTitle: "5_雨露霜雪_t",
+    followingTitle: "5_有明/Ariake_t",
     title: "5_宙天_t",
     levels: ["6", "8+", "13", "14+"],
   },
   {
-    followingTitle: "5_Feel The Luv_t",
+    followingTitle: "5_宙天_t",
     title: "5_Åntinomiε_t",
     levels: ["6", "9", "12+", "14+"],
   },
   {
     followingTitle: "5_Åntinomiε_t",
-    title: "5_ATLAS RUSH_t",
-    levels: ["5", "7+", "12+", "14+"],
-  },
-  {
-    followingTitle: "5_忙シー日_t",
     title: "5_FLΛME/FRΦST_t",
     levels: ["5", "8", "12+", "14+"],
   },
   {
-    followingTitle: "5_Amereistr_t",
+    followingTitle: "5_FLΛME/FRΦST_t",
     title: "5_World's end BLACKBOX_t",
     levels: ["7+", "10", "13", "14+"],
   },
   {
-    followingTitle: "5_World's end BLACKBOX_t",
+    followingTitle: "5_プリズム△▽リズム_t",
     title: "5_プリズム△▽リズム_f",
     levels: ["4", "6", "9", "13"],
   },
   {
-    followingTitle: "5_プリズム△▽リズム_f",
+    followingTitle: "5_connecting with you_f",
     title: "5_Believe the Rainbow_t",
     levels: ["2", "6", "9+", "13"],
   },
   {
-    followingTitle: "5_Believe the Rainbow_t",
+    followingTitle: "5_World's end BLACKBOX_t",
     title: "5_AFTER PANDORA_f",
     levels: ["3", "7+", "12", "14"],
   },
@@ -93,6 +88,11 @@ export const rules: AppendNoteRule[] = [
     followingTitle: "5_悪戯_f",
     title: "5_廃墟にいますキャンペーン_t",
     levels: ["5", "8", "10+", "13+"],
+  },
+  {
+    followingTitle: "5_Magical Paradox_t",
+    title: "5_7 Wonders_t",
+    levels: ["6", "8", "12+", "14+"],
   },
 ]
 
