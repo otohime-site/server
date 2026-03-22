@@ -1,0 +1,28 @@
+table:
+  name: dx_intl_rating_target_stats
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - current_version
+        - deluxe
+        - song_id
+        - count
+        - rating_target
+        - average_score
+        - difficulty
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - current_version
+        - deluxe
+        - song_id
+        - count
+        - rating_target
+        - average_score
+        - difficulty
+      filter: {}
+    comment: ""

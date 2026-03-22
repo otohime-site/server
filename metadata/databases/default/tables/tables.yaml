@@ -2,6 +2,7 @@
 - "!include public_dx_intl_notes.yaml"
 - "!include public_dx_intl_players.yaml"
 - "!include public_dx_intl_players_timelines.yaml"
+- "!include public_dx_intl_rating_target_stats.yaml"
 - "!include public_dx_intl_records.yaml"
 - "!include public_dx_intl_records_with_history.yaml"
 - "!include public_dx_intl_scores.yaml"
