@@ -120,7 +120,7 @@ ranked_songs AS (
   FROM player_song_ratings
 ),
 best_songs AS (
-  -- Best 20 from current_version=true, best 30 from current_version=false
+  -- Best 15 from current_version=true, best 35 from current_version=false
   SELECT
     rating_target,
     current_version,
@@ -129,8 +129,8 @@ best_songs AS (
     difficulty,
     score
   FROM ranked_songs
-  WHERE (current_version     AND rnk <= 20)
-     OR (NOT current_version AND rnk <= 30)
+  WHERE (current_version     AND rnk <= 15)
+     OR (NOT current_version AND rnk <= 35)
 ),
 aggregated AS (
   SELECT
@@ -162,8 +162,8 @@ SELECT
   count,
   average_score
 FROM ranked_agg
-WHERE (current_version     AND rnk <= 20)
-   OR (NOT current_version AND rnk <= 30)
+WHERE (current_version     AND rnk <= 15)
+   OR (NOT current_version AND rnk <= 35)
 ORDER BY rating_target, current_version DESC, count DESC;
 
 CREATE UNIQUE INDEX ON dx_intl_rating_target_stats
