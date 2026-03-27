@@ -98,7 +98,7 @@ export const fetchSongs = async (): Promise<void> => {
   // First, trying to sign in
   await fetchCookie("https://maimaidx-eng.com/", { redirect: "follow" })
   const loginResp = await fetchCookie(
-    "https://lng-tgk-aime-gw.am-all.net/common_auth/login/sid/",
+    "https://lng-tgk-aime-gw.am-all.net/common_auth/login/sid",
     {
       method: "POST",
       body: new URLSearchParams({
