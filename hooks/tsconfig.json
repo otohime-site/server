@@ -2,14 +2,15 @@
   "compilerOptions": {
     "module": "NodeNext",
     "noImplicitAny": true,
+    "rootDir": "src",
     "outDir": "build",
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
-    "esModuleInterop": true,
+    "target": "ES2022",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true
+    "erasableSyntaxOnly": true,
+    "types": ["node"]
   },
   "include": ["src"]
 }
