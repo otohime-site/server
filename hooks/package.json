@@ -8,21 +8,21 @@
   },
   "main": "index.js",
   "dependencies": {
-    "@hono/node-server": "^1.13.8",
+    "@hono/node-server": "^1.19.14",
     "@otohime-site/parser": "^24.1.1",
-    "fetch-cookie": "^3.0.1",
-    "hono": "^4.7.0",
-    "jose": "^6.0.8",
-    "linkedom": "^0.18.9",
-    "postgres": "^3.4.5"
+    "fetch-cookie": "^3.2.0",
+    "hono": "^4.12.14",
+    "jose": "^6.2.2",
+    "linkedom": "^0.18.12",
+    "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.9.2",
+    "@types/node": "^24.12.2",
     "eslint": "^10.2.0",
-    "eslint-config-prettier": "^10.1.1",
-    "prettier-plugin-organize-imports": "^4.0.0",
-    "tsx": "^4.20.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.2"
   },
