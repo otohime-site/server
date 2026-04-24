@@ -11,3 +11,43 @@ object_relationships:
         remote_table:
           name: finale_players
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - timelines
+        - id
+        - nickname
+      filter:
+        player:
+          private:
+            _ne: true
+    comment: ""
+  - role: importer
+    permission:
+      columns:
+        - timelines
+        - id
+        - nickname
+      filter:
+        player:
+          _or:
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - private:
+                _ne: true
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - timelines
+        - id
+        - nickname
+      filter:
+        player:
+          _or:
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - private:
+                _ne: true
+    comment: ""
