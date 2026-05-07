@@ -1,8 +1,9 @@
-FROM node:24-trixie-slim
-RUN corepack enable
+FROM node:26-trixie-slim
+RUN npm install -g pnpm@11.0.8
 RUN mkdir /app
 ADD package.json /app
 ADD pnpm-lock.yaml /app
+ADD pnpm-workspace.yaml /app
 WORKDIR /app
 RUN pnpm install --frozen-lockfile
 ADD . /app
