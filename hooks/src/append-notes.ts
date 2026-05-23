@@ -85,9 +85,9 @@ export const rules: AppendNoteRule[] = [
     long: true,
   },
   {
-    followingTitle: "5_悪戯_f",
-    title: "5_廃墟にいますキャンペーン_t",
-    levels: ["5", "8", "10+", "13+"],
+    followingTitle: "2_スノーマン (Rerec)_t",
+    title: "2_ヤミナベ!!!!_t",
+    levels: ["6", "8", "12+", "14"],
   },
   {
     followingTitle: "5_Magical Paradox_t",
