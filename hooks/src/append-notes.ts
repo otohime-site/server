@@ -1,4 +1,4 @@
-import {
+import type {
   ScoresParseEntry,
   ScoresParseEntryWithoutScore,
 } from "@otohime-site/parser/dx_intl/scores"

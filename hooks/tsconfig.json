@@ -3,13 +3,14 @@
     "module": "NodeNext",
     "noImplicitAny": true,
     "rootDir": "src",
-    "outDir": "build",
     "sourceMap": true,
     "strict": true,
     "target": "ES2022",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": ["node"]
   },
   "include": ["src"]

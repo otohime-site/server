@@ -1,8 +1,8 @@
 import { Hono } from "hono"
 import { HTTPException } from "hono/http-exception"
-import { JwtVariables } from "hono/jwt"
+import type { JwtVariables } from "hono/jwt"
 import { createRemoteJWKSet, jwtVerify } from "jose"
-import sql from "./db.js"
+import sql from "./db.ts"
 
 const firebaseProjectId = process.env.FIREBASE_ID
 if (firebaseProjectId === undefined) {

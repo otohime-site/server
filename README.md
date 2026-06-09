@@ -23,7 +23,7 @@ hasura metadata apply
 ```
 3. Update the song list as the score updater won't allow songs not included in song list. Use the following command to update it:
 ```
-docker compose run hooks node /app/build/fetch-cli.js
+docker compose run hooks node /app/src/fetch-cli.ts
 ```
 As it will call the real SEGA server for this, it won't work if the server is under maintenance (4:00 - 7:00 UTC+9 Daily)
 

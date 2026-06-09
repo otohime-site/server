@@ -1,12 +1,12 @@
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
 import { createHash } from "crypto"
 
-import { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
+import type { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
 import makeFetchCookie from "fetch-cookie"
 import { Hono } from "hono"
 import { DOMParser } from "linkedom"
-import { appendNotes } from "./append-notes.js"
-import sql from "./db.js"
+import { appendNotes } from "./append-notes.ts"
+import sql from "./db.ts"
 import Infos from "./infos.json" with { type: "json" }
 import InternalLvJson24PrismPlus from "./internal_lvs/24_prism_plus.json" with { type: "json" }
 import InternalLvJson25Circle from "./internal_lvs/25_circle.json" with { type: "json" }

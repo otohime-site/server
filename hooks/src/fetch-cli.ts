@@ -1,5 +1,5 @@
-import { fetchSongs } from "./fetch.js"
-import sql from "./db.js"
+import { fetchSongs } from "./fetch.ts"
+import sql from "./db.ts"
 
 fetchSongs()
   .then(() => console.log("ok!"))

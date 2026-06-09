@@ -1,4 +1,4 @@
-import sql from "./db.js"
+import sql from "./db.ts"
 import Infos from "./infos.json" with { type: "json" }
 
 // As the `fetch.ts` will update only for songs which still exists on DXNET,
