@@ -12,7 +12,7 @@ services:
       - dbdata_16:/var/lib/postgresql/data
     shm_size: 256mb
   hasura:
-    image: hasura/graphql-engine:v2.48.10-ce
+    image: hasura/graphql-engine:v2.49.1-ce
     ports:
       - "127.0.0.1:8580:8080"
     depends_on:
@@ -26,6 +26,7 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
       HASURA_GRAPHQL_AUTH_HOOK: http://hooks:8787/auth
       HASURA_GRAPHQL_ENABLED_APIS: "${HASURA_GRAPHQL_ENABLED_APIS}"
+      HASURA_GRAPHQL_ENABLE_RELAY: "false"
   hooks:
     build: hooks/
     restart: always
