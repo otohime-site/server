@@ -5,7 +5,6 @@
     "lint": "eslint",
     "tsc": "tsc"
   },
-  "main": "index.js",
   "dependencies": {
     "@hono/node-server": "^2.0.4",
     "@otohime-site/parser": "^26.4.0",
