@@ -1,0 +1,24 @@
+table:
+  name: dx_intl_score_per_rating_group
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - deluxe
+        - song_id
+        - rating_target
+        - average_score
+        - difficulty
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - deluxe
+        - song_id
+        - rating_target
+        - average_score
+        - difficulty
+      filter: {}
+    comment: ""
