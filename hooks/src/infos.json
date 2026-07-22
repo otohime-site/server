@@ -1500,7 +1500,7 @@
     "title_kana": "ユメハナヒ"
   },
   "5_オトヒメモリー☆ウタゲーション": {
-    "artist": "Junky",
+    "artist": "Junky feat. 乙姫(CV:浅川悠)",
     "title_kana": "オトヒメモリイウタケイシヨン"
   },
   "2_ラブチーノ": {
@@ -5488,7 +5488,7 @@
     "title_kana": "エンシエルトリイム"
   },
   "4_Hurtling Boys": {
-    "artist": "さだきち イシカダス「太鼓の達人」より",
+    "artist": "さだきち「太鼓の達人」より",
     "title_kana": "HURTLINGBOYS"
   },
   "2_しゅ～しん？変身☆ハカイシンzzZ": {
@@ -5703,8 +5703,220 @@
     "artist": "DJ Myosuke",
     "title_kana": ""
   },
+  "5_KNØCK ØUT!!": {
+    "artist": "DIVELA feat.ラングドシャ",
+    "title_kana": "KNOCKOUT"
+  },
+  "5_Aides": {
+    "artist": "tokiwa×むﾄ",
+    "title_kana": "AIDES"
+  },
+  "5_Treasure Chest Expedition": {
+    "artist": "7mai",
+    "title_kana": "TREASURECHESTEXPEDITION"
+  },
+  "5_ソテリア": {
+    "artist": "Rafutsuri feat.桜あおい",
+    "title_kana": "ソテリア"
+  },
+  "5_オールマスター": {
+    "artist": "大漠波新 feat.ヲタみん",
+    "title_kana": "オオルマスタア"
+  },
+  "5_STRAY": {
+    "artist": "umigame",
+    "title_kana": "STRAY"
+  },
+  "5_クロノイデア": {
+    "artist": "iDEN LiLY feat.X-Fenriey",
+    "title_kana": "クロノイテア"
+  },
+  "5_TAKE CONTROL": {
+    "artist": "ryhki",
+    "title_kana": "TAKECONTROL"
+  },
+  "5_HyperdrivE": {
+    "artist": "KARUT",
+    "title_kana": "HYPERDRIVE"
+  },
+  "5_Paradoxical Empress": {
+    "artist": "polysha",
+    "title_kana": "PARADOXICALEMPRESS"
+  },
+  "5_RONDØ": {
+    "artist": "Ashrount",
+    "title_kana": "RONDO"
+  },
+  "6_TECHNOPOLIS 2085": {
+    "artist": "PRASTIK DANCEFLOOR",
+    "title_kana": "TECHNOPOLIS2085"
+  },
   "6_Galaxy Blaster": {
     "artist": "ああああ",
-    "title_kana": ""
+    "title_kana": "GALAXYBLASTER"
+  },
+  "6_キミは“見ていたね”？": {
+    "artist": "曲：篠崎あやと、橘亮祐／歌：結城 莉玖(CV：朝日奈 丸佳)、東雲 つむぎ(CV：和泉 風花)",
+    "title_kana": "キミハミテイタネ"
+  },
+  "1_BOW AND ARROW （アニメ・オープニングver.）": {
+    "artist": "米津玄師",
+    "title_kana": "BOWANDARROWアニメオオフニンクVER"
+  },
+  "1_無敵的ハピネス！(SOS団5人Ver.)": {
+    "artist": "涼宮ハルヒ(CV.平野綾),長門有希(CV.茅原実里),朝比奈みくる(CV.後藤邑子)、キョン(CV.杉田智和)、古泉一樹(CV.小野大輔)",
+    "title_kana": "ムテキテキハヒネスSOSタン5ニンVER"
+  },
+  "1_Chasing destiny": {
+    "artist": "涼宮ハルヒ(CV.平野綾)",
+    "title_kana": "CHASINGDESTINY"
+  },
+  "1_Colorful Starting Line": {
+    "artist": "涼宮ハルヒ(CV.平野綾)",
+    "title_kana": "COLORFULSTARTINGLINE"
+  },
+  "1_愛♡スクリ～ム！": {
+    "artist": "AiScReam[黒澤ルビィ(CV.降幡 愛)、上原歩夢(CV.大西亜玖璃)、若菜四季(CV.大熊和奏)]",
+    "title_kana": "アイスクリイム"
+  },
+  "2_テレパシ": {
+    "artist": "DECO*27",
+    "title_kana": "テレハシ"
+  },
+  "2_ダイダイダイダイダイキライ": {
+    "artist": "雨良 Amala",
+    "title_kana": "タイタイタイタイタイキライ"
+  },
+  "2_オペラ！スペースオペラ！": {
+    "artist": "ナユタン星人",
+    "title_kana": "オヘラスヘエスオヘラ"
+  },
+  "2_T氏の話を信じるな": {
+    "artist": "ピノキオピー",
+    "title_kana": "Tシノハナシヲシンシルナ"
+  },
+  "3_超ナイト・オブ・ナイツ": {
+    "artist": "ビートまりお×まろん",
+    "title_kana": "チヨウナイトオフナイツ"
+  },
+  "4_浮世絵横丁": {
+    "artist": "魔界都市ニイガタ（黄泉路テヂーモ×dawn-system×かゆき）",
+    "title_kana": "ウキヨエヨコチヨウ"
+  },
+  "4_AiAe": {
+    "artist": "DJ'TEKINA//SOMETHING a.k.a ゆよゆっぺ",
+    "title_kana": "AIAE"
+  },
+  "4_奇々解体": {
+    "artist": "MURASAKI feat.かたたかんな",
+    "title_kana": "キキカイタイ"
+  },
+  "2_雑魚": {
+    "artist": "柊マグネタイト",
+    "title_kana": "サコ"
+  },
+  "2_お返事まだカナ？おじさん構文！": {
+    "artist": "吉本おじさん",
+    "title_kana": "オヘンシマタカナオシサンコウフン"
+  },
+  "4_ZEUS": {
+    "artist": "DÉ DÉ MOUSE & KAJI",
+    "title_kana": "ZEUS"
+  },
+  "4_Nine Point Eight": {
+    "artist": "Mili",
+    "title_kana": "NINEPOINTEIGHT"
+  },
+  "4_Myosotis": {
+    "artist": "M2U / Arranger : M2U & NICODE / Vocal : Guriri & Lucy",
+    "title_kana": "MYOSOTIS"
+  },
+  "4_ANiMA": {
+    "artist": "xi",
+    "title_kana": "ANIMA"
+  },
+  "4_Operation☆DOTABATA!": {
+    "artist": "Mitsukiyo「ブルーアーカイブ -Blue Archive-」",
+    "title_kana": "OPERATIONDOTABATA"
+  },
+  "4_RE Aoharu": {
+    "artist": "Nor「ブルーアーカイブ -Blue Archive-」",
+    "title_kana": "REAOHARU"
+  },
+  "4_Usagi Flap": {
+    "artist": "Nor「ブルーアーカイブ -Blue Archive-」",
+    "title_kana": "USAGIFLAP"
+  },
+  "1_キスキツネ": {
+    "artist": "HIMEHINA",
+    "title_kana": "キスキツネ"
+  },
+  "1_WWW": {
+    "artist": "HIMEHINA",
+    "title_kana": "WWW"
+  },
+  "1_うたかたよいかないで": {
+    "artist": "HIMEHINA",
+    "title_kana": "ウタカタヨイカナイテ"
+  },
+  "2_Intergalactic Bound": {
+    "artist": "Yunosuke / CircusP",
+    "title_kana": "INTERGALACTICBOUND"
+  },
+  "2_LEMON MELON COOKIE": {
+    "artist": "TAK",
+    "title_kana": "LEMONMELONCOOKIE"
+  },
+  "4_3rd Avenue": {
+    "artist": "Sound Souler",
+    "title_kana": "3RDAVENUE"
+  },
+  "3_純情アルメリア": {
+    "artist": "森羅万象",
+    "title_kana": "シユンシヨウアルメリア"
+  },
+  "3_運命線上のアリア": {
+    "artist": "森羅万象",
+    "title_kana": "ウンメイセンシヨウノアリア"
+  },
+  "3_デンデラパーティーナイト": {
+    "artist": "森羅万象",
+    "title_kana": "テンテラハアテイイナイト"
+  },
+  "3_Absolute Queen": {
+    "artist": "Laur",
+    "title_kana": "ABSOLUTEQUEEN"
+  },
+  "6_私たちは、花になる": {
+    "artist": "イロドリミドリ｜HaNaMiNa｜S.S.L.",
+    "title_kana": "ワタシタチハハナニナル"
+  },
+  "6_Here the Our MIRAI!": {
+    "artist": "イロドリミドリ",
+    "title_kana": "HERETHEOURMIRAI"
+  },
+  "6_色彩過剰のダイアリーミュージック": {
+    "artist": "イロドリミドリ",
+    "title_kana": "シキサイカシヨウノタイアリイミユウシツク"
+  },
+  "2_イレギュラーマン": {
+    "artist": "マサラダ",
+    "title_kana": "イレキユラアマン"
+  },
+  "2_ちっちゃな私": {
+    "artist": "マサラダ",
+    "title_kana": "チツチヤナワタシ"
+  },
+  "2_2代目閻魔": {
+    "artist": "読谷あかね",
+    "title_kana": "2タイメエンマ"
+  },
+  "2_シスターに懺悔を": {
+    "artist": "廃原メモリ",
+    "title_kana": "シスタアニサンケヲ"
+  },
+  "4_Cryogenic": {
+    "artist": "Camellia ft. Petra Gurin「In Falsus」",
+    "title_kana": "CRYOGENIC"
   }
 }
