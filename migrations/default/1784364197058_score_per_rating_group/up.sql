@@ -18,6 +18,7 @@ JOIN dx_intl_notes n
  AND n.deluxe = s.deluxe
  AND n.difficulty = s.difficulty
 WHERE n.difficulty >= 2
+  AND s.score > 0
 GROUP BY t.rating_target, s.song_id, s.deluxe, s.difficulty;
 
 CREATE UNIQUE INDEX ON dx_intl_score_per_rating_group

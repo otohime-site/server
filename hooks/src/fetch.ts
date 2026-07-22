@@ -8,8 +8,8 @@ import { DOMParser } from "linkedom"
 import { appendNotes } from "./append-notes.ts"
 import sql from "./db.ts"
 import Infos from "./infos.json" with { type: "json" }
-import InternalLvJson24PrismPlus from "./internal_lvs/24_prism_plus.json" with { type: "json" }
 import InternalLvJson25Circle from "./internal_lvs/25_circle.json" with { type: "json" }
+import InternalLvJson26CirclePlus from "./internal_lvs/26_circle_plus.json" with { type: "json" }
 import Versions from "./versions.json" with { type: "json" }
 
 interface VariantProps {
@@ -85,10 +85,10 @@ const sha256Sum = (text: string): string =>
 
 export const fetchSongs = async (): Promise<void> => {
   const CURRENT_VERSION =
-    new Date() > new Date("2026-01-22T04:00:00+09:00") ? 25 : 24
+    new Date() > new Date("2026-07-23T04:00:00+09:00") ? 26 : 25
 
   const internalLvDict: Record<string, number> =
-    CURRENT_VERSION === 25 ? InternalLvJson25Circle : InternalLvJson24PrismPlus
+    CURRENT_VERSION === 26 ? InternalLvJson26CirclePlus : InternalLvJson25Circle
   const infoDict: Record<string, { artist: string; title_kana: string }> = Infos
 
   const fetchCookie = makeFetchCookie(global.fetch)

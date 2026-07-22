@@ -36,6 +36,16 @@ The PostgreSQL database uses [PERIODs](https://github.com/xocolatl/periods) exte
 * If you need any hint to upgrade the PostgreSQL with `pg_upgrade`, [See this commit](https://github.com/otohime-site/server/commit/f6bac9ebbbdcf1623449dcea1a85cfd838387b03).
 
 
+#### Version upgrades
+
+When a new maimai version is released, update:
+
+* The Internal Lv JSON in `hooks/src/internal_lvs/`, and `CURRENT_VERSION` in `hooks/src/fetch.ts`
+* The song list in `hooks/src/versions.json` (the array index is the version number)
+* A migration raising the `dx_intl_variants_version_check1` constraint and updating
+  `dx_intl_constants` — see the comments in the latest `*_version_upgrade` migration
+
+
 #### Data sources
 
 * The maimai Internal Lv JSONs in `hooks/src` before `23_prism.json` are using sources from spreadsheet made by
