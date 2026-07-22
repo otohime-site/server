@@ -41,9 +41,14 @@ The PostgreSQL database uses [PERIODs](https://github.com/xocolatl/periods) exte
 When a new maimai version is released, update:
 
 * The Internal Lv JSON in `hooks/src/internal_lvs/`, and `CURRENT_VERSION` in `hooks/src/fetch.ts`
-* The song list in `hooks/src/versions.json` (the array index is the version number)
 * A migration raising the `dx_intl_variants_version_check1` constraint and updating
   `dx_intl_constants` — see the comments in the latest `*_version_upgrade` migration
+
+`hooks/src/versions.json` (where the array index is the version number) should be
+updated *before* the next version is released, so it still describes the version
+that is about to be superseded. Songs missing from it fall back to `CURRENT_VERSION`,
+which is how newly added songs get auto-filled as the latest version — so the entry
+for the new version itself is only added once that version is in turn superseded.
 
 
 #### Data sources
