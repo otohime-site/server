@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint",
+    "test": "node --test tests/*.test.ts",
     "tsc": "tsc"
   },
   "dependencies": {

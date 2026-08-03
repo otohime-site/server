@@ -5,7 +5,7 @@ import type { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/
 import makeFetchCookie from "fetch-cookie"
 import { Hono } from "hono"
 import { DOMParser } from "linkedom"
-import { appendNotes } from "./append-notes.ts"
+import { appendCharts } from "./append-charts.ts"
 import sql from "./db.ts"
 import Infos from "./infos.json" with { type: "json" }
 import InternalLvJson25Circle from "./internal_lvs/25_circle.json" with { type: "json" }
@@ -125,7 +125,7 @@ export const fetchSongs = async (): Promise<void> => {
       if (!resp.ok) {
         throw new Error("Network Error!")
       }
-      const result = appendNotes(
+      const result = appendCharts(
         parseScores(await resp.text(), undefined, true),
         difficulty,
       )
