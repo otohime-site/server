@@ -8,23 +8,23 @@ This is prepared as the DXNET after PRiSM update will hide some
 songs until player unlocked them, e.g. LEGEND and special event songs.
 */
 
-interface AppendChartRule {
+export interface AppendChartRule {
   // When seeing this title in the DXNET...
-  seeingTitle: string
+  readonly seeingTitle: string
   // Using the following title as the anchor...
-  anchorTitle: string
+  readonly anchorTitle: string
   // And put the song before or after the anchor.
-  appendPosition: "before" | "after"
+  readonly appendPosition: "before" | "after"
 
   // Then is the appended song & chart data
-  title: string
-  levels: ScoresParseEntry["level"][]
+  readonly title: string
+  readonly levels: readonly ScoresParseEntry["level"][]
 
   // TODO: can we get it from DXNET?
-  long?: boolean
+  readonly long?: boolean
 }
 
-export const rules: AppendChartRule[] = [
+export const rules: readonly AppendChartRule[] = [
   {
     seeingTitle: "6_キミは“見ていたね”？_t",
     anchorTitle: "4_AiAe_t",
@@ -68,9 +68,10 @@ const chartIndex = (scores: ScoresParseEntry[], rawTitle: string): number => {
 export const appendCharts = (
   scores: ScoresParseEntry[],
   difficulty: number,
+  chartRules: readonly AppendChartRule[],
 ): ScoresParseEntry[] => {
   const appendedScores = [...scores]
-  for (const rule of rules) {
+  for (const rule of chartRules) {
     const level = rule.levels[difficulty]
     const seeingIndex = chartIndex(scores, rule.seeingTitle)
     const anchorIndex = chartIndex(appendedScores, rule.anchorTitle)
