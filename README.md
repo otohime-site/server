@@ -8,26 +8,66 @@ It contains:
 #### Get Started
 
 1. Setup Necessary Credentials in `.env` (example in `.env.example`.)
-  - Firebase ID, with Google Auth connected in the Firebase project
-    It should be the same project used in the front-end, as it will be used
-    to authenticate the JWT from the front-end.
-  - SEGA ID with password to fetch the recent song list.
-    Once the site is up, the song list will update daily through Hasura Cron Jobs.
-  - Postgres user password
-2. Initialize databases
-  - Install [Hasura CLI](https://hasura.io/docs/2.0/hasura-cli/overview/) in your machine.
-  - After `docker compose up` (Add `sudo` if you have to), run the following commands in the project root to run database migration and initialize Hasura metadata (for GraphQL mapping, cron jobs, etc.):
-```
-hasura migrate apply --all-databases
-hasura metadata apply
-```
-3. Update the song list as the score updater won't allow songs not included in song list. Use the following command to update it:
-```
-docker compose run hooks node /app/src/fetch-cli.ts
-```
-As it will call the real SEGA server for this, it won't work if the server is under maintenance (4:00 - 7:00 UTC+9 Daily)
+
+   - Firebase ID, with Google Auth connected in the Firebase project
+     It should be the same project used in the front-end, as it will be used
+     to authenticate the JWT from the front-end.
+   - SEGA ID with password to fetch the recent song list.
+     Once the site is up, the song list will update daily through Hasura Cron Jobs.
+   - Postgres user password
+
+2. Start the development services
+
+   ```sh
+   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+   ```
+
+   The development override enables admin-secret authentication with the
+   development-only secret already configured in `config.yaml`. The base
+   Compose file disables admin-secret authentication.
+
+3. Initialize databases
+
+   - Install [Hasura CLI](https://hasura.io/docs/2.0/hasura-cli/overview/) in your machine.
+   - Run the following commands in the project root to run database migration and initialize Hasura metadata (for GraphQL mapping, cron jobs, etc.):
+
+    ```sh
+    hasura migrate apply --all-databases
+    hasura metadata apply
+    ```
+
+4. Update the song list as the score updater won't allow songs not included in song list. Use the following command to update it:
+
+   ```sh
+   docker compose -f docker-compose.yml -f docker-compose.dev.yml run hooks node /app/src/fetch-cli.ts
+   ```
+
+   As it will call the real SEGA server for this, it won't work if the server is under maintenance (4:00 - 7:00 UTC+9 Daily)
 
 #### Deployment and Maintenance Concerns
+
+The base Hasura service disables `x-hasura-admin-secret` authentication. Apply
+migrations and metadata through the isolated maintenance profile, which starts
+a temporary Hasura instance with a newly generated secret and does not publish
+its port:
+
+```sh
+./scripts/hasura-maintenance migrate apply --all-databases
+./scripts/hasura-maintenance metadata apply --disallow-inconsistent-metadata
+```
+
+The wrapper accepts any Hasura CLI arguments, including development rollback
+commands:
+
+```sh
+./scripts/hasura-maintenance migrate apply --database-name default --down 1
+./scripts/hasura-maintenance migrate status --database-name default
+```
+
+The temporary secret exists only in the wrapper and maintenance-container
+environments. The wrapper removes the maintenance Hasura container on exit.
+The wrapper also prevents concurrent maintenance commands from replacing each
+other's temporary instance.
 
 The PostgreSQL database uses [PERIODs](https://github.com/xocolatl/periods) extension to store the score history, several concerns are needed:
 * It cannot be used by most of managed PostgreSQL services, where the PERIODs extension is mostly missing

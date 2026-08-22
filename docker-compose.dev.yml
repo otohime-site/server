@@ -1,0 +1,7 @@
+services:
+  hasura:
+    environment:
+      HASURA_GRAPHQL_ADMIN_SECRET: development-hasura-secret
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_DISABLE_ADMIN_SECRET: "false"
+      HASURA_GRAPHQL_ENABLED_APIS: metadata,graphql

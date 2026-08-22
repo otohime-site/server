@@ -11,28 +11,77 @@ services:
     volumes:
       - dbdata_16:/var/lib/postgresql/data
     shm_size: 256mb
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d otohime
+      interval: 1s
+      timeout: 5s
+      retries: 30
   hasura:
-    image: hasura/graphql-engine:v2.49.5-ce
+    image: hasura/graphql-engine:v2.50.1-ce
     ports:
       - "127.0.0.1:8580:8080"
     depends_on:
-      - "db"
+      db:
+        condition: service_healthy
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://otohime:${POSTGRES_DB_PASSWORD}@db:5432/otohime
       HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
-      HASURA_GRAPHQL_DEV_MODE: "${HASURA_DEV_MODE}"
+      HASURA_GRAPHQL_DEV_MODE: "false"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
+      HASURA_GRAPHQL_DISABLE_ADMIN_SECRET: "true"
       HASURA_GRAPHQL_AUTH_HOOK: http://hooks:8787/auth
-      HASURA_GRAPHQL_ENABLED_APIS: "${HASURA_GRAPHQL_ENABLED_APIS}"
+      HASURA_GRAPHQL_ENABLED_APIS: graphql
       HASURA_GRAPHQL_ENABLE_RELAY: "false"
+  hasura-maintenance:
+    image: hasura/graphql-engine:v2.50.1-ce
+    profiles:
+      - maintenance
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    entrypoint:
+      - /bin/sh
+      - -ec
+    command:
+      - |
+        test -n "$${HASURA_GRAPHQL_ADMIN_SECRET:-}" || {
+          echo "HASURA_GRAPHQL_ADMIN_SECRET is required" >&2
+          exit 1
+        }
+        exec graphql-engine serve
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://otohime:${POSTGRES_DB_PASSWORD}@db:5432/otohime
+      HASURA_GRAPHQL_ADMIN_SECRET: ${MAINTENANCE_HASURA_ADMIN_SECRET-}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_ENABLED_APIS: metadata
+      HASURA_GRAPHQL_DISABLE_EVENT_PROCESSING: "true"
+      HASURA_GRAPHQL_ENABLE_RELAY: "false"
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
+  hasura-maintenance-cli:
+    image: hasura/graphql-engine:v2.50.1.cli-migrations-v3
+    profiles:
+      - maintenance
+    entrypoint:
+      - hasura-cli
+    working_dir: /project
+    volumes:
+      - ./:/project
+    environment:
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-maintenance:8080
+      HASURA_GRAPHQL_ADMIN_SECRET: ${MAINTENANCE_HASURA_ADMIN_SECRET-}
+      HASURA_GRAPHQL_SKIP_UPDATE_CHECK: "true"
   hooks:
     build: hooks/
     restart: always
     depends_on:
-      - "db"
-      - "hasura"
+      db:
+        condition: service_healthy
+      hasura:
+        condition: service_started
     environment:
       FIREBASE_ID: ${FIREBASE_ID}
       SEGA_ID: ${SEGA_ID}

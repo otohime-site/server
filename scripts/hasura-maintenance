@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if (( $# == 0 )); then
+  echo "Usage: $0 <hasura-cli arguments...>" >&2
+  echo "Example: $0 migrate apply --database-name default --down 1" >&2
+  exit 2
+fi
+
+for required_command in docker flock openssl; do
+  if ! command -v "$required_command" >/dev/null 2>&1; then
+    echo "Required command not found: $required_command" >&2
+    exit 1
+  fi
+done
+
+repository_root="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repository_root"
+
+lock_file="${TMPDIR:-/tmp}/otohime-server-hasura-maintenance.lock"
+exec 9>"$lock_file"
+if ! flock --nonblock 9; then
+  echo "Another Hasura maintenance command is already running." >&2
+  exit 1
+fi
+
+MAINTENANCE_HASURA_ADMIN_SECRET="$(openssl rand -hex 32)"
+export MAINTENANCE_HASURA_ADMIN_SECRET
+
+cleanup() {
+  docker compose --profile maintenance rm --stop --force \
+    hasura-maintenance >/dev/null 2>&1 || true
+  unset MAINTENANCE_HASURA_ADMIN_SECRET
+}
+
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+if ! docker compose --profile maintenance up --detach --wait --wait-timeout 30 \
+  hasura-maintenance; then
+  echo "The maintenance Hasura instance did not become ready." >&2
+  docker compose --profile maintenance logs hasura-maintenance >&2 || true
+  exit 1
+fi
+
+docker compose --profile maintenance run --rm --no-deps \
+  hasura-maintenance-cli "$@"
