@@ -9,6 +9,7 @@ app.post("/", async (c) => {
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_rating_target_stats;`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_score_per_rating_group;`
+    await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_histogram;`
   })
   return c.text("ok!")
 })

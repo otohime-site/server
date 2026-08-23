@@ -1,0 +1,24 @@
+table:
+  name: dx_intl_scores_histogram
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - count
+        - deluxe
+        - song_id
+        - score_bucket
+        - difficulty
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - count
+        - deluxe
+        - song_id
+        - score_bucket
+        - difficulty
+      filter: {}
+    comment: ""
