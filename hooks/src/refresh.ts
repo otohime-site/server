@@ -5,6 +5,7 @@ const app = new Hono()
 
 app.post("/", async (c) => {
   await sql.begin(async (tx) => {
+    await tx`SET LOCAL work_mem = '64MB';`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_stats;`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_scores_rates;`
     await tx`REFRESH MATERIALIZED VIEW CONCURRENTLY dx_intl_rating_target_stats;`
