@@ -1,5 +1,5 @@
 FROM node:26-trixie-slim
-RUN npm install -g pnpm@11.5.2
+RUN npm install -g pnpm@12.4.1
 RUN mkdir /app
 COPY package.json /app
 COPY pnpm-lock.yaml /app
