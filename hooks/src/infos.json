@@ -5701,7 +5701,7 @@
   },
   "5_Break The Speakers": {
     "artist": "DJ Myosuke",
-    "title_kana": ""
+    "title_kana": "BREAKTHESPEAKERS"
   },
   "5_KNØCK ØUT!!": {
     "artist": "DIVELA feat.ラングドシャ",
@@ -5922,5 +5922,53 @@
   "5_歌え踊れや桃源郷！": {
     "artist": "karato feat.yuno",
     "title_kana": "ウタエオトレヤトウケンキヨウ"
+  },
+  "5_Story Continued": {
+    "artist": "ユアミトス",
+    "title_kana": "STORYCONTINUED"
+  },
+  "5_SERAPHIC SYNDROME": {
+    "artist": "堀田英邦",
+    "title_kana": "SERAPHICSYNDROME"
+  },
+  "5_終幕の傀儡": {
+    "artist": "RB.H × lixound × 薛南",
+    "title_kana": "シユウマクノククツ"
+  },
+  "5_Aegisfortia": {
+    "artist": "お月さま交響曲",
+    "title_kana": "AEGISFORTIA"
+  },
+  "1_ボックスワンターバ〜ン": {
+    "artist": "ぼくわたチャンネル",
+    "title_kana": "ホツクスワンタアハアン"
+  },
+  "4_Broomstick adventure!": {
+    "artist": "しーけー",
+    "title_kana": "BROOMSTICKADVENTURE"
+  },
+  "4_無彩色のディストピア": {
+    "artist": "HyuN feat. ウォルピスカーター",
+    "title_kana": "ムサイシキノテイストヒア"
+  },
+  "4_Manifold Hypothesis": {
+    "artist": "cybermiso feat. tigerlily",
+    "title_kana": "MANIFOLDHYPOTHESIS"
+  },
+  "4_Inverted World": {
+    "artist": "ARForest",
+    "title_kana": "INVERTEDWORLD"
+  },
+  "1_相性×優勝ドロップス": {
+    "artist": "Idios",
+    "title_kana": "アイシヨウユウシヨウトロツフス"
+  },
+  "2_光線歌": {
+    "artist": "Guiano",
+    "title_kana": "コウセンカ"
+  },
+  "2_電脳眠眠猫": {
+    "artist": "桃寝ちのい",
+    "title_kana": "テンノウミエンミエンマオ"
   }
 }
