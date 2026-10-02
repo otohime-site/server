@@ -39,6 +39,13 @@ export const rules: readonly AppendChartRule[] = [
     title: "5_歌え踊れや桃源郷！_t",
     levels: ["4", "7+", "10+", "13"],
   },
+  {
+    seeingTitle: "1_キスキツネ_t",
+    anchorTitle: "5_RONDØ_t",
+    appendPosition: "after",
+    title: "5_OV3RCLOCK_t",
+    levels: ["6", "7+", "12+", "14+"],
+  },
 ]
 
 const splitInfo = (

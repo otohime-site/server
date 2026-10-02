@@ -2044,15 +2044,15 @@
     "title_kana": "FFT"
   },
   "6_-OutsideR:RequieM-": {
-    "artist": "箱部なる(CV:M・A・O)",
+    "artist": "箱部 なる(CV:M・A・O)",
     "title_kana": "OUTSIDERREQUIEM"
   },
   "6_イロトリドリのメロディ": {
-    "artist": "小仏凪(CV:佐倉薫)",
+    "artist": "小仏 凪(CV:佐倉 薫)",
     "title_kana": "イロトリトリノメロテイ"
   },
   "6_奏者はただ背中と提琴で語るのみ": {
-    "artist": "月鈴那知(CV:今村彩夏)",
+    "artist": "月鈴 那知(CV:今村 彩夏)",
     "title_kana": "ソウシヤハタタセナカトハイオリンテカタルノミ"
   },
   "5_雷切-RAIKIRI-": {
@@ -2756,7 +2756,7 @@
     "title_kana": "マネマネサイコトロヒツク"
   },
   "2_劣等上等": {
-    "artist": "Giga / 鏡音リン・レン / Vivid BAD SQUAD「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "Giga / Vivid BAD SQUAD × 鏡音リン・レン「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "レツトウシヨウトウ"
   },
   "2_アスノヨゾラ哨戒班": {
@@ -2832,7 +2832,7 @@
     "title_kana": "FELYSFINALREMIX"
   },
   "2_自傷無色": {
-    "artist": "ササノマリイ / 初音ミク / 25時、ナイトコードで。「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "ササノマリイ / 25時、ナイトコードで。 × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "シシヨウムシヨク"
   },
   "3_Prismatic": {
@@ -3228,7 +3228,7 @@
     "title_kana": "トラコンエネルキイ"
   },
   "2_セカイはまだ始まってすらいない": {
-    "artist": "ピノキオピー / 初音ミク / ワンダーランズ×ショウタイム「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "ピノキオピー / ワンダーランズ×ショウタイム × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "セカイハマタハシマツテスライナイ"
   },
   "3_Sweets Time": {
@@ -3320,11 +3320,11 @@
     "title_kana": "カイカイキタン"
   },
   "2_アイドル新鋭隊": {
-    "artist": "Mitchie M / 初音ミク / MORE MORE JUMP！「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "Mitchie M / MORE MORE JUMP！ × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "アイトルシンエイタイ"
   },
   "2_needLe": {
-    "artist": "DECO*27 / 初音ミク / Leo/need「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "DECO*27 / Leo/need × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "NEEDLE"
   },
   "4_ヒステリックナイトガール": {
@@ -4372,15 +4372,15 @@
     "title_kana": "アルカンシエル"
   },
   "2_RAD DOGS": {
-    "artist": "八王子P / 初音ミク / Vivid BAD SQUAD「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "八王子P / Vivid BAD SQUAD × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "RADDOGS"
   },
   "2_アイディスマイル": {
-    "artist": "とあ / MEIKO / 25時、ナイトコードで。「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "とあ / 25時、ナイトコードで。 × MEIKO「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "アイテイスマイル"
   },
   "2_にっこり^^調査隊のテーマ": {
-    "artist": "ワンダフル☆オポチュニティ！ / 初音ミク / ワンダーランズ×ショウタイム「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
+    "artist": "ワンダフル☆オポチュニティ！ / ワンダーランズ×ショウタイム × 初音ミク「プロジェクトセカイ カラフルステージ！ feat. 初音ミク」",
     "title_kana": "ニツコリチヨウサタイノテエマ"
   },
   "6_PinqPiq (xovevox Remix)": {
@@ -5970,5 +5970,105 @@
   "2_電脳眠眠猫": {
     "artist": "桃寝ちのい",
     "title_kana": "テンノウミエンミエンマオ"
+  },
+  "5_物語はここから": {
+    "artist": "OSTER project feat. Kanata.N",
+    "title_kana": "モノカタリハココカラ"
+  },
+  "5_ミルクミルクミルク": {
+    "artist": "藤原ハガネ feat. マスタード",
+    "title_kana": "ミルクミルクミルク"
+  },
+  "5_MissionDistortion": {
+    "artist": "Nor",
+    "title_kana": "MISSIONDISTORTION"
+  },
+  "5_Dear Player 2": {
+    "artist": "tn-shi",
+    "title_kana": "DEARPLAYER2"
+  },
+  "5_OV3RCLOCK": {
+    "artist": "Alicemetix",
+    "title_kana": "OV3RCLOCK"
+  },
+  "6_IMPACT": {
+    "artist": "USAO feat.光吉猛修",
+    "title_kana": "IMPACT"
+  },
+  "6_[HALO]": {
+    "artist": "Blacklolita",
+    "title_kana": "HALO"
+  },
+  "1_ごはん食べヨ": {
+    "artist": "Mega Shinnosuke",
+    "title_kana": "コハンタヘヨ"
+  },
+  "1_Ex-Otogibanashi (Anime ver.)": {
+    "artist": "ryo (supercell), 月見ヤチヨ (cv.早見沙織)",
+    "title_kana": "EXOTOGIBANASHIANIMEVER"
+  },
+  "1_私は、わたしの事が好き。(Short ver.)": {
+    "artist": "HoneyWorks, かぐや(cv.夏吉ゆうこ)",
+    "title_kana": "ワタシハワタシノコトカスキSHORTVER"
+  },
+  "1_ワールドイズマイン CPK! Remix (Anime ver.)": {
+    "artist": "ryo (supercell), かぐや (cv.夏吉ゆうこ), 月見ヤチヨ (cv.早見沙織)",
+    "title_kana": "ワアルトイスマインCPKREMIXANIMEVER"
+  },
+  "1_群青声明": {
+    "artist": "佐藤塩 & 西園チグサ",
+    "title_kana": "クンシヨウセイメイ"
+  },
+  "1_推活天使ビビアンちゃん (feat.マスタード＆ビートまりお)": {
+    "artist": "ファル公＆DJ Myosuke「ゲーム『ゼンレスゾーンゼロ』ビビアン 同人イメージソング」",
+    "title_kana": "オシカツテンシヒヒアンチヤンFEATマスタアトヒイトマリオ"
+  },
+  "2_愛言葉V": {
+    "artist": "DECO*27",
+    "title_kana": "アイコトハV"
+  },
+  "2_PPPP (feat. Hatsune Miku, Kasane Teto)": {
+    "artist": "TAK",
+    "title_kana": "PPPPFEATHATSUNEMIKUKASANETETO"
+  },
+  "3_さっきゅんライト（2025）": {
+    "artist": "石鹸屋",
+    "title_kana": "サツキユンライト2025"
+  },
+  "4_Antikythera [Vocal Version]": {
+    "artist": "technoplanet feat. 木下珠子",
+    "title_kana": "ANTIKYTHERAVOCALVERSION"
+  },
+  "4_Halzion": {
+    "artist": "H△G",
+    "title_kana": "HALZION"
+  },
+  "4_天靈靈地靈靈": {
+    "artist": "iKz feat.小可學妹",
+    "title_kana": "テンリンリンテイリンリン"
+  },
+  "4_The Happycore Idol": {
+    "artist": "3R2",
+    "title_kana": "THEHAPPYCOREIDOL"
+  },
+  "4_XODUS": {
+    "artist": "DJ Myosuke & Gram",
+    "title_kana": "XODUS"
+  },
+  "4_All Over Again": {
+    "artist": "Zekk",
+    "title_kana": "ALLOVERAGAIN"
+  },
+  "4_Energy": {
+    "artist": "Ryo Nakamura",
+    "title_kana": "ENERGY"
+  },
+  "4_Crossfire": {
+    "artist": "Blacklolita",
+    "title_kana": "CROSSFIRE"
+  },
+  "4_RE!NCARN4T10N": {
+    "artist": "xi",
+    "title_kana": "REINCARN4T10N"
   }
 }
