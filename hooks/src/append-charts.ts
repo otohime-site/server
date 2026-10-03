@@ -41,7 +41,7 @@ export const rules: readonly AppendChartRule[] = [
   },
   {
     seeingTitle: "1_キスキツネ_t",
-    anchorTitle: "5_RONDØ_t",
+    anchorTitle: "5_KNØCK ØUT!!_t",
     appendPosition: "after",
     title: "5_OV3RCLOCK_t",
     levels: ["6", "7+", "12+", "14+"],
