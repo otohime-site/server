@@ -4,6 +4,15 @@ import sql from "./db.ts"
 
 const app = new Hono()
 
+// Hasura actions require errors as JSON: { "message": "..." }
+app.onError((err, c) => {
+  if (err instanceof HTTPException) {
+    return c.json({ message: err.message }, err.status)
+  }
+  console.error(err)
+  return c.json({ message: "internal_error" }, 500)
+})
+
 interface TokenTransferPayload {
   action: { name: string }
   input: { token: string }
@@ -23,7 +32,7 @@ app.post("/", async (c) => {
   if (!validToken.test(body.input.token)) {
     throw new HTTPException(400, { message: "bad_token" })
   }
-  await sql.begin(async (tx) => {
+  return await sql.begin(async (tx) => {
     const results = await tx<
       { id: string; user_id: string }[]
     >`SELECT id, user_id FROM tokens WHERE id = ${body.input.token} AND user_id != ${newUserId};`
