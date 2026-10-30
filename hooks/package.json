@@ -7,22 +7,22 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@hono/node-server": "^2.1.1",
+    "@hono/node-server": "^2.1.5",
     "@otohime-site/parser": "^26.4.0",
     "fetch-cookie": "^3.2.0",
-    "hono": "^4.13.7",
-    "jose": "^6.2.12",
-    "linkedom": "^0.18.13",
+    "hono": "^4.13.14",
+    "jose": "^6.2.14",
+    "linkedom": "^0.18.14",
     "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.5.1",
-    "eslint": "^10.10.0",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.0"
+    "typescript-eslint": "^8.72.1"
   },
   "private": true
 }
