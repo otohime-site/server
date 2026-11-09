@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# Move a user's players from one Firebase uid to another.
+#
+# Same steps as the tokenTransfer action (hooks/src/token-transfer.ts), minus
+# the token handling: tokens stay attached to their original uid, and the old
+# users row is kept.
+#
+# Usage: scripts/move-user-id [-y] <old_uid> <new_uid>
+# Runs against the compose project in the current environment
+# (set COMPOSE_PROJECT_NAME to target another one).
+
+set -euo pipefail
+
+usage() {
+  echo "Usage: $0 [-y] <old_uid> <new_uid>" >&2
+  exit 2
+}
+
+assume_yes=false
+if [[ "${1:-}" == "-y" ]]; then
+  assume_yes=true
+  shift
+fi
+(( $# == 2 )) || usage
+
+old_uid="$1"
+new_uid="$2"
+
+for uid in "$old_uid" "$new_uid"; do
+  if [[ ! "$uid" =~ ^[A-Za-z0-9]{1,128}$ ]]; then
+    echo "Invalid uid: $uid" >&2
+    exit 2
+  fi
+done
+if [[ "$old_uid" == "$new_uid" ]]; then
+  echo "Old and new uid are the same." >&2
+  exit 2
+fi
+
+repository_root="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repository_root"
+
+psql() {
+  docker compose exec -T db psql -X -v ON_ERROR_STOP=1 -U otohime -d otohime \
+    -v old_uid="$old_uid" -v new_uid="$new_uid" "$@"
+}
+
+old_exists="$(psql -tA <<<"SELECT count(*) FROM users WHERE id = :'old_uid';")"
+if [[ "$old_exists" != 1 ]]; then
+  echo "User not found: $old_uid" >&2
+  exit 1
+fi
+
+nicknames="$(psql -tA -F ': ' <<'SQL'
+SELECT 'dx_intl', nickname FROM dx_intl_players WHERE user_id = :'old_uid'
+UNION ALL
+SELECT 'finale', nickname FROM finale_players WHERE user_id = :'old_uid'
+ORDER BY 1, 2;
+SQL
+)"
+
+echo "Nicknames to move from $old_uid to $new_uid:"
+if [[ -n "$nicknames" ]]; then
+  sed 's/^/  /' <<<"$nicknames"
+else
+  echo "  (none)"
+fi
+
+read -r new_exists new_dx new_fin <<<"$(psql -tA -F ' ' <<'SQL'
+SELECT (SELECT count(*) FROM users WHERE id = :'new_uid'),
+       (SELECT count(*) FROM dx_intl_players WHERE user_id = :'new_uid'),
+       (SELECT count(*) FROM finale_players WHERE user_id = :'new_uid');
+SQL
+)"
+if [[ "$new_exists" == 1 ]]; then
+  echo "Players already owned by $new_uid: dx_intl $new_dx, finale $new_fin"
+else
+  echo "$new_uid has never signed in (no players yet)."
+fi
+
+if [[ "$assume_yes" != true ]]; then
+  read -r -p "Proceed? [y/N] " answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 1; }
+fi
+
+psql --single-transaction <<'SQL'
+INSERT INTO users (id) VALUES (:'new_uid') ON CONFLICT DO NOTHING;
+UPDATE dx_intl_players SET user_id = :'new_uid' WHERE user_id = :'old_uid';
+UPDATE finale_players  SET user_id = :'new_uid' WHERE user_id = :'old_uid';
+SQL
+
+echo "Done. Players now owned by $new_uid:"
+psql -P footer=off <<'SQL'
+SELECT 'dx_intl' AS game, id, nickname FROM dx_intl_players WHERE user_id = :'new_uid'
+UNION ALL
+SELECT 'finale', id, nickname FROM finale_players WHERE user_id = :'new_uid'
+ORDER BY 1, 2;
+SQL
