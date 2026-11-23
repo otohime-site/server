@@ -1,7 +1,7 @@
 import type {
   ScoresParseEntry,
   ScoresParseEntryWithoutScore,
-} from "@otohime-site/parser/dx_intl/scores"
+} from "@otohime-site/parser/dx_intl"
 
 /*
 This is prepared as the DXNET after PRiSM update will hide some

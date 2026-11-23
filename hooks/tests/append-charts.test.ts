@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import type { ScoresParseEntry } from "@otohime-site/parser/dx_intl/scores"
+import type { ScoresParseEntry } from "@otohime-site/parser/dx_intl"
 import { appendCharts, type AppendChartRule } from "../src/append-charts.ts"
 
 const score = (

@@ -1,7 +1,7 @@
 import { parsePlayer, parseScores } from "@otohime-site/parser/dx_intl"
 import { createHash } from "crypto"
 
-import type { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl/scores"
+import type { ScoresParseEntryWithoutScore } from "@otohime-site/parser/dx_intl"
 import makeFetchCookie from "fetch-cookie"
 import { Hono } from "hono"
 import { DOMParser } from "linkedom"
@@ -126,7 +126,7 @@ export const fetchSongs = async (): Promise<void> => {
         throw new Error("Network Error!")
       }
       const result = appendCharts(
-        parseScores(await resp.text(), undefined, true),
+        parseScores(await resp.text(), { includeUnplayed: true }),
         difficulty,
         rules,
       )
