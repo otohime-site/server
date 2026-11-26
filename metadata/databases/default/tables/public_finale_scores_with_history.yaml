@@ -2,7 +2,7 @@ table:
   name: finale_scores_with_history
   schema: public
 object_relationships:
-  - name: finale_note
+  - name: finale_chart
     using:
       manual_configuration:
         column_mapping:
@@ -10,7 +10,7 @@ object_relationships:
           song_id: song_id
         insertion_order: null
         remote_table:
-          name: finale_scores
+          name: finale_charts
           schema: public
   - name: finale_player
     using:

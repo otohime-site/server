@@ -17,7 +17,7 @@ before(async () => {
   sql = db.sql
   await sql`INSERT INTO dx_intl_songs (id, category, title, "order") VALUES ('song', 1, 'Song', 1)`
   await sql`INSERT INTO dx_intl_variants (song_id, deluxe, version, active) VALUES ('song', true, 1, true)`
-  await sql`INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level) VALUES ('song', true, 3, '13')`
+  await sql`INSERT INTO dx_intl_charts (song_id, deluxe, difficulty, level) VALUES ('song', true, 3, '13')`
 })
 after(async () => {
   await db?.drop()
@@ -172,7 +172,7 @@ describe("a DX score is required for new play results", { skip }, () => {
     const p = await newPlayer()
     await sql`INSERT INTO dx_intl_songs (id, category, title, "order") VALUES ('old', 1, 'Old', 2)`
     await sql`INSERT INTO dx_intl_variants (song_id, deluxe, version, active) VALUES ('old', true, 1, true)`
-    await sql`INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level) VALUES ('old', true, 3, '13')`
+    await sql`INSERT INTO dx_intl_charts (song_id, deluxe, difficulty, level) VALUES ('old', true, 3, '13')`
     await legacyScore(p, 99, "old")
     await sql`UPDATE dx_intl_songs SET id = 'renamed' WHERE id = 'old'`
     const rows =

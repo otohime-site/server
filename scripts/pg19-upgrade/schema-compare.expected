@@ -1,0 +1,43 @@
+# Intentional structural differences, old -> new, checked by schema-compare.sh.
+# "- " = only in the old database, "+ " = only in the new one. Renames are handled
+# by RENAME_SED in the script and do not appear here.
+
+# Surrogate ids dropped: Hasura upserts used up a serial value for every proposed
+# row. The natural keys become the primary keys, keeping the constraint names that
+# clients use in on_conflict (names are not compared here).
+- col r dx_intl_records.id integer not null default nextval('<seq>'::regclass)
+- col r dx_intl_records_history.id integer not null
+- col r dx_intl_scores.id bigint not null default nextval('<seq>'::regclass)
+- col r dx_intl_scores_history.id bigint not null
+- col v dx_intl_public_records.id integer
+- col v dx_intl_public_scores.id bigint
+- col v dx_intl_records_with_history.id integer
+- col v dx_intl_scores_with_history.id bigint
+- con dx_intl_records p PRIMARY KEY (id)
+- con dx_intl_records u UNIQUE (player_id)
++ con dx_intl_records p PRIMARY KEY (player_id)
+- con dx_intl_scores p PRIMARY KEY (id)
+- con dx_intl_scores u UNIQUE (player_id, song_id, deluxe, difficulty)
++ con dx_intl_scores p PRIMARY KEY (player_id, song_id, deluxe, difficulty)
+- idx CREATE UNIQUE INDEX ON public.dx_intl_records USING btree (id)
+- idx CREATE UNIQUE INDEX ON public.dx_intl_scores USING btree (id)
+
+# dx_intl_constants (one row: active_since, current_version_threshold) is replaced
+# by dx_intl_versions (one row per release); transfer.sh converts the row.
+- acl dx_intl_constants <default>
+- col r dx_intl_constants.active_since timestamp with time zone not null
+- col r dx_intl_constants.current_version_threshold integer not null
+- col r dx_intl_constants.id boolean not null default true
+- con dx_intl_constants c CHECK (id)
+- con dx_intl_constants p PRIMARY KEY (id)
+- idx CREATE UNIQUE INDEX ON public.dx_intl_constants USING btree (id)
+- own r dx_intl_constants otohime
++ acl dx_intl_versions <default>
++ col r dx_intl_versions.released_at timestamp with time zone not null
++ col r dx_intl_versions.version smallint not null
++ con dx_intl_versions c CHECK ((version >= 0))
++ con dx_intl_versions p PRIMARY KEY (version)
++ con dx_intl_versions u UNIQUE (released_at)
++ idx CREATE UNIQUE INDEX ON public.dx_intl_versions USING btree (released_at)
++ idx CREATE UNIQUE INDEX ON public.dx_intl_versions USING btree (version)
++ own r dx_intl_versions otohime

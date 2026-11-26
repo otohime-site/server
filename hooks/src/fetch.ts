@@ -253,7 +253,7 @@ export const fetchSongs = async (): Promise<void> => {
       ON CONFLICT (song_id, deluxe) DO UPDATE SET
       active = excluded.active, version = excluded.version;`
     await tx`
-      INSERT INTO dx_intl_notes ${sql(noteRows)}
+      INSERT INTO dx_intl_charts ${sql(noteRows)}
       ON CONFLICT (song_id, deluxe, difficulty) DO UPDATE SET
       level = excluded.level, internal_lv = excluded.internal_lv;`
   })

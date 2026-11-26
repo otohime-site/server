@@ -1,0 +1,2 @@
+-- The baseline has no down migration: going back means going back to the
+-- PostgreSQL 16 database (db16), which still has the old schema and data.

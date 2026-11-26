@@ -33,6 +33,7 @@ It contains:
 
     ```sh
     hasura migrate apply --all-databases
+    hasura seed apply --database-name default
     hasura metadata apply
     ```
 
@@ -69,11 +70,11 @@ environments. The wrapper removes the maintenance Hasura container on exit.
 The wrapper also prevents concurrent maintenance commands from replacing each
 other's temporary instance.
 
-Score history (system versioning) is kept by plain PL/pgSQL triggers (see `migrations/default/1795241435242_replace_periods_with_triggers`), which replaced the [PERIODs](https://github.com/xocolatl/periods) extension:
+Score history (system versioning) is kept by plain PL/pgSQL triggers (see the baseline migration in `migrations/default/`), which replaced the [PERIODs](https://github.com/xocolatl/periods) extension:
 * Every change to `dx_intl_records` / `dx_intl_scores` moves the old version into `*_history`. `start` / `end` are always set by the database.
 * History rows cannot be updated. Deleting a player removes its history when the transaction commits.
 * A full `pg_dump` / `pg_restore` is safe, as triggers are created after the data. A data-only restore needs `--disable-triggers` (or `session_replication_role = replica`), otherwise the triggers would reset every `start` / `end`.
-* PERIODs is still installed by `docker-db/`, only so that the migration's `down.sql` can work. It goes away with the PostgreSQL 19 upgrade.
+* The database is PostgreSQL 19 (`docker-db/`). The PostgreSQL 16 database it was upgraded from is kept as the `db16` service (`--profile upgrade`) for now; see `scripts/pg19-upgrade/`.
 
 
 #### Version upgrades
@@ -81,8 +82,10 @@ Score history (system versioning) is kept by plain PL/pgSQL triggers (see `migra
 When a new maimai version is released, update:
 
 * The Internal Lv JSON in `hooks/src/internal_lvs/`, and `CURRENT_VERSION` in `hooks/src/fetch.ts`
-* A migration raising the `dx_intl_variants_version_check1` constraint and updating
-  `dx_intl_constants` — see the comments in the latest `*_version_upgrade` migration
+* A row in `dx_intl_versions` with the release time (it can be added before the
+  release: rows are ignored until their `released_at` has passed)
+* A migration raising the `dx_intl_variants_version_check` constraint — see the
+  comments on `dx_intl_versions` in the baseline migration
 
 `hooks/src/versions.json` (where the array index is the version number) should be
 updated *before* the next version is released, so it still describes the version

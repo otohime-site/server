@@ -3,13 +3,13 @@ services:
     build: docker-db/
     restart: always
     environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_PASSWORD
       - POSTGRES_DB=otohime
       - POSTGRES_DB_USER=otohime
       - POSTGRES_DB_PASSWORD
     volumes:
-      - dbdata_16:/var/lib/postgresql/data
+      # PG 18+ images keep their data in /var/lib/postgresql/<major>/docker.
+      - dbdata_19:/var/lib/postgresql
     shm_size: 256mb
     healthcheck:
       test:
@@ -20,6 +20,22 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 1s
+  # The PostgreSQL 16 database, kept for the upgrade (scripts/pg19-upgrade) and
+  # as the way back. Started only with --profile upgrade.
+  db16:
+    build: docker-db16/
+    profiles:
+      - upgrade
+    restart: "no"
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB=otohime
+      - POSTGRES_DB_USER=otohime
+      - POSTGRES_DB_PASSWORD
+    volumes:
+      - dbdata_16:/var/lib/postgresql/data
+    shm_size: 256mb
   hasura:
     image: hasura/graphql-engine:v2.51.3-ce
     ports:
@@ -94,3 +110,4 @@ services:
       PGPASSWORD: ${POSTGRES_DB_PASSWORD}
 volumes:
   dbdata_16:
+  dbdata_19:

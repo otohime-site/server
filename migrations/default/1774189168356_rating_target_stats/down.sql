@@ -1,3 +1,0 @@
-DROP MATERIALIZED VIEW IF EXISTS dx_intl_rating_target_stats;
-DROP MATERIALIZED VIEW IF EXISTS dx_intl_constants;
-DROP FUNCTION IF EXISTS dx_intl_get_rating(NUMERIC, NUMERIC, BOOLEAN);

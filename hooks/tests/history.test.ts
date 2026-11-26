@@ -21,7 +21,7 @@ before(async () => {
   await sql`INSERT INTO dx_intl_songs (id, category, title, "order") VALUES ('song', 1, 'Song', 1)`
   await sql`INSERT INTO dx_intl_variants (song_id, deluxe, version, active) VALUES ('song', true, 1, true)`
   await sql`
-    INSERT INTO dx_intl_notes (song_id, deluxe, difficulty, level, internal_lv)
+    INSERT INTO dx_intl_charts (song_id, deluxe, difficulty, level, internal_lv)
     VALUES ('song', true, 3, '13', 13.0), ('song', true, 4, '14', 14.0)`
 })
 after(async () => {

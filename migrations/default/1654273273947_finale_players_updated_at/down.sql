@@ -1,1 +1,0 @@
-DROP FUNCTION finale_players_updated_at;

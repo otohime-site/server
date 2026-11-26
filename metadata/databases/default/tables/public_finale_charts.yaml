@@ -1,0 +1,40 @@
+table:
+  name: finale_charts
+  schema: public
+object_relationships:
+  - name: finale_song
+    using:
+      foreign_key_constraint_on: song_id
+array_relationships:
+  - name: finale_scores
+    using:
+      manual_configuration:
+        column_mapping:
+          difficulty: difficulty
+          song_id: song_id
+        insertion_order: null
+        remote_table:
+          name: finale_scores
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - difficulty
+        - song_id
+        - level
+      filter: {}
+  - role: importer
+    permission:
+      columns:
+        - difficulty
+        - song_id
+        - level
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - difficulty
+        - song_id
+        - level
+      filter: {}

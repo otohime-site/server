@@ -6,7 +6,7 @@ object_relationships:
     using:
       foreign_key_constraint_on: song_id
 array_relationships:
-  - name: dx_intl_notes
+  - name: dx_intl_charts
     using:
       manual_configuration:
         column_mapping:
@@ -14,7 +14,7 @@ array_relationships:
           song_id: song_id
         insertion_order: null
         remote_table:
-          name: dx_intl_notes
+          name: dx_intl_charts
           schema: public
 select_permissions:
   - role: anonymous
