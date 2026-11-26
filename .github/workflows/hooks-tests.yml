@@ -37,5 +37,21 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
+      # The database tests (tests/database.ts) build throwaway databases from
+      # migrations/ on the same image as production's database.
+      - name: Start test database
+        working-directory: .
+        run: |
+          docker build -t otohime-test-db docker-db
+          docker run -d --name test-db -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=test otohime-test-db
+          for i in $(seq 60); do
+            docker exec test-db pg_isready -q -h localhost -U postgres && exit 0
+            sleep 1
+          done
+          docker logs test-db
+          exit 1
+
       - name: Test
         run: pnpm run test
+        env:
+          TEST_DATABASE_URL: postgres://postgres:test@127.0.0.1:5432/postgres

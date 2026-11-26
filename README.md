@@ -2,7 +2,7 @@
 
 It contains:
 
-- A Docker Compose project, featuring Hasura 2 GraphQL Server and PostgreSQL database with [PERIODs](https://github.com/xocolatl/periods) extension
+- A Docker Compose project, featuring Hasura 2 GraphQL Server and PostgreSQL database
 - Hooks written with TypeScript / Hono / Postgres.js to serve JWT/long-lived tokens auth, song list fetching, database cleanups, etc.
 
 #### Get Started
@@ -69,11 +69,11 @@ environments. The wrapper removes the maintenance Hasura container on exit.
 The wrapper also prevents concurrent maintenance commands from replacing each
 other's temporary instance.
 
-The PostgreSQL database uses [PERIODs](https://github.com/xocolatl/periods) extension to store the score history, several concerns are needed:
-* It cannot be used by most of managed PostgreSQL services, where the PERIODs extension is mostly missing
-* As it uses trigger to implement system versioning, it can be tricky when you need to mutate tables or restore the data from the SQL dump.
-  You need to call `periods.drop_system_versioning` for such operation, see `src/cleanup.ts` for a example.
-* If you need any hint to upgrade the PostgreSQL with `pg_upgrade`, [See this commit](https://github.com/otohime-site/server/commit/f6bac9ebbbdcf1623449dcea1a85cfd838387b03).
+Score history (system versioning) is kept by plain PL/pgSQL triggers (see `migrations/default/1795241435242_replace_periods_with_triggers`), which replaced the [PERIODs](https://github.com/xocolatl/periods) extension:
+* Every change to `dx_intl_records` / `dx_intl_scores` moves the old version into `*_history`. `start` / `end` are always set by the database.
+* History rows cannot be updated. Deleting a player removes its history when the transaction commits.
+* A full `pg_dump` / `pg_restore` is safe, as triggers are created after the data. A data-only restore needs `--disable-triggers` (or `session_replication_role = replica`), otherwise the triggers would reset every `start` / `end`.
+* PERIODs is still installed by `docker-db/`, only so that the migration's `down.sql` can work. It goes away with the PostgreSQL 19 upgrade.
 
 
 #### Version upgrades

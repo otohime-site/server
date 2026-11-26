@@ -3,23 +3,6 @@ import sql from "./db.ts"
 
 const app = new Hono()
 
-app.post("/", async (c) => {
-  await sql.begin(async (tx) => {
-    // Use `simple()` to allow multiple statements
-    await tx`
-      SELECT periods.drop_system_versioning('dx_intl_records');
-      SELECT periods.drop_system_versioning('dx_intl_scores');
-      GRANT DELETE ON TABLE dx_intl_records_history TO CURRENT_USER;
-      GRANT DELETE ON TABLE dx_intl_scores_history TO CURRENT_USER;
-      DELETE FROM dx_intl_records_history WHERE player_id NOT IN (SELECT id FROM dx_intl_players);
-      DELETE FROM dx_intl_scores_history WHERE player_id  NOT IN (SELECT id FROM dx_intl_players);
-      SELECT periods.add_system_versioning('dx_intl_records');
-      SELECT periods.add_system_versioning('dx_intl_scores');
-    `.simple()
-  })
-  return c.text("ok!")
-})
-
 app.post("/daily", async (c) => {
   const resultCron = await sql`
     DELETE FROM hdb_catalog.hdb_cron_events
