@@ -51,10 +51,11 @@ const upsertScore = (
   score: number,
   difficulty = 3,
 ) => q`
-  INSERT INTO dx_intl_scores (player_id, song_id, deluxe, difficulty, score, combo_flag, sync_flag)
-  VALUES (${playerId}, 'song', true, ${difficulty}, ${score}, '', '')
+  INSERT INTO dx_intl_scores (player_id, song_id, deluxe, difficulty, score, combo_flag, sync_flag, dx_score, max_dx_score)
+  VALUES (${playerId}, 'song', true, ${difficulty}, ${score}, '', '', ${Math.round(score * 10)}, 3000)
   ON CONFLICT ON CONSTRAINT dx_intl_scores_player_id_song_id_deluxe_difficulty_key DO UPDATE SET
-    score = EXCLUDED.score, combo_flag = EXCLUDED.combo_flag, sync_flag = EXCLUDED.sync_flag`
+    score = EXCLUDED.score, combo_flag = EXCLUDED.combo_flag, sync_flag = EXCLUDED.sync_flag,
+    dx_score = EXCLUDED.dx_score, max_dx_score = EXCLUDED.max_dx_score`
 
 const historyCount = async (playerId: number) => {
   const [{ records, scores }] = await sql<

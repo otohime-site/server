@@ -27,6 +27,8 @@ insert_permissions:
         - combo_flag
         - deluxe
         - difficulty
+        - dx_score
+        - max_dx_score
         - player_id
         - score
         - song_id
@@ -42,6 +44,8 @@ select_permissions:
         - player_id
         - id
         - score
+        - dx_score
+        - max_dx_score
         - end
         - start
         - song_id
@@ -59,6 +63,8 @@ select_permissions:
         - player_id
         - id
         - score
+        - dx_score
+        - max_dx_score
         - end
         - start
         - song_id
@@ -75,6 +81,8 @@ update_permissions:
     permission:
       columns:
         - combo_flag
+        - dx_score
+        - max_dx_score
         - score
         - sync_flag
       filter:
