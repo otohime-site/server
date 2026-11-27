@@ -32,13 +32,14 @@ export const rules: readonly AppendChartRule[] = [
     title: "4_奇々解体_t",
     levels: ["3", "6", "9+", "13"],
   },
-  {
-    seeingTitle: "6_私たちは、花になる_t",
-    anchorTitle: "5_TAKE CONTROL_t",
-    appendPosition: "before",
-    title: "5_歌え踊れや桃源郷！_t",
-    levels: ["4", "7+", "10+", "13"],
-  },
+  // Off for now: it doesn't fit the current international version schedule.
+  // {
+  //   seeingTitle: "6_私たちは、花になる_t",
+  //   anchorTitle: "5_TAKE CONTROL_t",
+  //   appendPosition: "before",
+  //   title: "5_歌え踊れや桃源郷！_t",
+  //   levels: ["4", "7+", "10+", "13"],
+  // },
   {
     seeingTitle: "1_キスキツネ_t",
     anchorTitle: "5_KNØCK ØUT!!_t",
