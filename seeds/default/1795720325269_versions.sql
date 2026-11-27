@@ -3,6 +3,6 @@
 -- the current version from the old database): existing versions are left as they are.
 INSERT INTO dx_intl_versions (version, released_at)
 VALUES
-    (25, '2026-01-22 19:00:00+00'), -- CiRCLE
+    (25, '2026-01-21 19:00:00+00'), -- CiRCLE
     (26, '2026-07-22 19:00:00+00')  -- CiRCLE PLUS
 ON CONFLICT (version) DO NOTHING;
