@@ -74,7 +74,7 @@ Score history (system versioning) is kept by plain PL/pgSQL triggers (see the ba
 * Every change to `dx_intl_records` / `dx_intl_scores` moves the old version into `*_history`. `start` / `end` are always set by the database.
 * History rows cannot be updated. Deleting a player removes its history when the transaction commits.
 * A full `pg_dump` / `pg_restore` is safe, as triggers are created after the data. A data-only restore needs `--disable-triggers` (or `session_replication_role = replica`), otherwise the triggers would reset every `start` / `end`.
-* The database is PostgreSQL 19 (`docker-db/`). The PostgreSQL 16 database it was upgraded from is kept as the `db16` service (`--profile upgrade`) for now; see `scripts/pg19-upgrade/`.
+* The database is PostgreSQL 19 (`docker-db/`). The PostgreSQL 16 database it was upgraded from is kept as the `db16` service (`--profile upgrade`) until its volume is removed; the scripts used for the upgrade are in the history (`git show 53f3a2b:scripts/pg19-upgrade/README.md`).
 
 
 #### Version upgrades

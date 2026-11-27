@@ -20,8 +20,8 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 1s
-  # The PostgreSQL 16 database, kept for the upgrade (scripts/pg19-upgrade) and
-  # as the way back. Started only with --profile upgrade.
+  # The PostgreSQL 16 database this one was upgraded from, kept for now as the
+  # way back. Started only with --profile upgrade.
   db16:
     build: docker-db16/
     profiles:
